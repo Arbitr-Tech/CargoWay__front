@@ -1,0 +1,154 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+@use '../utils' as u;
+
+.search {
+    @include m.form-step-base(column, 1rem 2.2rem, 100%);
+
+    &__form {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 1rem;
+
+        &-label {
+            @include m.center;
+            align-items: start;
+            flex-direction: column;
+            font-weight: 700;
+        }
+
+        &-input {
+            @include m.input-base;
+            width: 15rem;
+            margin-top: 1rem;
+
+            &--fromTo {
+                max-width: 2rem;
+            }
+        }
+
+        &-inputBox {
+            display: flex;
+            gap: 0.5rem;
+        }
+    }
+
+    &__choice {
+        display: flex;
+        justify-content: space-around;
+        margin: 2.2rem 0;
+        position: relative;
+
+        &-box {
+            @include m.box-overflow-y;
+            position: relative;
+
+            &-label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1rem;
+            }
+
+            & span {
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+
+            &:last-child::after {
+                display: none;
+            }
+        }
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+        }
+
+        &::after {
+            @include m.line(12.125rem, v.$noactive-color);
+        }
+    }
+
+    &__btnBox {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            margin-bottom: 1rem;
+        }
+
+
+    }
+
+    &__item {
+        border: 1px solid v.$primary-color;
+        border-radius: v.$border-radius;
+        display: grid;
+        grid-template-rows: repeat(auto-fill, minmax(3rem, auto));
+        margin-bottom: 1rem;
+
+        &-text {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+
+        }
+
+        &-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            max-width: 20rem;
+            // align-self: center;
+            margin-bottom: 1rem;
+        }
+
+        &-content {
+            padding: 0.5rem;
+            text-align: center;
+        }
+    }
+
+    &__result {
+        @include m.form-step-base(column, 1rem 2.2rem, 100%);
+        display: grid;
+        grid-template-rows: auto 1fr;
+        &-header {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            font-weight: 700;
+        }
+
+        &-title {
+        }
+
+        &-list {
+            max-height: 30rem;
+            overflow-y: auto;
+
+            &--mylist{
+                max-height: 43rem;
+            }
+        }
+    }
+}
+
+.searchPage {
+    &__desc {
+        text-align: center;
+        color: v.$primary-color;
+        font-size: 2.2rem
+    }
+    &__box {
+        @include m.center;
+        width: 100%;
+        gap: 1rem;
+        margin: 1rem 0 2.2rem;
+    }
+}

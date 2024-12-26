@@ -1,0 +1,35 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.progress-bar {
+    @include m.center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+
+    &__step {
+        background-color: v.$noactive-color;
+        padding: 10px;
+        border-radius: 50px;
+        color: v.$font-light-color;
+
+        &--completed {
+            background-color: v.$primary-color;
+        }
+
+        &--current {
+            background-color: v.$active-color;
+        }
+    }
+
+    &__line {
+        flex: 1;
+        height: 4px;
+        background-color: v.$noactive-color;
+        margin: 0 5px;
+
+        &--completed {
+            background-color: v.$primary-color;
+        }
+    }
+}

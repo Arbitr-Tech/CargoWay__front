@@ -1,0 +1,28 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.popup {
+    position: fixed;
+    top: 25%;
+    left: 30%;
+    z-index: 10;
+    width: 50rem;
+    @include m.form-step-base(column, 1rem 2.2rem, 40rem);
+
+    &__icon {
+        text-align: right;
+    }
+
+    &__text {
+        margin-bottom: 1rem;
+    }
+
+    &__buttons{
+        @include m.center;
+        gap: 1rem;
+    }
+
+    &__button{
+        @include m.button(v.$primary-color, v.$font-light-color)
+    }
+}
