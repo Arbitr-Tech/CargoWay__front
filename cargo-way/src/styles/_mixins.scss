@@ -22,14 +22,11 @@
 @mixin form-step-base($flex-diraction, $padding, $max-width) {
     @include center;
     flex-direction: $flex-diraction;
-    // flex-direction: column;
     text-align: center;
     background-color: v.$form-background-color;
     padding: $padding;
-    // padding: 6rem 12.5rem;
     color: v.$primary-color;
     max-width: $max-width;
-    // max-width: 47.5rem;
     border-radius: v.$border-radius;
     box-shadow: 10px 8px 29.2px 0px v.$box-shadow-color;
 }
@@ -53,6 +50,7 @@
 @mixin button($background-color, $color) {
     font-size: 1em;
     border-radius: v.$border-radius;
+    border: 0;
     background-color: $background-color;
     color: $color;
     padding: 1rem 2.2rem;

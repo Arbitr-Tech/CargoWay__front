@@ -89,6 +89,8 @@
         display: grid;
         grid-template-rows: repeat(auto-fill, minmax(3rem, auto));
         margin-bottom: 1rem;
+        background-color: v.$font-light-color;
+        margin: 1rem;
 
         &-text {
             display: grid;
@@ -105,7 +107,6 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             max-width: 20rem;
-            // align-self: center;
             margin-bottom: 1rem;
         }
 
@@ -119,20 +120,22 @@
         @include m.form-step-base(column, 1rem 2.2rem, 100%);
         display: grid;
         grid-template-rows: auto 1fr;
+
         &-header {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             font-weight: 700;
         }
 
-        &-title {
-        }
+        &-title {}
 
         &-list {
             max-height: 30rem;
             overflow-y: auto;
+            background-color: v.$primary-color;
+            margin: 0 -2.2rem;
 
-            &--mylist{
+            &--mylist {
                 max-height: 43rem;
             }
         }
@@ -145,6 +148,7 @@
         color: v.$primary-color;
         font-size: 2.2rem
     }
+
     &__box {
         @include m.center;
         width: 100%;

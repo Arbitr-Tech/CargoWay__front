@@ -3,52 +3,18 @@ import SearchForm from "../search/SearchForm";
 import SearchListResults from "../search/SearchListResults";
 import TopBar from "../TopBar";
 import { useState } from "react";
+import { observer } from "mobx-react";
+import { mainSearchStore } from "../../stores/MainSearchStore";
 
-const MainSearchPage = () => {
-    const [page, setPage] = useState('MainSearchPage');
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [popupContent, setPopupContent] = useState({});
+const MainSearchPage =  observer(() => {
 
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
-    const closePopup = () => setIsPopupOpen(false);
-    console.log(page)
-
-    const [formData, setFormData] = useState({
-        sending: "",
-        reception: "",
-        weightFrom: "",
-        weightTo: "",
-        volumeFrom: "",
-        volumeTo: "",
-        loadingDate: "",
-        bodyType: [],
-        nameОfСargo: [],
-        loadingType: []
-    });
+    const store = mainSearchStore;
+    console.log(store.page)
 
     const handleInputChange = (event) => {
         const { name, value, type, checked } = event.target;
 
-        if (type === 'checkbox') {
-            setFormData((prevState) => {
-                // Копируем старый массив
-                const updatedBodyType = checked
-                    ? [...prevState[name], value] // Добавляем значение, если чекбокс выбран
-                    : prevState[name].filter((item) => item !== value); // Удаляем значение, если чекбокс снят
-
-                return {
-                    ...prevState,
-                    [name]: updatedBodyType, // Обновляем состояние
-                };
-            });
-        } else {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value, // Обновляем остальные поля
-            }));
-        }
+        store.setFormData(name, value, type, checked);
     };
 
     const list = [
@@ -84,14 +50,12 @@ const MainSearchPage = () => {
 
     const handleContactsClick = (item) => {
         console.log(item.id)
-        setPopupContent(list[item.id-1]);
-        console.log(popupContent)
-        openPopup()
-        // console.log(popupContent);
+        store.openPopup(item);
+        console.log(store.popupContent)
     }
 
     const getPageContent = () => {
-        switch (page) {
+        switch (store.page) {
             case 'MainSearchPage':
                 return (
                     <>
@@ -121,22 +85,22 @@ const MainSearchPage = () => {
 
     return (
         <div className="searchPage">
-            <div className={`overlay ${isPopupOpen ? 'overlay--show' : ''} `}></div>
+            <div className={`overlay ${store.isPopupOpen ? 'overlay--show' : ''} `}></div>
             <div className="container">
-                <Popup isOpen={isPopupOpen} text={popupContent} typePopup='contacts' onClose={closePopup} />
+                <Popup isOpen={store.isPopupOpen} text={store.popupContent} typePopup='contacts' onClose={store.closePopup} />
                 <TopBar />
                 <SearchForm
-                    data={formData}
+                    data={store.formData}
                     onChange={handleInputChange}
-                    onClickAuto={() => page === 'MainSearchPage' ? setPage('SearchAutoPage') : page === 'SearchCargoPage' ? setPage('MainSearchPage') : console.log(formData)}
-                    onClickCargo={() => page === 'MainSearchPage' ? setPage('SearchCargoPage') : page === 'SearchAutoPage' ? setPage('MainSearchPage') : console.log(formData)}
-                    page={page}
+                    onClickAuto={() => store.page === 'MainSearchPage' ? store.setPage('SearchAutoPage') : store.page === 'SearchCargoPage' ? store.setPage('MainSearchPage') : console.log(store.formData)}
+                    onClickCargo={() => store.page === 'MainSearchPage' ? store.setPage('SearchCargoPage') : store.page === 'SearchAutoPage' ? store.setPage('MainSearchPage') : console.log(store.formData)}
+                    page={store.page}
                 />
                 {getPageContent()}
             </div>
 
         </div >
     )
-};
+});
 
 export default MainSearchPage;

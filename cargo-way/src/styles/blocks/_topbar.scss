@@ -13,19 +13,23 @@
         display: flex;
         justify-content: start;
         list-style-type: none;
-        gap: 1.875rem;
         flex-grow: 1;
         padding: 0;
 
-        &-item a{
+        &-item a {
             text-decoration: none;
             color: v.$primary-color;
             white-space: nowrap;
+            cursor: pointer;
+            border-radius: v.$border-radius;
+            padding: 1rem 2.2rem;
+            transition: all .3s;
+            margin-right: 0.2rem;
         }
 
-        &-item a:hover{
-            @include m.button(v.$primary-color, v.$font-light-color);
-            transform: scale(1.05);
+        &-item a:hover {
+            background-color: v.$primary-color;
+            color: v.$font-light-color;
         }
     }
 
@@ -36,6 +40,17 @@
         &-btn {
             @include m.button(v.$primary-color, v.$font-light-color);
             text-decoration: none;
+        }
+    }
+
+    &__profile {
+        @include m.center;
+        gap: 1rem;
+
+        &-text {
+            @include m.center;
+            flex-direction: row;
+            gap: 1rem;
         }
     }
 }

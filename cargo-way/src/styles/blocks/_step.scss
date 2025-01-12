@@ -5,16 +5,26 @@
     @include m.margin-center;
     @include m.form-step-base(column, 6rem 12.5rem, 47.5rem);
 
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
     &__form {
         @include m.center;
         flex-direction: column;
 
         &-label {
-            display: flex; /* Расположить надпись и инпут в одной строке */
-            align-items: center; /* Выравнивание текста и инпута по вертикали */
-            gap: 1rem; /* Отступ между текстом и инпутом */
+            display: flex;
+            /* Расположить надпись и инпут в одной строке */
+            align-items: center;
+            /* Выравнивание текста и инпута по вертикали */
+            gap: 1rem;
+            /* Отступ между текстом и инпутом */
             width: 100%;
-            
+
             & span {
                 margin-bottom: 1.125rem;
             }
@@ -34,7 +44,8 @@
             }
 
             &[type="date"]::-webkit-datetime-edit::placeholder {
-                color: v.$primary-color; /* Цвет текста */
+                color: v.$primary-color;
+                /* Цвет текста */
                 // display: none;
             }
         }
@@ -43,6 +54,7 @@
     &__button {
         @include m.button(v.$primary-color, v.$font-light-color);
         margin-bottom: 1rem;
+
         &:last-child {
             margin-bottom: 0px;
         }

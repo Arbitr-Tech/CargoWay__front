@@ -3,16 +3,13 @@ import Popup from "../Popup";
 import SearchListResults from "../search/SearchListResults";
 import TopBar from "../TopBar";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react";
+import { listStore } from "../../stores/ListStore";
 
-const CargoListPage = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+const CargoListPage = observer(() => {
+    const store = listStore;
     const navigate = useNavigate();
-    // const [popupContent, setPopupContent] = useState({});
-
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
-    const closePopup = () => setIsPopupOpen(false);
 
     const handleEditClick = (item) => {
         navigate('/cargo/edit');
@@ -38,15 +35,15 @@ const CargoListPage = () => {
 
     return (
         <div className="cargoList">
-            <div className={`overlay ${isPopupOpen ? 'overlay--show' : ''} `}></div>
+            <div className={`overlay ${store.isPopupOpen ? 'overlay--show' : ''} `}></div>
             <div className="container">
-                <Popup isOpen={isPopupOpen} text='Вы действительно хоите удалить эту запись?' typePopup='del' onClose={closePopup} />
+                <Popup isOpen={store.isPopupOpen} text='Вы действительно хоите удалить эту запись?' typePopup='del' onClose={store.closePopup} />
                 <TopBar />
                 <h2 className="cargoList__title">Ваши грузы</h2>
-                <SearchListResults list={list} typeButton='mylist' onClickOne={handleEditClick} onClickTwo={openPopup} />
+                <SearchListResults list={list} typeButton='mylist' onClickOne={handleEditClick} onClickTwo={store.openPopup} />
             </div>
         </div>
     )
-};
+});
 
 export default CargoListPage;

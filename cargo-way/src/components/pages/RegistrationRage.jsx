@@ -4,94 +4,64 @@ import ProgressBar from "../ProgressBar";
 import StepOne from "../steps/StepOne";
 import StepTwo from "../steps/StepTwo";
 import StepThree from "../steps/StepThree";
-import { validateStepOne, validateStepTwo, validateStepThree } from "../validation/validations"
+import { validateStepOne, validateStepTwo, validateStepThree } from "../../validation/validations"
+import { observer } from "mobx-react";
+import { registrationAutorizationStore } from "../../stores/RegistrationAutorizationStore";
 
-const RegistrationPage = () => {
-    const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({
-        userType: "",
-        login: "",
-        email: "",
-        password: "",
-        agreement: false,
-        individualData: {},
-        companyData: {},
-    });
-    const [errors, setErrors] = useState({});
+const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];
 
-    const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];
+const RegistrationPage = observer(() => {
 
-    const navigate = useNavigate();
+    const store = registrationAutorizationStore;
+    // const navigate = useNavigate();
 
     const validateStep = (currentStep) => {
-        switch (currentStep) {
-            case 1:
-                return validateStepOne(formData);
-            case 2:
-                return validateStepTwo(
-                    formData.userType,
-                    formData.userType === "individual" ? formData.individualData : formData.companyData
-                );
-            case 3:
-                return validateStepThree(
-                    formData.userType,
-                    formData.userType === "individual" ? formData.individualData : formData.companyData
-                );
-            default:
-                return {};
-        }
+        const { registrationFormData } = store;
+        const isIndividual = registrationFormData.userType === "individual";
+        const dataToValidate = isIndividual ? registrationFormData.individualData : registrationFormData.companyData;
+
+        const validators = {
+            1: () => validateStepOne(registrationFormData),
+            2: () => validateStepTwo(registrationFormData.userType, dataToValidate),
+            3: () => validateStepThree(registrationFormData.userType, dataToValidate),
+        };
+
+        return validators[currentStep]?.() || {};
     };
 
     const handleInputChange = (event) => {
         const { name, value, type, checked } = event.target;
 
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value
-        }))
+        store.setRegistrationFormData(name, value, type, checked);
     }
 
     const handleStepChange = (nextStep) => {
-        if (nextStep > step) {
+        if (nextStep > store.registrationStep) {
             console.log("Переход на шаг:", nextStep);
 
-            const validationErrors = validateStep(step);
+            const errors = validateStep(store.registrationStep);
 
-            if (Object.keys(validationErrors).length > 0) {
-                setErrors(validationErrors);
-                console.log("Ошибки валидации:", validationErrors);
-                for (let error of Object.values(validationErrors)) {
-                    alert(error);
-                }
+            if (Object.keys(errors).length > 0) {
+                console.log("Ошибки валидации:", errors);
+                alert(Object.values(errors).join("\n"));
                 return;
             }
         }
 
-        setErrors({});
-        console.log(formData);
-        setStep(nextStep);
+        console.log(store.registrationFormData);
+        store.setRegistrationStep(nextStep);
     }
 
-    const handleNestedFormChange = (formName, newData,) => {
-        setFormData((prev) => ({
-            ...prev,
-            [formName]: newData,
-        }));
-
-    };
-
     const handleSubmit = () => {
-        let validationErrors = validateStep(3);
+        let errors = validateStep(3);
 
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            console.log("Ошибки валидации:", validationErrors);
-            for (let error of Object.values(validationErrors)) {
-                alert(error);
-            }
+        if (Object.keys(errors).length > 0) {
+            console.log("Ошибки валидации:", errors);
+            alert(Object.values(errors).join("\n"));
             return;
         }
-        console.log(formData)
+        console.log(store.registrationFormData)
+        store.submitRegistration();
 
         //     const payload = {
         //         ...formData,
@@ -104,37 +74,37 @@ const RegistrationPage = () => {
     return (
         <div className="registration">
             <div className="container">
-                <ProgressBar currentStep={step - 1} steps={steps} />
-                {step === 1 && (
+                <ProgressBar currentStep={store.registrationStep - 1} steps={steps} />
+                {store.registrationStep === 1 && (
                     <StepOne
-                        formData={formData}
+                        formData={store.registrationFormData}
                         onChange={handleInputChange}
                         onNext={() => handleStepChange(2)}
                     />
                 )}
-                {step === 2 && (
+                {store.registrationStep === 2 && (
                     <StepTwo
-                        userType={formData.userType}
-                        data={formData}
+                        userType={store.registrationFormData.userType}
+                        data={store.registrationFormData}
                         onBack={() => handleStepChange(1)}
                         onNext={() => handleStepChange(3)}
-                        onNestedChange={handleNestedFormChange}
+                        onNestedChange={store.setRegistrationNestedFormData}
                     />
                 )}
-                {step === 3 && (
+                {store.registrationStep === 3 && (
                     <StepThree
-                        userType={formData.userType}
-                        data={formData}
+                        userType={store.registrationFormData.userType}
+                        data={store.registrationFormData}
                         onBack={() => handleStepChange(2)}
                         onSubmit={handleSubmit}
-                        onNestedChange={handleNestedFormChange}
-                        image={formData.individualData.identityDocuments}
+                        onNestedChange={store.setRegistrationNestedFormData}
+                        image={store.registrationFormData.individualData.identityDocuments}
                     />
                 )}
             </div>
         </div >
     )
 
-};
+});
 
 export default RegistrationPage;

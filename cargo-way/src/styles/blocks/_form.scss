@@ -3,7 +3,7 @@
 
 .form {
     @include m.margin-center;
-    @include m.form-step-base(column, 6rem 12.5rem, 47.5rem);
+    @include m.form-step-base(column, 6rem 5rem, 35rem); 
 
 
     &__title {
