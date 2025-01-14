@@ -6,6 +6,7 @@ class RegistrationAutorizationStore {
     registrationStep = 1;
     registrationFormData = {
         userType: "",
+        userRole: "",
         login: "",
         email: "",
         password: "",

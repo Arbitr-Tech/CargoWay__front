@@ -1,6 +1,7 @@
 const validateStepOne = (data) => {
     const errors = {};
     if (!data.userType) errors.userType = "Тип пользователя обязателен";
+    if (!data.userRole) errors.userRole = "Выберите одну из ролей";
     if (!data.login) errors.login = "Логин обязателен";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
     if (!data.password || data.password.length < 6) errors.password = "Пароль должен быть не менее 6 символов";

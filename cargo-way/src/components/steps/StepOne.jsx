@@ -26,6 +26,38 @@ const StepOne = ({ formData, onChange, onNext }) => {
                     Юридическое лицо
                 </label>
             </div>
+            <div className='form__radio'>
+                <label className='form__radio-label'>
+                    <input className='form__radio-input'
+                        type="radio"
+                        name="userRole"
+                        value="carrier"
+                        checked={formData.userRole === "carrier"}
+                        onChange={onChange}
+                    />
+                    Перевозчик
+                </label>
+                <label className='form__radio-label'>
+                    <input className='form__radio-input'
+                        type="radio"
+                        name="userRole"
+                        value="customer"
+                        checked={formData.userRole === "customer"}
+                        onChange={onChange}
+                    />
+                    Заказчик
+                </label>
+                <label className='form__radio-label'>
+                    <input className='form__radio-input'
+                        type="radio"
+                        name="userRole"
+                        value="forwarder"
+                        checked={formData.userRole === "forwarder"}
+                        onChange={onChange}
+                    />
+                    Экспедитор
+                </label>
+            </div>
             <div className='form__simple'>
                 <input className='form__simple-input'
                     type="text"
