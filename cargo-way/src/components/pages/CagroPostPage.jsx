@@ -1,7 +1,7 @@
 import { postStore } from "../../stores/PostStore";
 import CargoForm from "../forms/CargoForm";
 import TopBar from "../TopBar";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 
 const CargoPostPage = observer(({ typePage }) => {
     const store = postStore;

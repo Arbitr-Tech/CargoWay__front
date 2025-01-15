@@ -3,7 +3,7 @@ import SearchForm from "../search/SearchForm";
 import SearchListResults from "../search/SearchListResults";
 import TopBar from "../TopBar";
 import { useState } from "react";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { mainSearchStore } from "../../stores/MainSearchStore";
 
 const MainSearchPage =  observer(() => {

@@ -1,5 +1,5 @@
 import AuthorizationForm from "../forms/AuthorizationForm";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { registrationAutorizationStore } from "../../stores/RegistrationAutorizationStore";
 
 

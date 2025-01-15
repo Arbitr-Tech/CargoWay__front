@@ -2,7 +2,7 @@ import SearchListResults from "../search/SearchListResults";
 import TopBar from "../TopBar";
 import { useNavigate } from "react-router-dom";
 import Popup from "../Popup";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { listStore } from "../../stores/ListStore";
 import { postStore } from "../../stores/PostStore";
 

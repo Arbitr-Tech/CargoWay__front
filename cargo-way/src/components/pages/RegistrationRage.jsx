@@ -5,7 +5,7 @@ import StepOne from "../steps/StepOne";
 import StepTwo from "../steps/StepTwo";
 import StepThree from "../steps/StepThree";
 import { validateStepOne, validateStepTwo, validateStepThree } from "../../validation/validations"
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { registrationAutorizationStore } from "../../stores/RegistrationAutorizationStore";
 
 const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];

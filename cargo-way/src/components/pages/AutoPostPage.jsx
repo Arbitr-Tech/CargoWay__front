@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TopBar from "../TopBar";
 import AutoForm from "../forms/AutoForm";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { postStore } from "../../stores/PostStore";
 
 
