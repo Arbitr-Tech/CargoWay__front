@@ -438,13 +438,12 @@ body {
   flex-direction: column;
   text-align: center;
   background-color: #ffffff;
-  padding: 1rem 2.2rem;
+  padding: 1rem 0;
   color: #232873;
   max-width: 100%;
   border-radius: 1rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
-  display: grid;
-  grid-template-rows: auto 1fr;
+  width: 100%;
 }
 .search__result-header {
   display: grid;
@@ -455,7 +454,6 @@ body {
   max-height: 30rem;
   overflow-y: auto;
   background-color: #232873;
-  margin: 0 -2.2rem;
 }
 .search__result-list--mylist {
   max-height: 43rem;
@@ -469,7 +467,6 @@ body {
 .searchPage__box {
   display: flex;
   justify-content: center;
-  width: 100%;
   gap: 1rem;
   margin: 1rem 0 2.2rem;
 }
@@ -547,14 +544,13 @@ body {
   border-color: #00A9E0;
   outline: none;
 }
-.cargoForm__input--weight, .cargoForm__input--volume,
-.autoForm__input--weight,
-.autoForm__input--volume {
+.cargoForm__input--short,
+.autoForm__input--short {
   max-width: 6rem;
 }
-.cargoForm__input--address,
-.autoForm__input--address {
-  width: 19rem;
+.cargoForm__input--long,
+.autoForm__input--long {
+  width: 20rem;
 }
 .cargoForm__input-group,
 .autoForm__input-group {
@@ -571,6 +567,31 @@ body {
 .cargoForm__input--img,
 .autoForm__input--img {
   max-width: 20rem;
+}
+.cargoForm__textarea,
+.autoForm__textarea {
+  border: 1px solid #232873;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  transition: all 0.3s;
+  width: 20rem;
+  font-family: "Roboto", sans-serif;
+}
+.cargoForm__textarea::placeholder,
+.autoForm__textarea::placeholder {
+  color: #232873;
+}
+.cargoForm__textarea:focus,
+.autoForm__textarea:focus {
+  border-color: #00A9E0;
+  outline: none;
+}
+.cargoForm__radio,
+.autoForm__radio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.2rem;
 }
 
 .cargo,
@@ -625,6 +646,8 @@ body {
 .formGroup span {
   width: 11rem;
   font-weight: 700;
+  height: 1rem;
+  align-self: center;
 }
 .formGroup__group {
   width: 50rem;

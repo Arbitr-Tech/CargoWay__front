@@ -23,11 +23,11 @@ const TopBar = () => {
                     <Link to={'/'}>Найти машины / грузы</Link>
                 </li>
             </ul>
-            <div className="topbar__buttonBox">
+            {/* <div className="topbar__buttonBox">
                 <Link className="topbar__buttonBox-btn" to='/auth'>Войти</Link>
                 <Link className="topbar__buttonBox-btn" to='/reg'>Зарегистрироваться</Link>
-            </div>
-            {/* <div className="topbar__profile">
+            </div> */}
+            <div className="topbar__profile">
                 <svg width="50" height="50" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                     <rect width="90" height="90" fill="url(#pattern0_136_2)" />
                     <defs>
@@ -41,7 +41,7 @@ const TopBar = () => {
                     <p className="topbar__profile-text">Профиль</p>
                     <p className="topbar__profile-text">Выйти</p>
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 };

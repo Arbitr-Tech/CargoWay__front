@@ -38,13 +38,12 @@
     &__input {
         @include m.input-base;
 
-        &--weight,
-        &--volume {
+        &--short {
             max-width: 6rem;
         }
 
-        &--address {
-            width: 19rem;
+        &--long {
+            width: 20rem;
         }
 
         &-group {
@@ -55,6 +54,18 @@
         &--img {
             max-width: 20rem;
         }
+    }
+
+    &__textarea {
+        @include m.input-base;
+        width: 20rem;
+        font-family: v.$font-family-primary;
+    } 
+
+    &__radio {
+        @include m.center;
+        align-items: center;
+        gap: 2.2rem;
     }
 }
 

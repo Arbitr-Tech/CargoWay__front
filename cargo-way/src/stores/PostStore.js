@@ -2,34 +2,59 @@ import { makeAutoObservable } from "mobx";
 
 class PostStore {
     autoFormData = {
-        weight: "",
-        volume: "",
-        bodyType: [],
-        loadingType: [],
+        brand: "",
+        model: "",
+        year: 0,
+        dimensions: {
+            length: 0,
+            width: 0,
+            height: 0
+        },
+        cargo_type: "",
+        volume: 0,
+        category: "",
+        transport_number: 0,
+        trailer_details: {
+            dimensions: {
+                length: 0,
+                width: 0,
+                height: 0
+            },
+            cargo_type: "",
+            volume: 0,
+            trailer_number: 0
+        },
+        lifting_capacity: 0,
+        bodyType: "",
+        loadingType: "",
         date: "",
-        loadingLocality: "",
-        unloadingLocality: "",
-        noncashVAT: "",
-        noncash: "",
-        cash: "",
+        route: {
+            from: "",
+            to: ""
+        },
         autoPhoto: ""
     };
 
     cargoFormData = {
-        cargoName: "",
+        name: "",
+        description: "",
         weight: "",
         volume: "",
-        date: "",
-        loadingLocality: "",
-        loadingAddress: "",
-        unloadingLocality: "",
-        unloadingAddress: "",
-        bodyType: [],
-        loadingType: [],
-        unloadingType: [],
-        noncashVAT: "",
-        noncash: "",
-        cash: "",
+        dimensions: {
+            length: 0,
+            width: 0,
+            height: 0
+        },
+        route: {
+            from: "",
+            to: ""
+        },
+        typePrice: "",
+        price: 0,
+        ready: "",
+        bodyType: "",
+        loadingType: "",
+        unloadingType: "",
         cargoPhoto: ""
     };
 
@@ -37,24 +62,49 @@ class PostStore {
         makeAutoObservable(this)
     }
 
-    setFormData = (name, value, type, checked, event) => {
-        if (type === 'checkbox') {
-            const updatedData = checked
-                ? [...this.autoFormData[name], value]
-                : this.autoFormData[name].filter((item) => item !== value);
+    setFormData = (name, value, type, file, typeInfo) => {
+        const isCargo = typeInfo === 'cargo';
 
-            this.autoFormData = { ...this.autoFormData[name], [name]: updatedData }
-        } else if (type === 'file') {
-            const file = event.target.files[0];
+        if (type === 'file') {
             if (file) {
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    this.autoFormData = { ...this.autoFormData, autoPhoto: reader.result }
+                    if (isCargo) {
+                        this.cargoFormData = { ...this.cargoFormData, cargoPhoto: reader.result }
+                    } else {
+                        this.autoFormData = { ...this.autoFormData, autoPhoto: reader.result }
+                    }
                 };
                 reader.readAsDataURL(file);
             }
+            return;
         } else {
-            this.autoFormData = { ...this.autoFormData, [name]: value }
+            if (isCargo) {
+                this.cargoFormData = { ...this.cargoFormData, [name]: value }
+            } else {
+                this.autoFormData = { ...this.autoFormData, [name]: value }
+            }
+        }
+    }
+
+    setNestedFormData = (formName, newData, secondName, typeInfo) => {
+        const isCargo = typeInfo === 'cargo';
+        if (isCargo) {
+            this.cargoFormData = {
+                ...this.cargoFormData,
+                [formName]: {
+                    ...this.cargoFormData[formName],
+                    [secondName]: newData
+                }
+            };
+        } else {
+            this.autoFormData = {
+                ...this.autoFormData,
+                [formName]: {
+                    ...this.autoFormData[formName],
+                    [secondName]: newData
+                }
+            };
         }
     }
 

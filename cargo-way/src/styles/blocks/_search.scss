@@ -117,9 +117,8 @@
     }
 
     &__result {
-        @include m.form-step-base(column, 1rem 2.2rem, 100%);
-        display: grid;
-        grid-template-rows: auto 1fr;
+        @include m.form-step-base(column, 1rem 0, 100%);
+        width: 100%;
 
         &-header {
             display: grid;
@@ -133,7 +132,6 @@
             max-height: 30rem;
             overflow-y: auto;
             background-color: v.$primary-color;
-            margin: 0 -2.2rem;
 
             &--mylist {
                 max-height: 43rem;
@@ -151,7 +149,6 @@
 
     &__box {
         @include m.center;
-        width: 100%;
         gap: 1rem;
         margin: 1rem 0 2.2rem;
     }

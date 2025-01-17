@@ -17,19 +17,15 @@ const CargoListPage = observer(() => {
     }
 
     const list = [
-        { id: 1, direction: 'RUS-BEL', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 2, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 3, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 4, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 5, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 6, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 7, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 8, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 9, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 10, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 11, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 12, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
-        { id: 13, direction: 'RUS-KUZ', transport: 'тентованный, полупр.с полн.раст.', weight: 20, volume: 83, from: 'Россия', to: 'Казахстан', price: '1 руб карта без НДС' },
+        { id: 1, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 2, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 3, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 4, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 5, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 6, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 7, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 8, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
+        { id: 9, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
     ]
 
 

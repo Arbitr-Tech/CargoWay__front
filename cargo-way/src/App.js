@@ -2,7 +2,7 @@ import './App.css';
 import '../src/styles/styles.css';
 import { Routes, Route } from 'react-router-dom';
 import AuthorizationPage from './components/pages/AuthorizationPage';
-import RegistrationPage from './components/pages/RegistrationRage';
+import RegistrationPage from './components/pages/RegistrationPage';
 import MainSearchPage from './components/pages/MainSearchPage';
 import CargoForm from './components/forms/CargoForm';
 import AutoForm from './components/forms/AutoForm';

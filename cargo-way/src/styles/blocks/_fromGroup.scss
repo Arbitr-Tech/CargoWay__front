@@ -11,13 +11,14 @@
     & span {
         width: 11rem;
         font-weight: 700;
+        height: 1rem;
+        align-self: center;
     }
 
     &__group {
         width: 50rem;
         display: flex;
         gap: 2.2rem;
-        // justify-content: space-between;
 
         &--img {
             display: flex;
