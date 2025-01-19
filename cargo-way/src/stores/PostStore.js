@@ -87,7 +87,7 @@ class PostStore {
         }
     }
 
-    setNestedFormData = (formName, newData, secondName, typeInfo) => {
+    setNestedFormData = (formName, secondName, newData, typeInfo) => {
         const isCargo = typeInfo === 'cargo';
         if (isCargo) {
             this.cargoFormData = {
@@ -106,6 +106,10 @@ class PostStore {
                 }
             };
         }
+    }
+
+    setTwiceNestedFormData = (formName, secondName, thirdName, newData) => {
+        this.setNestedFormData(formName, secondName, {...this.autoFormData[formName][secondName], [thirdName]: newData}, 'auto');
     }
 
     setEditData = (name, value) => {

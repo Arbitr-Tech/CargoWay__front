@@ -14,7 +14,7 @@ const CargoPostPage = observer(({ typePage }) => {
 
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
         const resValue = name === 'dimensions' ? +value : value;
-        store.setNestedFormData(name, resValue, dataset.path, 'cargo');
+        store.setNestedFormData(name, dataset.path, resValue, 'cargo');
         console.log(store.cargoFormData)
     };
 

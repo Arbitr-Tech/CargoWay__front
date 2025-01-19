@@ -1,6 +1,6 @@
 import FormGroup from "./FormGroup";
 
-const AutoForm = ({ data, image, onChange }) => {
+const AutoForm = ({ data, image, onChange, onNestedChange, onTwiceNesctedChange }) => {
 
     const bodyType = [
         { id: 1, name: "Option 1" },
@@ -43,24 +43,27 @@ const AutoForm = ({ data, image, onChange }) => {
             <FormGroup label="Размеры">
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="length"
+                    name="dimensions"
                     value={data.dimensions['length'] === 0 ? null : data.dimensions['length']}
                     placeholder="Длина (м)"
-                    onChange={onChange}
+                    data-path="length"
+                    onChange={onNestedChange}
                 />
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="width"
+                    name="dimensions"
                     value={data.dimensions.width === 0 ? null : data.dimensions.width}
                     placeholder="Ширина (м)"
-                    onChange={onChange}
+                    data-path="width"
+                    onChange={onNestedChange}
                 />
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="height"
+                    name="dimensions"
                     value={data.dimensions.height === 0 ? null : data.dimensions.height}
                     placeholder="Высота (м)"
-                    onChange={onChange}
+                    data-path="height"
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Грузоподъемность (т)">
@@ -114,7 +117,6 @@ const AutoForm = ({ data, image, onChange }) => {
                                     type="radio"
                                     name="bodyType"
                                     value={option.name}
-                                    // checked={data.bodyType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -131,7 +133,6 @@ const AutoForm = ({ data, image, onChange }) => {
                                     type="radio"
                                     name="loadingType"
                                     value={option.name}
-                                    // checked={data.loadingType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -143,48 +144,58 @@ const AutoForm = ({ data, image, onChange }) => {
             <FormGroup label="Прицеп">
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="length"
+                    name="trailer_details"
                     value={data.trailer_details.dimensions['length'] === 0 ? null : data.trailer_details.dimensions['length']}
                     placeholder="Длина (м)"
-                    onChange={onChange}
+                    data-path="dimensions"
+                    data-pathtwo="length"
+                    onChange={onTwiceNesctedChange}
                 />
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="width"
+                    name="trailer_details"
                     value={data.trailer_details.dimensions.width === 0 ? null : data.trailer_details.dimensions.width}
                     placeholder="Ширина (м)"
-                    onChange={onChange}
+                    data-path="dimensions"
+                    data-pathtwo="width"
+                    onChange={onTwiceNesctedChange}
                 />
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="height"
+                    name="trailer_details"
                     value={data.trailer_details.dimensions.height === 0 ? null : data.trailer_details.dimensions.height}
                     placeholder="Высота (м)"
-                    onChange={onChange}
+                    data-path="dimensions"
+                    data-pathtwo="height"
+                    onChange={onTwiceNesctedChange}
                 />
             </FormGroup>
             <FormGroup label="Тип груза прицепа">
                 <input className="autoForm__input"
                     type="text"
-                    name="cargo_type"
+                    name="trailer_details"
                     value={data.trailer_details.cargo_type}
-                    onChange={onChange}
+                    data-path="cargo_type"
+
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Объем прицепа (кв.м)">
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="volume"
+                    name="trailer_details"
                     value={data.trailer_details.volume}
-                    onChange={onChange}
+                    data-path="volume"
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Номер прицепа">
                 <input className="autoForm__input autoForm__input--short"
                     type="number"
-                    name="trailer_number"
+                    name="trailer_details"
                     value={data.trailer_details.trailer_number}
-                    onChange={onChange}
+                    data-path="trailer_number"
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Когда">
@@ -198,19 +209,21 @@ const AutoForm = ({ data, image, onChange }) => {
             <FormGroup label="Откуда">
                 <input className="autoForm__input"
                     type="text"
-                    name="from"
+                    name="route"
                     placeholder="Населенный пункт"
                     value={data.route.from}
-                    onChange={onChange}
+                    data-path="from"
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Возможная выгрузка">
                 <input className="autoForm__input"
                     type="text"
-                    name="to"
+                    name="route"
                     placeholder="Населенный пункт"
                     value={data.route.to}
-                    onChange={onChange}
+                    data-path="to"
+                    onChange={onNestedChange}
                 />
             </FormGroup>
             <FormGroup label="Фото машины" image={image}>
@@ -218,7 +231,6 @@ const AutoForm = ({ data, image, onChange }) => {
                 <input className="autoForm__input--img"
                     type="file"
                     name="autoPhoto"
-                    // value={data.autoPhoto}
                     onChange={onChange}
                 />
             </FormGroup>
