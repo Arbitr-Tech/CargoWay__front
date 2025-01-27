@@ -1,0 +1,191 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.cargoForm,
+.autoForm,
+.driverForm {
+    @include m.form-step-base(column, 1rem 2.2rem, 70rem);
+    @include m.margin-center;
+    padding-top: 3.5rem;
+    max-width: v.$max-width;
+
+    &__section {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+        }
+
+        &::after {
+            @include m.line(16.125rem, v.$noactive-color);
+        }
+    }
+
+    &__label {
+        @include m.margin-center;
+        margin-bottom: 2.8rem;
+
+        &-text {
+            font-weight: 700;
+        }
+    }
+
+    &__photo {
+        width: 90%;
+    }
+
+    &__input {
+        @include m.input-base;
+
+        &-group {
+            @include m.box-overflow-y;
+            margin-top: 0.5rem;
+        }
+
+        &-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        &--img {
+            max-width: 20rem;
+        }
+
+        &--short {
+            max-width: 6rem;
+        }
+
+        &--long {
+            width: 20rem;
+        }
+    }
+
+    &__inputBox {
+        @include m.input-base;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20rem;
+
+        &-input {
+            flex: 1;
+
+            & input {
+                width: 100%;
+                padding: 0;
+                border-color: transparent;
+                background-color: transparent;
+                color: v.$primary-color;
+            }
+        }
+
+        &-menu {
+            @include m.center;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        &-ul {
+            position: absolute;
+            top: 0.75rem;
+            left: -5.375rem;
+            width: 20rem;
+            padding: 1rem;
+            background-color: v.$primary-color;
+            z-index: 5;
+            color: v.$font-light-color;
+            box-shadow: 10px 10px 20px 10px v.$box-shadow-color;
+            list-style: none;
+            border-radius: v.$border-radius;
+            opacity: 0;
+            /* Изначально скрыт */
+            transform: translateY(-10px);
+            /* Смещение вверх */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            /* Переход */
+            pointer-events: none;
+            /* Отключает клики, когда элемент скрыт */
+        }
+
+        &-ul.show {
+            opacity: 1;
+            /* Показывает элемент */
+            transform: translateY(0);
+            /* Возвращает в исходное положение */
+            pointer-events: auto;
+            /* Включает клики */
+        }
+
+
+        &-li {
+            cursor: pointer;
+            width: 100%;
+            padding: 1rem;
+        }
+    }
+
+    &__textarea {
+        @include m.input-base;
+        width: 20rem;
+        font-family: v.$font-family-primary;
+        max-width: 20rem;
+    }
+
+    &__radio {
+        @include m.center;
+        align-items: center;
+        gap: 2.2rem;
+    }
+
+    &__btnBox {
+        display: flex;
+        justify-content: start;
+        position: relative;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            margin-bottom: 3rem;
+        }
+    }
+
+    &__trailer {
+        position: relative;
+
+        &-label {
+            font-size: 1.875rem;
+            margin-bottom: 2.2rem;
+        }
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+        }
+    }
+}
+
+.cargo,
+.auto,
+.driver,
+.cargoList,
+.autoList {
+    margin-bottom: 2rem;
+
+    &__title {
+        text-align: center;
+        font-size: 2.875em;
+        color: v.$primary-color;
+    }
+
+    &__btnBox {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__button {
+        @include m.button(v.$primary-color, v.$font-light-color);
+        // width: 70%;
+        margin-top: 5rem;
+    }
+}

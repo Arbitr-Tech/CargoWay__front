@@ -3,8 +3,13 @@
 
 .form {
     @include m.margin-center;
-    @include m.form-step-base(column, 6rem 5rem, 35rem); 
+    @include m.form-step-base(column, 6rem 5rem, 35rem);
+    transform: translateY(50%);
 
+
+    &--stepOne {
+        transform: translateY(20%);
+    }
 
     &__title {
         font-size: 2.875em;

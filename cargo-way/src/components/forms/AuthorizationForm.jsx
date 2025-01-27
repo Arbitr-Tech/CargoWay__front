@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const AuthorizationForm = ({ formData, onChange, onNext }) => {
     return (
-        <div className='form' style={{marginTop: '6rem'}}>
+        <div className='form'>
             <h1 className='form__title'>Авторизация</h1>
             <div className='form__simple'>
                 <input className='form__simple-input'

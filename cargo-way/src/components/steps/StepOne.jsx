@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const StepOne = ({ formData, onChange, onNext }) => {
     return (
-        <div className='form'>
+        <div className='form form--stepOne'>
             <h1 className='form__title'>Регистрация</h1>
             <div className='form__radio'>
                 <label className='form__radio-label'>

@@ -1,5 +1,5 @@
-import { IndividualAdditionalForm } from '../forms/IndividualAssitionalForm';
-import { CompanyAdditionalForm } from '../forms/CompanyAdditionalForm';
+import { IndividualAdditionalForm } from '../forms/registrationForms/IndividualAssitionalForm';
+import { CompanyAdditionalForm } from '../forms/registrationForms/CompanyAdditionalForm';
 
 const StepThree = ({ userType, data, onBack, onSubmit, onNestedChange, image }) => {
     return (    

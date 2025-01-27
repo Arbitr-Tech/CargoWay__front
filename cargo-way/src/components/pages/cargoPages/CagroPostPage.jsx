@@ -1,20 +1,20 @@
-import { postStore } from "../../stores/PostStore";
-import CargoForm from "../forms/CargoForm";
-import TopBar from "../TopBar";
+import { cargoStore } from "../../../stores/CargoStore";
+import CargoForm from "../../forms/CargoForm";
+import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
 
 const CargoPostPage = observer(({ typePage }) => {
-    const store = postStore;
+    const store = cargoStore;
 
     const handleInputChange = ({ target: { name, value, type, file } }) => {
         const resValue = name === 'weight' ||  name === 'volume' ? +value : value;
-        store.setFormData(name, resValue, type, file?.[0], 'cargo');
+        store.setFormData(name, resValue, type, file?.[0]);
         console.log(store.cargoFormData)
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
         const resValue = name === 'dimensions' ? +value : value;
-        store.setNestedFormData(name, dataset.path, resValue, 'cargo');
+        store.setNestedFormData(name, dataset.path, resValue);
         console.log(store.cargoFormData)
     };
 

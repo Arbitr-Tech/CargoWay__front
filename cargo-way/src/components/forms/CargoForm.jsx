@@ -36,11 +36,11 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     type="number"
                     name="volume"
                     value={data.volume}
-                    placeholder="Объем (кв.м)"
+                    placeholder="Объем (куб.м)"
                     onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Размеры">
+            <FormGroup label="Габариты">
                 <input className="cargoForm__input"
                     type="number"
                     name="dimensions"
@@ -75,7 +75,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Когда">
+            <FormGroup label="Возможная загрузка">
                 <input className="cargoForm__input"
                     type="date"
                     name="ready"
@@ -83,7 +83,15 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Загрузка">
+            <FormGroup label="Возможная выгрузка ??">
+                <input className="cargoForm__input"
+                    type="date"
+                    name="ready"
+                    value={data.ready}
+                    onChange={onChange}
+                />
+            </FormGroup>
+            <FormGroup label="Место загрузки">
                 <input className="cargoForm__input cargoForm__input--long"
                     type="text"
                     name="route"
@@ -93,11 +101,11 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     onChange={onNestedChange}
                 />
             </FormGroup>
-            <FormGroup label="Выгрузка">
+            <FormGroup label="Место выгрузки">
                 <input className="cargoForm__input cargoForm__input--long"
                     type="text"
                     name="route"
-                    namdata-path="to"
+                    data-path="to"
                     placeholder="Укажите населенный пункт и адрес"
                     value={data.route.to}
                     onChange={onNestedChange}
@@ -105,7 +113,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
             </FormGroup>
             <div className="cargoForm__section">
                 <label className="cargoForm__label">
-                    <span className="cargoForm__label-text">Кузов</span>
+                    <span className="cargoForm__label-text">Тип кузова</span>
                     <div className="cargoForm__input-group">
                         {bodyType.map((option) => (
                             <label key={option.id} className="cargoForm__radiobox-label">
@@ -122,7 +130,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     </div>
                 </label>
                 <label className="cargoForm__label">
-                    <span className="cargoForm__label-text">Загрузка</span>
+                    <span className="cargoForm__label-text">Тип загрузки</span>
                     <div className="cargoForm__input-group">
                         {bodyType.map((option) => (
                             <label key={option.id} className="cargoForm__radiobox-label">
@@ -139,7 +147,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     </div>
                 </label>
                 <label className="cargoForm__label">
-                    <span className="cargoForm__label-text">Выгрузка</span>
+                    <span className="cargoForm__label-text">Тип выгрузки</span>
                     <div className="cargoForm__input-group">
                         {bodyType.map((option) => (
                             <label key={option.id} className="cargoForm__radiobox-label">
@@ -170,7 +178,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                             type="radio"
                             name="typePrice"
                             value="Без НДС, безнал"
-                            checked={data.priceType === "Без НДС, безнал"}
+                            // checked={data.priceType === "Без НДС, безнал"}
                             onChange={onChange}
                         />
                         Без НДС, безнал
@@ -180,7 +188,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                             type="radio"
                             name="typePrice"
                             value="С НДС, безнал"
-                            checked={data.priceType === "С НДС, безнал"}
+                            // checked={data.priceType === "С НДС, безнал"}
                             onChange={onChange}
                         />
                         С НДС, безнал
@@ -190,7 +198,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                             type="radio"
                             name="typePrice"
                             value="Наличными"
-                            checked={data.priceType === "Наличными"}
+                            // checked={data.priceType === "Наличными"}
                             onChange={onChange}
                         />
                         Наличными

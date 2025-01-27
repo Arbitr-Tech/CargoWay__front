@@ -71,6 +71,7 @@
     overflow-x: hidden;
     padding: 0.5rem;
     text-align: left;
+    scrollbar-width: thin;
 }
 
 @mixin line($top, $color) {

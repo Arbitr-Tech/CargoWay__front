@@ -1,5 +1,5 @@
-import { IndividualForm } from "../forms/IndividualForm";
-import { CompanyForm } from "../forms/CompanyForm";
+import { IndividualForm } from "../forms/registrationForms/IndividualForm";
+import { CompanyForm } from "../forms/registrationForms/CompanyForm";
 
 const StepTwo = ({ userType, data, onBack, onNext, onNestedChange }) => {
     return (

@@ -4,6 +4,7 @@
 .step {
     @include m.margin-center;
     @include m.form-step-base(column, 6rem 12.5rem, 47.5rem);
+    transform: translateY(20%);
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

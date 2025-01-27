@@ -74,6 +74,10 @@ body {
   max-width: 35rem;
   border-radius: 1rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(50%);
+}
+.form--stepOne {
+  transform: translateY(20%);
 }
 .form__title {
   font-size: 2.875em;
@@ -141,6 +145,7 @@ body {
   max-width: 47.5rem;
   border-radius: 1rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(20%);
 }
 .step input::-webkit-outer-spin-button,
 .step input::-webkit-inner-spin-button {
@@ -341,6 +346,7 @@ body {
   overflow-x: hidden;
   padding: 0.5rem;
   text-align: left;
+  scrollbar-width: thin;
   position: relative;
 }
 .search__choice-box-label {
@@ -408,6 +414,9 @@ body {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
+.search__item-text--mylist {
+  grid-template-columns: repeat(7, 1fr);
+}
 .search__item-btns {
   display: flex;
   gap: 1rem;
@@ -449,11 +458,17 @@ body {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   font-weight: 700;
+  padding: 0.6rem;
+  border-bottom: 1px solid #232873;
+}
+.search__result-header--mylist {
+  grid-template-columns: repeat(7, 1fr);
 }
 .search__result-list {
   max-height: 30rem;
   overflow-y: auto;
   background-color: #232873;
+  scrollbar-width: thin;
 }
 .search__result-list--mylist {
   max-height: 43rem;
@@ -472,7 +487,8 @@ body {
 }
 
 .cargoForm,
-.autoForm {
+.autoForm,
+.driverForm {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -488,13 +504,15 @@ body {
   max-width: 100rem;
 }
 .cargoForm__section,
-.autoForm__section {
+.autoForm__section,
+.driverForm__section {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
 .cargoForm__section::before,
-.autoForm__section::before {
+.autoForm__section::before,
+.driverForm__section::before {
   content: "";
   position: absolute;
   display: block;
@@ -505,7 +523,8 @@ body {
   width: 100%;
 }
 .cargoForm__section::after,
-.autoForm__section::after {
+.autoForm__section::after,
+.driverForm__section::after {
   content: "";
   position: absolute;
   display: block;
@@ -516,44 +535,43 @@ body {
   width: 100%;
 }
 .cargoForm__label,
-.autoForm__label {
+.autoForm__label,
+.driverForm__label {
   margin: 0 auto;
   margin-bottom: 2.8rem;
 }
 .cargoForm__label-text,
-.autoForm__label-text {
+.autoForm__label-text,
+.driverForm__label-text {
   font-weight: 700;
 }
 .cargoForm__photo,
-.autoForm__photo {
+.autoForm__photo,
+.driverForm__photo {
   width: 90%;
 }
 .cargoForm__input,
-.autoForm__input {
+.autoForm__input,
+.driverForm__input {
   border: 1px solid #232873;
   border-radius: 1rem;
   padding: 0.625rem;
   transition: all 0.3s;
 }
 .cargoForm__input::placeholder,
-.autoForm__input::placeholder {
+.autoForm__input::placeholder,
+.driverForm__input::placeholder {
   color: #232873;
 }
 .cargoForm__input:focus,
-.autoForm__input:focus {
+.autoForm__input:focus,
+.driverForm__input:focus {
   border-color: #00A9E0;
   outline: none;
 }
-.cargoForm__input--short,
-.autoForm__input--short {
-  max-width: 6rem;
-}
-.cargoForm__input--long,
-.autoForm__input--long {
-  width: 20rem;
-}
 .cargoForm__input-group,
-.autoForm__input-group {
+.autoForm__input-group,
+.driverForm__input-group {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 1rem;
@@ -562,46 +580,205 @@ body {
   overflow-x: hidden;
   padding: 0.5rem;
   text-align: left;
+  scrollbar-width: thin;
   margin-top: 0.5rem;
 }
+.cargoForm__input-icon,
+.autoForm__input-icon,
+.driverForm__input-icon {
+  width: 30px;
+  height: 30px;
+}
 .cargoForm__input--img,
-.autoForm__input--img {
+.autoForm__input--img,
+.driverForm__input--img {
   max-width: 20rem;
 }
+.cargoForm__input--short,
+.autoForm__input--short,
+.driverForm__input--short {
+  max-width: 6rem;
+}
+.cargoForm__input--long,
+.autoForm__input--long,
+.driverForm__input--long {
+  width: 20rem;
+}
+.cargoForm__inputBox,
+.autoForm__inputBox,
+.driverForm__inputBox {
+  border: 1px solid #232873;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20rem;
+}
+.cargoForm__inputBox::placeholder,
+.autoForm__inputBox::placeholder,
+.driverForm__inputBox::placeholder {
+  color: #232873;
+}
+.cargoForm__inputBox:focus,
+.autoForm__inputBox:focus,
+.driverForm__inputBox:focus {
+  border-color: #00A9E0;
+  outline: none;
+}
+.cargoForm__inputBox-input,
+.autoForm__inputBox-input,
+.driverForm__inputBox-input {
+  flex: 1;
+}
+.cargoForm__inputBox-input input,
+.autoForm__inputBox-input input,
+.driverForm__inputBox-input input {
+  width: 100%;
+  padding: 0;
+  border-color: transparent;
+  background-color: transparent;
+  color: #232873;
+}
+.cargoForm__inputBox-menu,
+.autoForm__inputBox-menu,
+.driverForm__inputBox-menu {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.cargoForm__inputBox-ul,
+.autoForm__inputBox-ul,
+.driverForm__inputBox-ul {
+  position: absolute;
+  top: 0.75rem;
+  left: -5.375rem;
+  width: 20rem;
+  padding: 1rem;
+  background-color: #232873;
+  z-index: 5;
+  color: #ffffff;
+  box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.25);
+  list-style: none;
+  border-radius: 1rem;
+  opacity: 0;
+  /* Изначально скрыт */
+  transform: translateY(-10px);
+  /* Смещение вверх */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  /* Переход */
+  pointer-events: none;
+  /* Отключает клики, когда элемент скрыт */
+}
+.cargoForm__inputBox-ul.show,
+.autoForm__inputBox-ul.show,
+.driverForm__inputBox-ul.show {
+  opacity: 1;
+  /* Показывает элемент */
+  transform: translateY(0);
+  /* Возвращает в исходное положение */
+  pointer-events: auto;
+  /* Включает клики */
+}
+.cargoForm__inputBox-li,
+.autoForm__inputBox-li,
+.driverForm__inputBox-li {
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem;
+}
 .cargoForm__textarea,
-.autoForm__textarea {
+.autoForm__textarea,
+.driverForm__textarea {
   border: 1px solid #232873;
   border-radius: 1rem;
   padding: 0.625rem;
   transition: all 0.3s;
   width: 20rem;
   font-family: "Roboto", sans-serif;
+  max-width: 20rem;
 }
 .cargoForm__textarea::placeholder,
-.autoForm__textarea::placeholder {
+.autoForm__textarea::placeholder,
+.driverForm__textarea::placeholder {
   color: #232873;
 }
 .cargoForm__textarea:focus,
-.autoForm__textarea:focus {
+.autoForm__textarea:focus,
+.driverForm__textarea:focus {
   border-color: #00A9E0;
   outline: none;
 }
 .cargoForm__radio,
-.autoForm__radio {
+.autoForm__radio,
+.driverForm__radio {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2.2rem;
 }
+.cargoForm__btnBox,
+.autoForm__btnBox,
+.driverForm__btnBox {
+  display: flex;
+  justify-content: start;
+  position: relative;
+}
+.cargoForm__btnBox-button,
+.autoForm__btnBox-button,
+.driverForm__btnBox-button {
+  font-size: 1em;
+  border-radius: 1rem;
+  border: 0;
+  background-color: #232873;
+  color: #ffffff;
+  padding: 1rem 2.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 3rem;
+}
+.cargoForm__btnBox-button:hover,
+.autoForm__btnBox-button:hover,
+.driverForm__btnBox-button:hover {
+  transform: scale(1.05);
+}
+.cargoForm__trailer,
+.autoForm__trailer,
+.driverForm__trailer {
+  position: relative;
+}
+.cargoForm__trailer-label,
+.autoForm__trailer-label,
+.driverForm__trailer-label {
+  font-size: 1.875rem;
+  margin-bottom: 2.2rem;
+}
+.cargoForm__trailer::before,
+.autoForm__trailer::before,
+.driverForm__trailer::before {
+  content: "";
+  position: absolute;
+  display: block;
+  background-color: #777777;
+  top: -1rem;
+  left: 0;
+  height: 0.05rem;
+  width: 100%;
+}
 
 .cargo,
 .auto,
+.driver,
 .cargoList,
 .autoList {
   margin-bottom: 2rem;
 }
 .cargo__title,
 .auto__title,
+.driver__title,
 .cargoList__title,
 .autoList__title {
   text-align: center;
@@ -610,6 +787,7 @@ body {
 }
 .cargo__btnBox,
 .auto__btnBox,
+.driver__btnBox,
 .cargoList__btnBox,
 .autoList__btnBox {
   display: flex;
@@ -617,6 +795,7 @@ body {
 }
 .cargo__button,
 .auto__button,
+.driver__button,
 .cargoList__button,
 .autoList__button {
   font-size: 1em;
@@ -631,6 +810,7 @@ body {
 }
 .cargo__button:hover,
 .auto__button:hover,
+.driver__button:hover,
 .cargoList__button:hover,
 .autoList__button:hover {
   transform: scale(1.05);

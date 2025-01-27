@@ -96,6 +96,9 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
 
+            &--mylist {
+                grid-template-columns: repeat(7, 1fr);
+            }
         }
 
         &-btns {
@@ -124,6 +127,12 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             font-weight: 700;
+            padding: 0.6rem;
+            border-bottom: 1px solid v.$primary-color;
+
+            &--mylist {
+                grid-template-columns: repeat(7, 1fr);
+            }
         }
 
         &-title {}
@@ -132,6 +141,7 @@
             max-height: 30rem;
             overflow-y: auto;
             background-color: v.$primary-color;
+            scrollbar-width: thin;
 
             &--mylist {
                 max-height: 43rem;

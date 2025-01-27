@@ -20,6 +20,12 @@ const TopBar = () => {
                     <Link to={'/auto/add'}>Добавить машины</Link>
                 </li>
                 <li className="topbar__list-item">
+                    <Link to={'/driver/list'}>Ваши водители</Link>
+                </li>
+                <li className="topbar__list-item">
+                    <Link to={'/driver/add'}>Добавить водителя</Link>
+                </li>
+                <li className="topbar__list-item">
                     <Link to={'/'}>Найти машины / грузы</Link>
                 </li>
             </ul>
