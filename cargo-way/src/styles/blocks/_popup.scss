@@ -3,10 +3,11 @@
 
 .popup {
     position: fixed;
-    top: 25%;
-    left: 30%;
+    top: 8%;
+    left: 27%;
     z-index: 10;
     width: 50rem;
+
     @include m.form-step-base(column, 1rem 2.2rem, 40rem);
 
     &__icon {
@@ -15,14 +16,18 @@
 
     &__text {
         margin-bottom: 1rem;
+        max-height: 30rem;
+        overflow-y: auto;
+        scrollbar-width: thin;
+
     }
 
-    &__buttons{
+    &__buttons {
         @include m.center;
         gap: 1rem;
     }
 
-    &__button{
+    &__button {
         @include m.button(v.$primary-color, v.$font-light-color)
     }
 }

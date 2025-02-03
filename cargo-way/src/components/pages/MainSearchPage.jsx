@@ -5,6 +5,7 @@ import TopBar from "../TopBar";
 import { observer } from "mobx-react-lite";
 import { mainSearchStore } from "../../stores/MainSearchStore";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const MainSearchPage = observer(() => {
 
@@ -16,6 +17,18 @@ const MainSearchPage = observer(() => {
 
         store.setFormData(name, value, type, checked);
     };
+
+    useEffect(() => {
+        if (store.isPopupOpen) {
+            document.body.style.overflow = "hidden"; // Отключаем прокрутку
+        } else {
+            document.body.style.overflow = ""; // Восстанавливаем прокрутку
+        }
+    
+        return () => {
+            document.body.style.overflow = ""; // Восстанавливаем при размонтировании
+        };
+    }, [store.isPopupOpen]);
 
     const list = [
         { id: 1, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePrice: "Наличными", price: 12000, ready: "2025-01-18", bodyType: "тент", loadingType: "задняя", unloadingType: "ручная", cargoPhoto: "photo_url_here" },
@@ -140,7 +153,7 @@ const MainSearchPage = observer(() => {
                             </div>
                         </motion.div>
                     </div>
-                    <motion.div
+                    <motion.div className="searchPage__formBox-motion"
                         initial={
                             {
                                 scale: 0

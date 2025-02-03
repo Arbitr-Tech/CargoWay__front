@@ -1,19 +1,16 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ProgressBar from "../ProgressBar";
 import StepOne from "../steps/StepOne";
 import StepTwo from "../steps/StepTwo";
 import StepThree from "../steps/StepThree";
 import { validateStepOne, validateStepTwo, validateStepThree } from "../../validation/validations"
 import { observer } from "mobx-react-lite";
-import { registrationAutorizationStore } from "../../stores/RegistrationAutorizationStore";
+import { registrationStore } from "../../stores/RegistrationStore";
 
 const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];
 
 const RegistrationPage = observer(() => {
 
-    const store = registrationAutorizationStore;
-    // const navigate = useNavigate();
+    const store = registrationStore;
 
     const validateStep = (currentStep) => {
         const { registrationFormData } = store;

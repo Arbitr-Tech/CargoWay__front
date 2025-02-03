@@ -1,10 +1,11 @@
 import AuthorizationForm from "../forms/AuthorizationForm";
 import { observer } from "mobx-react-lite";
-import { registrationAutorizationStore } from "../../stores/RegistrationAutorizationStore";
+import { autorizationStore } from "../../stores/AutorizationStore";
+import { login } from "../../api/auth/authService";
 
 
 const AuthorizationPage = observer(() => {
-    const store = registrationAutorizationStore;
+    const store = autorizationStore;
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
@@ -12,8 +13,14 @@ const AuthorizationPage = observer(() => {
         store.setAuthorizationFormData(name, value);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         console.log(store.autorizationFormData);
+
+        try {
+            await login(store.autorizationFormData);
+        } catch (error) {
+            console.error("Ошибка входа:", error);
+        }
     };
 
     return (

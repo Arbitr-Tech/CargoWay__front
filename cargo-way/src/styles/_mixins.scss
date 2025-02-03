@@ -32,7 +32,7 @@
 }
 
 @mixin input-base {
-    border-bottom: 1px solid #44403B;
+    border: 1px solid #44403B;
     border-radius: v.$border-radius;
     padding: 0.625rem;
     transition: all .3s;

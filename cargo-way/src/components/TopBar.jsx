@@ -10,18 +10,15 @@ const TopBar = () => {
                 <li className="topbar__list-item">
                     <Link to={'/cargo/add'}>Добавить грузы</Link>
                 </li>
-                {/* <li className="topbar__list-item">
-                    <Link to={'#'}>Найти грузы</Link>
-                </li> */}
-                {/* <li className="topbar__list-item">
+                <li className="topbar__list-item">
                     <Link to={'/auto/list'}>Ваши машины</Link>
                 </li>
                 <li className="topbar__list-item">
                     <Link to={'/auto/add'}>Добавить машины</Link>
                 </li>
                 <li className="topbar__list-item">
-                    <Link to={'/driver/list'}>Ваши водители</Link> */}
-                {/* </li> */}
+                    <Link to={'/driver/list'}>Ваши водители</Link>
+                </li>
                 <li className="topbar__list-item">
                     <Link to={'/driver/add'}>Добавить водителя</Link>
                 </li>

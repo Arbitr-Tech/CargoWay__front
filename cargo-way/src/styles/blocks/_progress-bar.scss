@@ -8,13 +8,13 @@
     margin-bottom: 3rem;
 
     &__step {
-        background-color: v.$noactive-color;
+        background-color: v.$font-dark-color;
         padding: 10px;
         border-radius: 50px;
         color: v.$font-light-color;
 
         &--completed {
-            background-color: v.$primary-color;
+            background-color: v.$active-color;
         }
 
         &--current {
@@ -25,11 +25,11 @@
     &__line {
         flex: 1;
         height: 4px;
-        background-color: v.$noactive-color;
+        background-color: v.$font-dark-color;
         margin: 0 5px;
 
         &--completed {
-            background-color: v.$primary-color;
+            background-color: v.$active-color;
         }
     }
 }

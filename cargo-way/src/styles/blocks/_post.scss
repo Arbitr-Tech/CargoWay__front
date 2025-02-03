@@ -47,6 +47,7 @@
         &-icon {
             width: 30px;
             height: 30px;
+            justify-self: center;
         }
 
         &--img {
@@ -68,6 +69,7 @@
         align-items: center;
         justify-content: center;
         width: 20rem;
+        padding: 0.3rem 0.625rem;
 
         &-input {
             flex: 1;
@@ -124,6 +126,10 @@
             cursor: pointer;
             width: 100%;
             padding: 1rem;
+
+            &:hover {
+                background-color: v.$active-color;
+            }
         }
     }
 
@@ -175,7 +181,8 @@
     &__title {
         text-align: center;
         font-size: 2.875em;
-        color: v.$primary-color;
+        color: v.$font-light-color;
+        font-weight: 400;
     }
 
     &__btnBox {
@@ -184,7 +191,7 @@
     }
 
     &__button {
-        @include m.button(v.$primary-color, v.$font-light-color);
+        @include m.button(v.$active-color, v.$font-light-color);
         // width: 70%;
         margin-top: 5rem;
     }

@@ -12,7 +12,7 @@
         justify-content: space-between;
         position: relative;
         margin-bottom: 1rem;
-        color: #44403B;
+        color: v.$font-dark-color;
 
         &-label {
             @include m.center;
@@ -126,7 +126,7 @@
             }
 
             &--brown {
-                color: #44403B;
+                color: v.$font-dark-color;
                 font-weight: 700;
             }
         }
@@ -325,6 +325,10 @@
             font-weight: 400;
         }
 
+        &-motion {
+            width: 100%;
+        }
+
         &::before {
             display: block;
             content: "";
@@ -334,7 +338,7 @@
             width: 34rem;
             height: 22rem;
             z-index: -100;
-            background: #44403B;
+            background: v.$font-dark-color;
             transform: rotate(141deg);
             border-radius: (56% 44% 25% 74% / 58% 61% 39% 42%);
         }
@@ -348,7 +352,7 @@
             width: 39rem;
             height: 25rem;
             z-index: -100;
-            background: #44403B;
+            background: v.$font-dark-color;
             transform: rotate(141deg);
             border-radius: 81% 19% 42% 58% / 46% 73% 27% 54%;
         }
@@ -363,7 +367,7 @@
         width: 48rem;
         height: 30rem;
         z-index: -100;
-        background: #44403B;
+        background: v.$font-dark-color;
         border-radius: 40% 103% 103% 30%/79% 94% 47% 61%;
     }
 }

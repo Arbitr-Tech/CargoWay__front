@@ -38,6 +38,8 @@ input[type=date]::-webkit-datetime-edit {
   visibility: hidden;
   opacity: 0;
   transition: all 0.3s;
+  width: 100vw;
+  height: 100vh;
 }
 .overlay--show {
   opacity: 1;
@@ -52,13 +54,13 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 3rem;
 }
 .progress-bar__step {
-  background-color: #777777;
+  background-color: #44403B;
   padding: 10px;
   border-radius: 50px;
   color: #ffffff;
 }
 .progress-bar__step--completed {
-  background-color: #2C2C2C;
+  background-color: #E9C17D;
 }
 .progress-bar__step--current {
   background-color: #E9C17D;
@@ -66,11 +68,11 @@ input[type=date]::-webkit-datetime-edit {
 .progress-bar__line {
   flex: 1;
   height: 4px;
-  background-color: #777777;
+  background-color: #44403B;
   margin: 0 5px;
 }
 .progress-bar__line--completed {
-  background-color: #2C2C2C;
+  background-color: #E9C17D;
 }
 
 .form {
@@ -110,7 +112,7 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 1.6rem;
 }
 .form__simple-input {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -207,7 +209,7 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 1.125rem;
 }
 .step__form-input {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -361,7 +363,7 @@ input[type=date]::-webkit-datetime-edit {
   font-weight: 700;
 }
 .search__form-input {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -677,6 +679,9 @@ input[type=date]::-webkit-datetime-edit {
   color: #ffffff;
   font-weight: 400;
 }
+.searchPage__formBox-motion {
+  width: 100%;
+}
 .searchPage__formBox::before {
   display: block;
   content: "";
@@ -811,7 +816,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__input,
 .autoForm__input,
 .driverForm__input {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -846,6 +851,7 @@ input[type=date]::-webkit-datetime-edit {
 .driverForm__input-icon {
   width: 30px;
   height: 30px;
+  justify-self: center;
 }
 .cargoForm__input--img,
 .autoForm__input--img,
@@ -865,7 +871,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox,
 .autoForm__inputBox,
 .driverForm__inputBox {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -873,6 +879,7 @@ input[type=date]::-webkit-datetime-edit {
   align-items: center;
   justify-content: center;
   width: 20rem;
+  padding: 0.3rem 0.625rem;
 }
 .cargoForm__inputBox::placeholder,
 .autoForm__inputBox::placeholder,
@@ -948,10 +955,15 @@ input[type=date]::-webkit-datetime-edit {
   width: 100%;
   padding: 1rem;
 }
+.cargoForm__inputBox-li:hover,
+.autoForm__inputBox-li:hover,
+.driverForm__inputBox-li:hover {
+  background-color: #E9C17D;
+}
 .cargoForm__textarea,
 .autoForm__textarea,
 .driverForm__textarea {
-  border-bottom: 1px solid #44403B;
+  border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
   transition: all 0.3s;
@@ -1041,7 +1053,8 @@ input[type=date]::-webkit-datetime-edit {
 .autoList__title {
   text-align: center;
   font-size: 2.875em;
-  color: #2C2C2C;
+  color: #ffffff;
+  font-weight: 400;
 }
 .cargo__btnBox,
 .auto__btnBox,
@@ -1059,7 +1072,7 @@ input[type=date]::-webkit-datetime-edit {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
-  background-color: #2C2C2C;
+  background-color: #E9C17D;
   color: #ffffff;
   padding: 1rem 2.2rem;
   cursor: pointer;
@@ -1099,8 +1112,8 @@ input[type=date]::-webkit-datetime-edit {
 
 .popup {
   position: fixed;
-  top: 25%;
-  left: 30%;
+  top: 8%;
+  left: 27%;
   z-index: 10;
   width: 50rem;
   display: flex;
@@ -1119,6 +1132,9 @@ input[type=date]::-webkit-datetime-edit {
 }
 .popup__text {
   margin-bottom: 1rem;
+  max-height: 30rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 .popup__buttons {
   display: flex;

@@ -1,6 +1,6 @@
 import FormGroup from "./FormGroup";
 
-const AutoForm = ({ data, image, onChange, autoTrailer, dropDown, onNestedChange, onTwiceNesctedChange, onClickButtonTrailer, onClickDriver, onClickMenu}) => {
+const AutoForm = ({ data, image, onChange, autoTrailer, dropDown, onNestedChange, onTwiceNesctedChange, onClickButtonTrailer, onClickDriver, onClickMenu }) => {
 
     const bodyType = [
         { id: 1, name: "Option 1" },
@@ -119,67 +119,28 @@ const AutoForm = ({ data, image, onChange, autoTrailer, dropDown, onNestedChange
                         </div>
                         <div className="autoForm__inputBox-menu">
                             {dropDown ?
-                                <svg className="autoForm__input-icon"
-                                    width="90"
-                                    height="90"
-                                    viewBox="0 0 90 90"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                <img
+                                    src="/assets/img/arrow_top.svg"
+                                    alt="arrow top"
+                                    className="autoForm__input-icon"
                                     onClick={onClickMenu}
-                                >
-                                    <rect width="90" height="90" fill="url(#pattern0)" />
-                                    <defs>
-                                        <pattern
-                                            id="pattern0"
-                                            patternContentUnits="objectBoundingBox"
-                                            width="1"
-                                            height="1"
-                                        >
-                                            <use href="#image0" transform="scale(0.0111111)" />
-                                        </pattern>
-                                        <image
-                                            id="image0"
-                                            width="90"
-                                            height="90"
-                                            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiklEQVR4nO3aQUrDQBSA4WkX6sI7FPICM7yjCW5mDpCtriy4r3dwIZ5IDyCSpZJIQBfaqJ3pzOT/oJs20Pf+Nm2gNQYAAAAAAAAAAAAAAAAAgLTa9vJUbLgW65/Fhiex/mq4j9fhgFS7k8b5e3Hh7fOtceFxs+nOiB0xshA7XWQhdrrIQux0kYXY6SILsecbL+Gcf/g55vD4/mO49PvHO3m6nPvNsd893yLpH8IRO0HkCbFn0gN8BBA7QeQJsROGUb4g0wUhdsIQi4+tCU/txcbWIyy+uNjHXFiXEjuHRTWDGaLKaUHNaJbqF9MMZ6p2Ic14tuoW0QJmrGYBLWjW4gfX0mYubuASZy9m0JJ3yH7AGnbJdrCadpr7l4ASf+5vc9qtsf42i0GOGjtsTVzdWqx/rTXy3NiNDS/GmJWJp1uL833NkefF9v3QwsQkLtzVHnl/bL8zsalenH/E9v1wCon1NzVG/ho7bMddx7PZ74YGJqGYn1E5Wi1wZwAAAAAAAAAAAAAAAACmJO9sDRlfyD5/rAAAAABJRU5ErkJggg=="
-                                        />
-                                    </defs>
-                                </svg> :
-                                <svg className="autoForm__input-icon"
-                                    width="90"
-                                    height="90"
-                                    viewBox="0 0 90 90"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+
+                                /> :
+                                <img
+                                    src="/assets/img/arrow.svg"
+                                    alt="arrow down"
+                                    className="autoForm__input-icon"
                                     onClick={onClickMenu}
-                                >
-                                    <rect width="90" height="90" fill="url(#pattern0)" />
-                                    <defs>
-                                        <pattern
-                                            id="pattern0"
-                                            patternContentUnits="objectBoundingBox"
-                                            width="1"
-                                            height="1"
-                                        >
-                                            <use href="#image0" transform="scale(0.0111111)" />
-                                        </pattern>
-                                        <image
-                                            id="image0"
-                                            width="90"
-                                            height="90"
-                                            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAABlUlEQVR4nO3ay0oDMRSA4dSFVd9AKBSSQMLZ+lxdmDzALAsidO1CH8JF8YncuBC84LIy0I3Y1gskk2T+D2Y95/yEIdAqBQAAAAAAAAAAAAAAAAAox2T75DGbXZ4aH2+0C2/axyfjw5W1i6lqlLWLqfbh2rj4bHz4MD7enl90Z8lf3Ec2Pm6+PmHdYmxrF9N+tx373qV+90S7+Pr9xe3Ftnsjx41x4V2p7ijpANqHl92h24ltD0X2cdM3SD6EcWG1P3T9se0PkbcnelXGIJXGtqXtJtIdax/uDw2kfXyYz7sTVQkpdadiB2txl+IHbGmHagZtYfbqBlZ1zlzd4FLRrNUuIBXMWP0iUvBszSwkBc7U3GJS0CzNLigFzJDFkIvKWCIPubCMLfIQi8tYI+cMMPrIOUIQOUMQImcII2P/JucIJEROH1uInP5kC5H/R/4QjsiZfu43Jf0loFbyi5PN7WLg2HrMV7hcsTWR08cmcoaTrTnJ6WNrIie6+rm4NC4+bp8lVzgAAAAAAAAAAAAAAAAAgMrvEx2HGBb0JArhAAAAAElFTkSuQmCC"
-                                        />
-                                    </defs>
-                                </svg>
+                                />
                             }
                             <ul className={`autoForm__inputBox-ul ${dropDown ? 'show' : ''}`}>
                                 {listDrivers.map((option) => (
                                     <li
-                                    key={option.id}
-                                    className="autoForm__inputBox-li"
-                                    onClick={onClickDriver}
-                                    data-id={option.id}
-                                    data-name={option.name}
+                                        key={option.id}
+                                        className="autoForm__inputBox-li"
+                                        onClick={onClickDriver}
+                                        data-id={option.id}
+                                        data-name={option.name}
                                     >
                                         {option.name}
                                     </li>

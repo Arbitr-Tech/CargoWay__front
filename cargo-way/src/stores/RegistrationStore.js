@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
 
-class RegistrationAutorizationStore {
-    isLoggedIn = false;
+class RegistrationStore {
 
     registrationStep = 1;
+
     registrationFormData = {
         userType: "",
         userRole: "",
@@ -15,17 +15,8 @@ class RegistrationAutorizationStore {
         companyData: {},
     };
 
-    autorizationFormData = {
-        email: "",
-        password: ""
-    };
-
     constructor() {
         makeAutoObservable(this);
-    }
-
-    logout() {
-        this.isLoggedIn = false;
     }
 
     setRegistrationStep = (step) => {
@@ -44,10 +35,6 @@ class RegistrationAutorizationStore {
         console.log("Регистрация завершена", this.registrationFormData);
         this.registrationStep = 1; // Сброс шага
     }
-
-    setAuthorizationFormData = (name, value) => {
-        this.autorizationFormData = {...this.autorizationFormData, [name]: value}
-    }
 }
 
-export const registrationAutorizationStore = new RegistrationAutorizationStore();
+export const registrationStore = new RegistrationStore();
