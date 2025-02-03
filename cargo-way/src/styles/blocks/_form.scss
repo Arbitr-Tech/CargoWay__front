@@ -4,11 +4,9 @@
 .form {
     @include m.margin-center;
     @include m.form-step-base(column, 6rem 5rem, 35rem);
-    transform: translateY(50%);
-
 
     &--stepOne {
-        transform: translateY(20%);
+        padding: 4rem 4rem 2rem;
     }
 
     &__title {
@@ -46,8 +44,39 @@
         @include m.button(v.$primary-color, v.$font-light-color);
     }
 
-    &__transition a{
+    &__transition a {
         color: v.$active-color;
         cursor: pointer;
     }
+
+    @include m.mobile {
+        width: 60%;
+        padding: 3rem 2rem;
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__simple {
+            align-items: center;
+            &-input {
+                width: 70%;
+            }
+        }
+
+        &__button {
+            width: 70%;
+            align-self: center;
+        }
+
+        &__transition {
+            font-size: 0.75rem; 
+        }
+    }
+
+    @include m.tablet {
+        width: 80%;
+        padding: 4rem 2rem;
+    }
+
 }

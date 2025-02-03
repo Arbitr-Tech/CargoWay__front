@@ -3,8 +3,7 @@
 
 .step {
     @include m.margin-center;
-    @include m.form-step-base(column, 6rem 12.5rem, 47.5rem);
-    transform: translateY(20%);
+    @include m.form-step-base(column, 5rem 6rem, 47.5rem);
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -63,5 +62,24 @@
 
     & img {
         padding-bottom: 1rem;
+    }
+
+    @include m.mobile {
+        width: 60%;
+        padding: 3rem 2rem;
+
+        &__form {
+            &-label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.1rem;
+            }
+        }
+    }
+
+    @include m.tablet {
+        width: 80%;
+        padding: 4rem 2rem;
     }
 }

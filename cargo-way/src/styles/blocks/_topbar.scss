@@ -4,10 +4,11 @@
 .topbar {
     display: flex;
     justify-content: space-between;
-    @include m.form-step-base(row, 1rem 2.2rem, 104rem);
     align-items: center;
     margin-top: 1.5rem;
     margin-bottom: 2.2rem;
+    border-bottom: 1px solid v.$active-color;
+    padding-bottom: 0.5rem;
 
     &__list {
         display: flex;
@@ -18,7 +19,7 @@
 
         &-item a {
             text-decoration: none;
-            color: v.$primary-color;
+            color: v.$font-light-color;
             white-space: nowrap;
             cursor: pointer;
             border-radius: v.$border-radius;
@@ -28,7 +29,7 @@
         }
 
         &-item a:hover {
-            background-color: v.$primary-color;
+            background-color: v.$active-color;
             color: v.$font-light-color;
         }
     }
@@ -46,6 +47,7 @@
     &__profile {
         @include m.center;
         gap: 1rem;
+        color: v.$font-light-color;
 
         &-text {
             @include m.center;
