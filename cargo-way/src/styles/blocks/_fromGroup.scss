@@ -15,6 +15,17 @@
         align-self: center;
     }
 
+    &__label {
+        @include m.laptop {
+            max-width: 20%;
+        }
+    }
+
+    @include m.laptop {
+        width: 100%;
+        gap: 2rem;
+    }
+
     &__group {
         width: 50rem;
         display: flex;
@@ -23,6 +34,16 @@
         &--img {
             display: flex;
             flex-direction: column;
+        }
+
+        @include m.laptop {
+            flex-direction: column;
+            align-items: start;
+        }
+
+        
+        @include m.tablet {
+            align-items: center;
         }
     }
 }

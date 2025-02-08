@@ -15,6 +15,7 @@
     &__form {
         @include m.center;
         flex-direction: column;
+        margin: 0;
 
         &-label {
             display: flex;
@@ -65,7 +66,7 @@
     }
 
     @include m.mobile {
-        width: 60%;
+        width: 50%;
         padding: 3rem 2rem;
 
         &__form {
@@ -78,8 +79,8 @@
         }
     }
 
-    @include m.tablet {
-        width: 80%;
+    @include m.laptop {
+        width: 90%;
         padding: 4rem 2rem;
     }
 }

@@ -5,12 +5,18 @@ import StepThree from "../steps/StepThree";
 import { validateStepOne, validateStepTwo, validateStepThree } from "../../validation/validations"
 import { observer } from "mobx-react-lite";
 import { registrationStore } from "../../stores/RegistrationStore";
+import { registration } from "../../api/reg/regService";
+import { toJS } from "mobx";
+import { userStore } from "../../stores/UserStore";
+import { useNavigate } from "react-router-dom";
 
 const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];
 
 const RegistrationPage = observer(() => {
 
     const store = registrationStore;
+    const storeUser = userStore;
+    const navigate = useNavigate();
 
     const validateStep = (currentStep) => {
         const { registrationFormData } = store;
@@ -49,7 +55,7 @@ const RegistrationPage = observer(() => {
         store.setRegistrationStep(nextStep);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let errors = validateStep(3);
 
         if (Object.keys(errors).length > 0) {
@@ -58,14 +64,17 @@ const RegistrationPage = observer(() => {
             return;
         }
         console.log(store.registrationFormData)
-        store.submitRegistration();
 
-        //     const payload = {
-        //         ...formData,
-        //         individualData: formData.userType === "individual" ? formData.individualData : null,
-        //         companyData: formData.userType === "company" ? formData.companyData : null,
-        //     };
-        //     console.log("Отправка данных:", JSON.stringify(payload));
+        try {
+            await registration(store.registrationFormData.userType, toJS(store.registrationFormData))
+            storeUser.setRole(store.registrationFormData.role);
+            navigate('/');
+
+        } catch (error) {
+            console.error("Ошибка входа:", error);
+        }
+
+        store.submitRegistration();
     };
 
     return (

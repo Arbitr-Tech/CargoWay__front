@@ -2,7 +2,6 @@
 @use '../mixins' as m;
 
 .form {
-    @include m.margin-center;
     @include m.form-step-base(column, 6rem 5rem, 35rem);
 
     &--stepOne {
@@ -50,7 +49,7 @@
     }
 
     @include m.mobile {
-        width: 60%;
+        width: 55%;
         padding: 3rem 2rem;
 
         &__title {
@@ -75,8 +74,8 @@
     }
 
     @include m.tablet {
-        width: 80%;
-        padding: 4rem 2rem;
+        width: 75%;
+        padding: 3rem 2rem;
     }
 
 }

@@ -141,7 +141,7 @@ const SearchForm = ({ data, onChange, onClickAuto, onClickCargo, page }) => {
                 </div>
             </div>
             <div className="search__btnBox">
-                <button className='search__btnBox-button' onClick={onClickAuto}>{`${page === "SearchCargoPage" ? "Назад" : "Найти машину"}`}</button>
+                <button className='search__btnBox-button' onClick={onClickAuto}>{`${page === "SearchCargoPage" ? "Назад" : "Найти транспорт"}`}</button>
                 <button className='search__btnBox-button' onClick={onClickCargo}>{` ${page === "SearchAutoPage" ? "Назад" : "Найти груз"}`}</button>
             </div>
         </div>

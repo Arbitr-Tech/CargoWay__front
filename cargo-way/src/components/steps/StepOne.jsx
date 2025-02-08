@@ -30,9 +30,9 @@ const StepOne = ({ formData, onChange, onNext }) => {
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="userRole"
-                        value="carrier"
-                        checked={formData.userRole === "carrier"}
+                        name="role"
+                        value="CARRIER"
+                        checked={formData.role === "CARRIER"}
                         onChange={onChange}
                     />
                     Перевозчик
@@ -40,9 +40,9 @@ const StepOne = ({ formData, onChange, onNext }) => {
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="userRole"
-                        value="customer"
-                        checked={formData.userRole === "customer"}
+                        name="role"
+                        value="CUSTOMER"
+                        checked={formData.role === "CUSTOMER"}
                         onChange={onChange}
                     />
                     Заказчик
@@ -50,9 +50,9 @@ const StepOne = ({ formData, onChange, onNext }) => {
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="userRole"
-                        value="forwarder"
-                        checked={formData.userRole === "forwarder"}
+                        name="role"
+                        value="FORWARDER"
+                        checked={formData.role === "FORWARDER"}
                         onChange={onChange}
                     />
                     Экспедитор
@@ -61,9 +61,9 @@ const StepOne = ({ formData, onChange, onNext }) => {
             <div className='form__simple'>
                 <input className='form__simple-input'
                     type="text"
-                    name="login"
+                    name="username"
                     placeholder="Логин"
-                    value={formData.login}
+                    value={formData.username}
                     onChange={onChange}
                 />
                 <input className='form__simple-input'

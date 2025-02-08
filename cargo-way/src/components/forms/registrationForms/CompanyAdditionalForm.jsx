@@ -3,19 +3,19 @@ export const CompanyAdditionalForm = ({ data, onChange }) => (
         <input
             className="step__form-input"
             type="text"
-            name="companyName"
+            name="name"
             placeholder="Название компании"
-            value={data.companyName || ""}
-            onChange={(e) => onChange({ ...data, companyName: e.target.value })}
+            value={data.name || ""}
+            onChange={(e) => onChange({ ...data, name: e.target.value })}
         />
         <label className="step__form-label">
             <span>Дата регистрации компании:</span>
             <input
                 className="step__form-input"
                 type="date"
-                name="dateRegCompany"
-                value={data.dateRegCompany || ""}
-                onChange={(e) => onChange({ ...data, dateRegCompany: e.target.value })}
+                name="registrationDate"
+                value={data.registrationDate || ""}
+                onChange={(e) => onChange({ ...data, registrationDate: e.target.value })}
             />
         </label>
         <label className="step__form-label">

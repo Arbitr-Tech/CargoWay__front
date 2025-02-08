@@ -6,11 +6,13 @@ import { observer } from "mobx-react-lite";
 import { mainSearchStore } from "../../stores/MainSearchStore";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { userStore } from "../../stores/UserStore";
 
 const MainSearchPage = observer(() => {
 
     const store = mainSearchStore;
-    console.log(store.page)
+    const role  = userStore.role;
+    console.log(role);
 
     const handleInputChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -66,10 +68,10 @@ const MainSearchPage = observer(() => {
                     <>
                         <h2 className="searchPage__desc">Последние записи</h2>
                         <div className="searchPage__box">
-                            <motion.div initial={{ x: -200, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
+                            <motion.div initial={{ x: -200, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }} className="searchPage__box-motion">
                                 <SearchListResults list={list} typeButton='main' onClickOne={handleContactsClick} />
                             </motion.div>
-                            <motion.div initial={{ x: 200, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }}>
+                            <motion.div initial={{ x: 200, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }} className="searchPage__box-motion">
                                 <SearchListResults list={list2} typeButton='main' onClickOne={handleContactsClick} />
                             </motion.div>
                         </div>
@@ -96,7 +98,7 @@ const MainSearchPage = observer(() => {
         <div className="searchPage">
             <div className={`overlay ${store.isPopupOpen ? 'overlay--show' : ''} `}></div>
             <div className="container">
-                <Popup isOpen={store.isPopupOpen} text={store.popupContent} typePopup='contacts' onClose={store.closePopup} />
+                <Popup isOpen={store.isPopupOpen} text={role && role !== '' ? store.popupContent : 'Для просмотра необходимо авторизоваться'} typePopup={role && role !== '' ? 'contacts' : ''} onClose={store.closePopup} />
                 <div className="searchPage__menu">
                     <div className="searchPage__menu-topBar">
                         <TopBar />

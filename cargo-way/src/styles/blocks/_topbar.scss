@@ -6,9 +6,13 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
-    margin-bottom: 2.2rem;
+    margin-bottom: 2rem;
     border-bottom: 1px solid v.$active-color;
     padding-bottom: 0.5rem;
+
+    @include m.tablet {
+        overflow-y: scroll;
+    }
 
     &__list {
         display: flex;
@@ -17,20 +21,76 @@
         flex-grow: 1;
         padding: 0;
 
-        &-item a {
-            text-decoration: none;
-            color: v.$font-light-color;
-            white-space: nowrap;
-            cursor: pointer;
-            border-radius: v.$border-radius;
-            padding: 1rem 2.2rem;
-            transition: all .3s;
-            margin-right: 0.2rem;
+        &-item {
+
+            & a {
+                text-decoration: none;
+                color: v.$font-light-color;
+                white-space: nowrap;
+                cursor: pointer;
+                border-radius: v.$border-radius;
+                padding: 1rem 1rem;
+                transition: all .3s;
+                margin-right: 0.2rem;
+            }
+
+            &--dropdown {
+                position: relative;
+                display: inline-block;
+
+                &:hover .topbar__list-dropdownContent {
+                    display: block;
+                }
+            }
+
+            &--hide {
+                @include m.mobile {
+                    display: none;
+                }
+            }
         }
 
         &-item a:hover {
             background-color: v.$active-color;
             color: v.$font-light-color;
+        }
+
+        &-dropbtn {
+            color: v.$font-light-color;
+            cursor: pointer;
+            padding: 0;
+            padding-bottom: 0.3rem;
+            transition: all .3s;
+            margin: 0 1rem;
+        }
+
+        &-dropdownContent {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: v.$border-radius;
+            z-index: 99999;
+            width: 15rem;
+            height: auto;
+            list-style: none;
+            padding: 0;
+            top: 1.5rem;
+            background-color: v.$font-dark-color;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        &-dropItem {
+            padding: 1rem;
+            text-align: center;
+            @include m.transition(all);
+
+            &:hover {
+                background-color: v.$active-color
+            }
+
+            &:hover a {
+                background-color: transparent;
+            }
         }
     }
 
@@ -39,8 +99,14 @@
         gap: 1rem;
 
         &-btn {
-            @include m.button(v.$primary-color, v.$font-light-color);
+            @include m.button(v.$active-color, v.$font-light-color);
             text-decoration: none;
+
+            &--hide {
+                @include m.mobile {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -53,6 +119,7 @@
             @include m.center;
             flex-direction: row;
             gap: 1rem;
+            cursor: pointer;
         }
     }
 }

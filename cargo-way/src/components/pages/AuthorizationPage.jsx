@@ -1,11 +1,16 @@
 import AuthorizationForm from "../forms/AuthorizationForm";
 import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
 import { autorizationStore } from "../../stores/AutorizationStore";
-import { login } from "../../api/auth/authService";
+import { getProfileRole, login } from "../../api/auth/authService";
+import { useNavigate } from "react-router-dom";
+import { userStore } from "../../stores/UserStore";
 
 
 const AuthorizationPage = observer(() => {
     const store = autorizationStore;
+    const storeUser = userStore;
+    const navigate = useNavigate();
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
@@ -14,13 +19,20 @@ const AuthorizationPage = observer(() => {
     };
 
     const handleNext = async () => {
-        console.log(store.autorizationFormData);
+        console.log(toJS(store.autorizationFormData));
 
         try {
-            await login(store.autorizationFormData);
+            await login(toJS(store.autorizationFormData));
+            const role = await getProfileRole(localStorage.getItem('access_token'));
+            storeUser.setRole(role);
+            store.reset();
+
         } catch (error) {
             console.error("Ошибка входа:", error);
+            return;
         }
+
+        navigate('/');
     };
 
     return (

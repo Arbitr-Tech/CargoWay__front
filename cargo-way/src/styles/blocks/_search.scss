@@ -5,7 +5,11 @@
 .search {
     @include m.form-step-base(column, 1rem 2.2rem, 100%);
     margin-top: 5rem;
-    width: 100%;
+    margin-inline: auto;
+
+    @include m.laptop {
+        max-width: 87%;
+    }
 
     &__form {
         display: flex;
@@ -13,6 +17,11 @@
         position: relative;
         margin-bottom: 1rem;
         color: v.$font-dark-color;
+
+        @include m.laptop {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
         &-label {
             @include m.center;
@@ -102,6 +111,10 @@
             &--mylist {
                 grid-template-columns: repeat(7, 1fr);
             }
+
+            @include m.mobile {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         &-btns {
@@ -129,6 +142,12 @@
                 color: v.$font-dark-color;
                 font-weight: 700;
             }
+
+            &--hide {
+                @include m.mobile {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -146,6 +165,10 @@
             &--mylist {
                 grid-template-columns: repeat(7, 1fr);
             }
+
+            @include m.mobile {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         &-list {
@@ -155,6 +178,12 @@
 
             &--mylist {
                 max-height: 43rem;
+            }
+        }
+
+        &-title--hide {
+            @include m.mobile {
+                display: none;
             }
         }
     }
@@ -167,7 +196,8 @@
         width: 100%;
         height: 8rem;
         position: relative;
-        overflow: hidden;
+        z-index: 100;
+        overflow-y: visible;
 
         &-topBar {
             position: absolute;
@@ -192,6 +222,11 @@
             flex-direction: column;
             align-items: end;
 
+            @include m.tablet {
+                margin-top: 1rem;
+                align-items: start;
+            }
+
             & a {
                 position: relative;
                 width: 25%;
@@ -203,6 +238,10 @@
                 animation-name: titleAnimation;
                 animation-timing-function: ease-in;
                 animation-duration: 1.5s;
+
+                @include m.tablet {
+                    width: 50%;
+                }
             }
 
             & a::after {
@@ -216,6 +255,11 @@
                 opacity: 0;
                 transform: scale(0);
                 transition: transform 0.3s ease, opacity 0.3s ease, font-size 0.3s ease;
+
+                @include m.laptop {
+                    // width: 30%;
+                    left: 10rem;
+                }
             }
 
             & a:hover::after {
@@ -239,6 +283,15 @@
             & span {
                 color: v.$active-color;
             }
+
+            @include m.tablet {
+                font-size: 2rem;
+                width: 90%;
+            }
+
+            @include m.mobile {
+                line-height: 2.5rem;
+            }
         }
 
         &-p {
@@ -251,6 +304,11 @@
             animation-name: titleAnimation;
             animation-timing-function: ease-in;
             animation-duration: 1.5s;
+
+            @include m.tablet {
+                align-self: start;
+                width: 70%;
+            }
         }
     }
 
@@ -258,13 +316,26 @@
         text-align: center;
         color: v.$font-light-color;
         font-size: 2.2rem;
-        font-weight: 400
+        font-weight: 400;
+
+        @include m.tablet {
+            font-size: 2rem;
+        }
     }
 
     &__box {
         @include m.center;
+        align-items: center;
         gap: 1rem;
         margin: 1rem 0 2.2rem;
+
+        @include m.tablet {
+            flex-direction: column;
+        }
+
+        @include m.laptop {
+            flex-direction: column;
+        }
     }
 
     &__img {
@@ -272,12 +343,27 @@
         width: 100%;
         height: 31.25rem;
 
+        @include m.laptop {
+            height: 26.25rem;
+            margin-bottom: -15rem;
+        }
+
+        @include m.tablet {
+            display: none;
+        }
+
         & img {
             position: absolute;
             bottom: 10%;
             top: 0;
             animation: moveTruck 1.5s ease-out forwards;
             height: 80%;
+
+            @include m.laptop {
+                height: 70%;
+                left: 0;
+                top: -6rem;
+            }
         }
     }
 
@@ -292,6 +378,14 @@
             flex-direction: column;
             align-items: center;
             margin-top: 2rem;
+
+            @include m.tablet {
+                display: none;
+            }
+
+            @include m.laptop {
+                display: none;
+            }
         }
 
         &-text {
@@ -308,7 +402,6 @@
 
         &-img {
             margin-top: -8rem;
-            z-index: 5;
             transform: rotate(-33deg);
         }
 
@@ -341,6 +434,13 @@
             background: v.$font-dark-color;
             transform: rotate(141deg);
             border-radius: (56% 44% 25% 74% / 58% 61% 39% 42%);
+
+            @include m.laptop {
+                top: 7rem;
+                left: 40rem;
+                width: 24rem;
+                height: 14rem;
+            }
         }
 
         &::after {
@@ -363,12 +463,19 @@
         content: "";
         position: absolute;
         top: 10rem;
-        left: -6rem;
+        left: 4rem;
         width: 48rem;
         height: 30rem;
         z-index: -100;
         background: v.$font-dark-color;
         border-radius: 40% 103% 103% 30%/79% 94% 47% 61%;
+
+        @include m.laptop {
+            top: 13rem;
+            left: 3rem;
+            width: 37rem;
+            height: 23rem;
+        }
     }
 }
 

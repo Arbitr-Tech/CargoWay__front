@@ -4,9 +4,27 @@
 .container {
     width: v.$max-width;
     padding: 0px 1rem;
-    height: 100%;
+    min-height: 100vh; /* Гарантирует, что контейнер займет весь экран */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+    
     @include m.margin-center;
+
+    @include m.laptop {
+        width: 80%;
+    }
+
+    @include m.tablet {
+        width: 80%;
+    }
+
+    @include m.mobile {
+        width: 70%;
+    }
 }
+
 
 .hide {
     display: none !important;

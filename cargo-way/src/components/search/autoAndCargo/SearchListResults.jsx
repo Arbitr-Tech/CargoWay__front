@@ -6,10 +6,10 @@ const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo }) => {
             <div className={`search__result-header ${typeButton === 'mylist' ? 'search__result-header--mylist' : ''}`}>
                 <p className="search__result-title">Тип кузова</p>
                 <p className="search__result-title">Вес, т / Объем, кв.м</p>
-                <p className="search__result-title">Откуда</p>
-                <p className="search__result-title">Куда</p>
+                <p className="search__result-title search__result-title--hide">Откуда</p>
+                <p className="search__result-title search__result-title--hide">Куда</p>
                 <p className="search__result-title">Ставка</p>
-                <p className="search__result-title">Тип ставки</p>
+                <p className="search__result-title search__result-title--hide">Тип ставки</p>
                 {typeButton === 'mylist' ? <p className="search__result-title">Статус</p> : ''}
             </div>
 

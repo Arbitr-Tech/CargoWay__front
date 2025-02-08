@@ -1,8 +1,8 @@
 const validateStepOne = (data) => {
     const errors = {};
     if (!data.userType) errors.userType = "Тип пользователя обязателен";
-    if (!data.userRole) errors.userRole = "Выберите одну из ролей";
-    if (!data.login) errors.login = "Логин обязателен";
+    if (!data.role) errors.userRole = "Выберите одну из ролей";
+    if (!data.username || !/^.{5,50}$/.test(data.username)) errors.username = "Логин должен состоять от 5 до 50 символов";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
     if (!data.password || data.password.length < 6) errors.password = "Пароль должен быть не менее 6 символов";
     if (!data.agreement) errors.agreement = "Необходимо согласиться с условиями обработки данных";
@@ -13,13 +13,15 @@ const validateStepOne = (data) => {
 const validateStepTwo = (userType, data) => {
     const errors = {};
     if (userType === "individual") {
-        if (!data.fullName) errors.fullName = "ФИО обязательно";
-        if (!data.passportSeriesNumber || !/^\d{10}$/.test(data.passportSeriesNumber)) {
-            errors.passportSeriesNumber = "Серия и номер паспорта должны содержать 10 цифр";
+        if (!data.fullname) errors.fullname = "ФИО обязательно";
+        if (!data.passportNum || !/^\d{6}$/.test(data.passportNum)) {
+            errors.passportNum = "Номер паспорта должен содержать 6 цифр";
         }
-        if (!data.dateGet) errors.dateGet = "Дата выдачи паспорта обязательна";
-        if (!data.passportIssuedBy) errors.passportIssuedBy = "Укажите, кем выдан паспорт";
-        if (!data.placeOfBirth) errors.placeOfBirth = "Место рождения обязательно";
+        if (!data.passportSeries || !/^\d{4}$/.test(data.passportSeries)) {
+            errors.passportSeries = "Серия паспорта должна содержать 4 цифры";
+        }
+        if (!data.whoGive) errors.whoGive = "Укажите, кем выдан паспорт";
+        if (!data.departmentCode) errors.departmentCode = "Код подразделения обязателен";
     } else {
         if (!data.inn || !/^\d{10}$/.test(data.inn)) {
             errors.inn = "ИНН должен содержать 10 цифр";
@@ -47,10 +49,10 @@ const validateStepThree = (userType, data) => {
         if (!data.phoneNumber || !/^\+?\d{11}$/.test(data.phoneNumber)) {
             errors.phoneNumber = "Некорректный номер телефона";
         }
-        if (!data.identityDocuments) errors.identityDocuments = "Добавьте скан-копии документов";
+        // if (!data.identityDocuments) errors.identityDocuments = "Добавьте скан-копии документов";
     } else {
-        if (!data.companyName) errors.companyName = "Название компании обязательно";
-        if (!data.dateRegCompany) errors.dateRegCompany = "Дата регистрации компании обязательна";
+        if (!data.name) errors.name = "Название компании обязательно";
+        if (!data.registrationDate) errors.registrationDate = "Дата регистрации компании обязательна";
         if (!data.dateRegInSystem) errors.dateRegInSystem = "Дата регистрации в системе обязательна";
     }
 

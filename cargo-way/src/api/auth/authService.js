@@ -1,7 +1,7 @@
 import { API_URL } from '../config';
 
 export const login = async (formData) => {
-    const response = await fetch(`${API_URL}/v1/auth/login/`, {
+    const response = await fetch(`${API_URL}/api/v1/auth/login/`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -13,51 +13,63 @@ export const login = async (formData) => {
     if (!response.ok) throw new Error("Ошибка авторизации");
 
     const data = await response.json();
-    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("access_token", data.access_token);
     console.log(data)
     return data;
 };
 
-export const logout = async () => {
-    await fetch(`${API_URL}/v1/auth/logout/`, {
-        method: "POST",
-        credentials: "include"
+export const getProfileRole = async (access_token) => {
+    const response = await fetch(`${API_URL}/api/v1/profile/`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            "Authorization": `Bearer ${access_token}`
+        }
     });
-    localStorage.removeItem("accessToken");
+
+    if (response.status === 401) { // Если access_token истёк
+        access_token = await refreshToken();
+        return getProfileRole(access_token); // Повторный запрос
+    }
+
+    const data = await response.json();
+
+    return data.role;
 };
 
 export const refreshToken = async () => {
-    const response = await fetch(`${API_URL}/v1/auth/refresh-token/`, {
-        method: "POST",
-        credentials: "include"
+    const response = await fetch(`${API_URL}/api/v1/auth/refresh-token/`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('access_token')}`
+        }
     });
 
     if (!response.ok) {
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("access_token");
         window.location.href = "/login"; //переход на страницу login
         throw new Error("Не удалось обновить токен");
     }
 
     const data = await response.json();
-    localStorage.setItem("accessToken", data.accessToken);
-    return data.accessToken;
+    localStorage.setItem("access_token", data.access_token);
+    return data.access_token;
 };
 
 export const fetchWithAuth = async (url, options = {}) => {
-    let accessToken = localStorage.getItem("accessToken");
+    let access_token = localStorage.getItem("access_token");
 
     const response = await fetch(`${API_URL}${url}`, {
         ...options,
         headers: {
             ...options.headers,
-            "Authorization": `Bearer ${accessToken}`,
+            "Authorization": `Bearer ${access_token}`,
             "Content-Type": "application/json"
         },
         credentials: "include"
     });
 
-    if (response.status === 401) { // Если accessToken истёк
-        accessToken = await refreshToken();
+    if (response.status === 401) { // Если access_token истёк
+        access_token = await refreshToken();
         return fetchWithAuth(url, options); // Повторный запрос
     }
 

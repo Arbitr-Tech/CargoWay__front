@@ -6,10 +6,10 @@ class RegistrationStore {
 
     registrationFormData = {
         userType: "",
-        userRole: "",
-        login: "",
+        username: "",
         email: "",
         password: "",
+        role: "",
         agreement: false,
         individualData: {},
         companyData: {},
@@ -24,16 +24,26 @@ class RegistrationStore {
     }
 
     setRegistrationFormData = (name, value, type, checked) => {
-        this.registrationFormData = {...this.registrationFormData, [name]: type === "checkbox" ? checked : value}
+        this.registrationFormData = { ...this.registrationFormData, [name]: type === "checkbox" ? checked : value }
     }
 
     setRegistrationNestedFormData = (formName, newData) => {
-        this.registrationFormData = {...this.registrationFormData, [formName]: newData}
+        this.registrationFormData = { ...this.registrationFormData, [formName]: newData }
     }
 
     submitRegistration() {
         console.log("Регистрация завершена", this.registrationFormData);
-        this.registrationStep = 1; // Сброс шага
+        this.registrationStep = 1;
+        this.registrationFormData = {
+            userType: "",
+            username: "",
+            email: "",
+            password: "",
+            role: "",
+            agreement: false,
+            individualData: {},
+            companyData: {},
+        }
     }
 }
 

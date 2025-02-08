@@ -1,4 +1,4 @@
-const Popup = ({ isOpen, text, typePopup, onClose }) => {
+const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
     if (!isOpen) return null;
 
     const fieldNames = {
@@ -11,10 +11,6 @@ const Popup = ({ isOpen, text, typePopup, onClose }) => {
         <div className="popup">
             <div className="popup__icon">
                 <img src="/assets/img/close.svg" alt="close"  onClick={onClose}/>
-                {/* <svg onClick={onClose} width="24" height="24" viewBox="0 0 24 24" fill='#232873' xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 20L20 4" stroke="#232873" strokeWidth="3" strokeLinecap="round" />
-                    <path d="M4 4L20 20" stroke="#232873" strokeWidth="3" strokeLinecap="round" /> */}
-                {/* </svg> */}
             </div>
             <div className="popup__text">
                 {typePopup === 'contacts' ? Object.entries(text).map(([key, value]) => (
@@ -23,10 +19,10 @@ const Popup = ({ isOpen, text, typePopup, onClose }) => {
                     </p>
                 )) : text}
             </div>
-            {typePopup === 'del' && (
+            {(typePopup === 'del' || typePopup === 'exit') && (
                 <div className="popup__buttons">
-                    <button className="popup__button">Удалить</button>
-                    <button className="popup__button">Отменить</button>
+                    <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
+                    <button className="popup__button" onClick={onClose}>Отменить</button>
                 </div>
             )}
         </div>

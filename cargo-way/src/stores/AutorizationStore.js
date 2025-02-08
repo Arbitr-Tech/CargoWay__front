@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
 class AutorizationStore {
-    isLoggedIn = false;
 
     autorizationFormData = {
         email: "",
@@ -12,12 +11,15 @@ class AutorizationStore {
         makeAutoObservable(this);
     }
 
-    logout() {
-        this.isLoggedIn = false;
+    setAuthorizationFormData = (name, value) => {
+        this.autorizationFormData = { ...this.autorizationFormData, [name]: value }
     }
 
-    setAuthorizationFormData = (name, value) => {
-        this.autorizationFormData = {...this.autorizationFormData, [name]: value}
+    reset = () => {
+        this.autorizationFormData = {
+            email: "",
+            password: ""
+        }
     }
 }
 
