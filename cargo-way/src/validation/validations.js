@@ -43,9 +43,9 @@ const validateStepTwo = (userType, data) => {
 const validateStepThree = (userType, data) => {
     const errors = {};
     if (userType === "individual") {
-        if (data.driverLicenseNumber && !/^\d{10}$/.test(data.driverLicenseNumber)) {
-            errors.driverLicenseNumber = "Номер водительских прав должен содержать 10 цифр";
-        }
+        // if (data.driverLicenseNumber && !/^\d{10}$/.test(data.driverLicenseNumber)) {
+        //     errors.driverLicenseNumber = "Номер водительских прав должен содержать 10 цифр";
+        // }
         if (!data.phoneNumber || !/^\+?\d{11}$/.test(data.phoneNumber)) {
             errors.phoneNumber = "Некорректный номер телефона";
         }
@@ -53,7 +53,7 @@ const validateStepThree = (userType, data) => {
     } else {
         if (!data.name) errors.name = "Название компании обязательно";
         if (!data.registrationDate) errors.registrationDate = "Дата регистрации компании обязательна";
-        if (!data.dateRegInSystem) errors.dateRegInSystem = "Дата регистрации в системе обязательна";
+        // if (!data.dateRegInSystem) errors.dateRegInSystem = "Дата регистрации в системе обязательна";
     }
 
     return errors;

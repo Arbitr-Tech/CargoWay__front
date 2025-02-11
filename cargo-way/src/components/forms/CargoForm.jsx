@@ -1,19 +1,78 @@
+import { useState } from "react";
 import FormGroup from "./FormGroup";
+import { toJS } from "mobx";
 
-const CargoForm = ({ data, image, onChange, onNestedChange }) => {
+const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage }) => {
 
     const bodyType = [
         { id: 1, name: "Option 1" },
         { id: 2, name: "Option 2" },
         { id: 3, name: "Option 3" },
         { id: 4, name: "Option 4" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
+        { id: 25, name: "Option 2" },
+        { id: 35, name: "Option 3" },
+        { id: 43, name: "Option 4" },
+        { id: 27, name: "Option 2" },
+        { id: 32, name: "Option 3" },
+        { id: 49, name: "Option 4" },
     ];
+
+    const [previewImages, setPreviewImages] = useState([null, null, null, null, null]);
+    const [loading, setLoading] = useState([false, false, false, false, false]);
+
+    const handleFileUpload = async (e, index) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setLoading((prev) => {
+            const newLoading = [...prev];
+            newLoading[index] = true;
+            return newLoading;
+        });
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreviewImages((prev) => {
+                const newPreviews = [...prev];
+                newPreviews[index] = reader.result;
+                return newPreviews;
+            });
+        };
+        reader.readAsDataURL(file);
+
+        try {
+            const result = await onLoadImage(file);
+            const existingPhotos = data.photos || [];
+            const updatedPhotos = [...existingPhotos];
+            updatedPhotos[index] = { id: result.guid };
+            onChangeImage("photos", updatedPhotos);
+        } catch (error) {
+            console.error("Ошибка при загрузке фото:", error);
+        } finally {
+            // Останавливаем анимацию загрузки
+            setLoading((prev) => {
+                const newLoading = [...prev];
+                newLoading[index] = false;
+                return newLoading;
+            });
+        }
+    };
+
+    const handleCancelUpload = (index) => {
+        setPreviewImages((prev) => {
+            const newPreviews = [...prev];
+            newPreviews[index] = null;
+            return newPreviews;
+        });
+
+        const photos = data.photos || [];
+
+        // Убираем фото по индексу
+        const updatedPhotos = photos.filter((_, i) => i !== index);
+
+        onChangeImage("photos", updatedPhotos);
+    };
+
 
     return (
         <div className="cargoForm">
@@ -28,14 +87,14 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                 <input className="cargoForm__input cargoForm__input--short"
                     type="number"
                     name="weight"
-                    value={data.weight}
+                    value={data.weight === 0 ? null : data.weight}
                     placeholder="Вес (т)"
                     onChange={onChange}
                 />
                 <input className="cargoForm__input cargoForm__input--short"
                     type="number"
                     name="volume"
-                    value={data.volume}
+                    value={data.volume === 0 ? null : data.volume}
                     placeholder="Объем (куб.м)"
                     onChange={onChange}
                 />
@@ -44,7 +103,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                 <input className="cargoForm__input"
                     type="number"
                     name="dimensions"
-                    data-path = "length"
+                    data-path="length"
                     value={data.dimensions['length'] === 0 ? null : data.dimensions['length']}
                     placeholder="Длина (м)"
                     onChange={onNestedChange}
@@ -78,16 +137,16 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
             <FormGroup label="Возможная загрузка">
                 <input className="cargoForm__input"
                     type="date"
-                    name="ready"
-                    value={data.ready}
+                    name="readyDate"
+                    value={data.readyDate}
                     onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Возможная выгрузка ??">
+            <FormGroup label="Возможная выгрузка">
                 <input className="cargoForm__input"
                     type="date"
-                    name="ready"
-                    value={data.ready}
+                    name="deliveryDate"
+                    value={data.deliveryDate}
                     onChange={onChange}
                 />
             </FormGroup>
@@ -136,9 +195,9 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                             <label key={option.id} className="cargoForm__radiobox-label">
                                 <input className="cargoForm__radiobox"
                                     type="radio"
-                                    name="loadingType"
+                                    name="loadType"
                                     value={option.name}
-                                    // checked={data.loadingType.includes(option.name)}
+                                    // checked={data.loadType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -153,9 +212,9 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                             <label key={option.id} className="cargoForm__radiobox-label">
                                 <input className="cargoForm__radiobox"
                                     type="radio"
-                                    name="unloadingType"
+                                    name="unloadType"
                                     value={option.name}
-                                    // checked={data.unloadingType.includes(option.name)}
+                                    // checked={data.unloadType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -176,7 +235,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     <label className='cargoForm__radio-label'>
                         <input className='cargoForm__radio-input'
                             type="radio"
-                            name="typePrice"
+                            name="typePay"
                             value="Без НДС, безнал"
                             // checked={data.priceType === "Без НДС, безнал"}
                             onChange={onChange}
@@ -186,7 +245,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     <label className='cargoForm__radio-label'>
                         <input className='cargoForm__radio-input'
                             type="radio"
-                            name="typePrice"
+                            name="typePay"
                             value="С НДС, безнал"
                             // checked={data.priceType === "С НДС, безнал"}
                             onChange={onChange}
@@ -196,7 +255,7 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     <label className='cargoForm__radio-label'>
                         <input className='cargoForm__radio-input'
                             type="radio"
-                            name="typePrice"
+                            name="typePay"
                             value="Наличными"
                             // checked={data.priceType === "Наличными"}
                             onChange={onChange}
@@ -205,14 +264,35 @@ const CargoForm = ({ data, image, onChange, onNestedChange }) => {
                     </label>
                 </div>
             </FormGroup>
-            <FormGroup label="Фото груза" image={image}>
-                {image && <img className="cargoForm__photo" src={image} alt="Preview" />}
+            <FormGroup label="Фото груза">
+                <div className="cargoForm__photos">
+                    {[0, 1, 2, 3, 4].map((index) => (
+                        <div key={index} className="cargoForm__imgBox">
+                            <input
+                                className="cargoForm__input"
+                                type="file"
+                                name={`photo${index}`}
+                                accept="image/*"
+                                onChange={(e) => handleFileUpload(e, index)}
+                            />
+                            {loading[index] ? <div className="cargoForm__loader"></div> :
+                                previewImages[index] && (
+                                    <div className="cargoForm__preview">
+                                        <img className="cargoForm__image" src={previewImages[index]} alt={`Фото ${index + 1}`} />
+                                        <button className="cargoForm__button" onClick={() => handleCancelUpload(index)}>Отмена</button>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    ))}
+                </div>
+                {/* {image && <img className="cargoForm__photo" src={image} alt="Preview" />}
                 <input className="cargoForm__input--img"
                     type="file"
                     name="cargoPhoto"
                     // value={data.cargoPhoto}
                     onChange={onChange}
-                />
+                /> */}
             </FormGroup>
         </div>
     )

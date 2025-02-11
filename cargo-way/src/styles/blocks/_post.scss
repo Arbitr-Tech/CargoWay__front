@@ -218,6 +218,39 @@
             @include m.line(-1rem, v.$noactive-color);
         }
     }
+
+    &__photos {
+        @include m.center;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__imgBox {
+        @include m.imgBox;
+    }
+
+    &__loader {
+        @include m.loader;
+        margin-top: 1rem;
+    }
+
+    &__preview {
+        @include m.preview;
+    }
+
+    &__image {
+        @include m.image;
+        margin-top: 1rem;
+    }
+
+    &__button {
+        @include m.button(v.$primary-color, v.$font-light-color);
+
+
+        &:last-child {
+            margin-bottom: 0.5rem;
+        }
+    }
 }
 
 .cargo,

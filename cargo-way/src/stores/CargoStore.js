@@ -4,8 +4,8 @@ class CargoStore {
     cargoFormData = {
         name: "",
         description: "",
-        weight: "",
-        volume: "",
+        weight: 0,
+        volume: 0,
         dimensions: {
             length: 0,
             width: 0,
@@ -15,37 +15,28 @@ class CargoStore {
             from: "",
             to: ""
         },
-        typePrice: "",
-        price: 0,
-        ready: "",
+        price: 0.0,
+        typePay: "",
+        readyDate: "",
+        deliveryDate: "",
         bodyType: "",
-        loadingType: "",
-        unloadingType: "",
+        loadType: "",
+        unloadType: "",
         cargoPhoto: "",
-        status: "Не опубликовано"
+        status: "HIDDEN",
+        photos: []
     };
 
     constructor() {
         makeAutoObservable(this)
     };
 
-    setFormData = (name, value, type, file) => {
-        if (type === 'file') {
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    this.cargoFormData = { ...this.cargoFormData, cargoPhoto: reader.result }
-                };
-                reader.readAsDataURL(file);
-            }
-            return;
-        } else {
-            this.cargoFormData = { ...this.cargoFormData, [name]: value }
-        }
+    setFormData = (name, value) => {
+        this.cargoFormData = { ...this.cargoFormData, [name]: value }
     }
 
     
-    setNestedFormData = (formName, secondName, newData, typeInfo) => {
+    setNestedFormData = (formName, secondName, newData) => {
         this.cargoFormData = {
             ...this.cargoFormData,
             [formName]: {
@@ -53,6 +44,34 @@ class CargoStore {
                 [secondName]: newData
             }
         };
+    }
+
+    resetFormData = () => {
+        this.cargoFormData = {
+            name: "",
+            description: "",
+            weight: 0,
+            volume: 0,
+            dimensions: {
+                length: 0,
+                width: 0,
+                height: 0
+            },
+            route: {
+                from: "",
+                to: ""
+            },
+            price: 0.0,
+            typePay: "",
+            readyDate: "",
+            deliveryDate: "",
+            bodyType: "",
+            loadType: "",
+            unloadType: "",
+            cargoPhoto: "",
+            status: "HIDDEN",
+            photos: []
+        }
     }
 }
 

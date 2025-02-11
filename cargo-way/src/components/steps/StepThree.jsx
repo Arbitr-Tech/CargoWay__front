@@ -1,14 +1,15 @@
 import { IndividualAdditionalForm } from '../forms/registrationForms/IndividualAssitionalForm';
 import { CompanyAdditionalForm } from '../forms/registrationForms/CompanyAdditionalForm';
 
-const StepThree = ({ userType, data, onBack, onSubmit, onNestedChange, image }) => {
+const StepThree = ({ userType, data, onBack, onSubmit, onNestedChange, onChangeImage }) => {
     return (    
         <div className='step'>
             {userType === "individual" ? (
                 <IndividualAdditionalForm
                     data={data.individualData}
                     onChange={(newData) => onNestedChange("individualData", newData)}
-                    image={image}
+                    onChangeNested={onNestedChange}
+                    onChangeImage={onChangeImage}
                 />
             ) : (
                 <CompanyAdditionalForm

@@ -5,7 +5,8 @@ import StepThree from "../steps/StepThree";
 import { validateStepOne, validateStepTwo, validateStepThree } from "../../validation/validations"
 import { observer } from "mobx-react-lite";
 import { registrationStore } from "../../stores/RegistrationStore";
-import { registration } from "../../api/reg/regService";
+import { registration } from "../../api/regService";
+import { loadFile } from "../../api/commonService";
 import { toJS } from "mobx";
 import { userStore } from "../../stores/UserStore";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +64,7 @@ const RegistrationPage = observer(() => {
             alert(Object.values(errors).join("\n"));
             return;
         }
-        console.log(store.registrationFormData)
+        console.log(toJS(store.registrationFormData))
 
         try {
             await registration(store.registrationFormData.userType, toJS(store.registrationFormData))
@@ -105,6 +106,7 @@ const RegistrationPage = observer(() => {
                         onSubmit={handleSubmit}
                         onNestedChange={store.setRegistrationNestedFormData}
                         image={store.registrationFormData.individualData.identityDocuments}
+                        onChangeImage={loadFile}
                     />
                 )}
             </div>

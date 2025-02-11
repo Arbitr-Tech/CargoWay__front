@@ -2,7 +2,7 @@ import AuthorizationForm from "../forms/AuthorizationForm";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
 import { autorizationStore } from "../../stores/AutorizationStore";
-import { getProfileRole, login } from "../../api/auth/authService";
+import { getProfileRole, login } from "../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../../stores/UserStore";
 
@@ -23,7 +23,7 @@ const AuthorizationPage = observer(() => {
 
         try {
             await login(toJS(store.autorizationFormData));
-            const role = await getProfileRole(localStorage.getItem('access_token'));
+            const role = await getProfileRole(localStorage.getItem('accessToken'));
             storeUser.setRole(role);
             store.reset();
 

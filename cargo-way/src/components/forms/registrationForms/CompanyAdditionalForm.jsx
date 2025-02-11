@@ -18,7 +18,7 @@ export const CompanyAdditionalForm = ({ data, onChange }) => (
                 onChange={(e) => onChange({ ...data, registrationDate: e.target.value })}
             />
         </label>
-        <label className="step__form-label">
+        {/* <label className="step__form-label">
             <span>Дата регистрации в системе:</span>
             <input
                 className="step__form-input"
@@ -27,6 +27,6 @@ export const CompanyAdditionalForm = ({ data, onChange }) => (
                 value={data.dateRegInSystem || ""}
                 onChange={(e) => onChange({ ...data, dateRegInSystem: e.target.value })}
             />
-        </label>
+        </label> */}
     </div>
 );

@@ -16,7 +16,7 @@ const TopBar = () => {
 
     const handleConfirmLogout = async () => {
         userStore.setRole('');
-        localStorage.removeItem('access_token');
+        localStorage.removeItem('accessToken');
         navigate('/');
         setIsPopupOpen(false);
 
@@ -44,7 +44,6 @@ const TopBar = () => {
                     <li className="topbar__list-item topbar__list-item--dropdown">
                         <p className="topbar__list-dropbtn">Еще</p>
                         <ul className="topbar__list-dropdownContent">
-                            <li className="topbar__list-dropItem  topbar__list-dropItem--hide"><Link to={'/'}>Найти транспорт / грузы</Link></li>
                             <li className="topbar__list-dropItem"><Link to={'/cargo/list'}>Ваши грузы</Link></li>
                             <li className="topbar__list-dropItem"><Link to={'/cargo/add'}>Добавить грузы</Link></li>
                             <li className="topbar__list-dropItem"><Link to={'/auto/list'}>Ваш транспорт</Link></li>
