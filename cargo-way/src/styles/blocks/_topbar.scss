@@ -13,6 +13,7 @@
 
     @include m.tablet {
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     &__list {

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { getCargoListOfLatest } from "../api/cargoService";
 
 class MainSearchStore {
     page = 'MainSearchPage';
@@ -16,6 +17,24 @@ class MainSearchStore {
         nameОfСargo: [],
         loadingType: []
     };
+    cargoListLatest = [];
+    loadingCargoListLatest = false;
+    error = null;
+
+    async fetchCargoListLatest() {
+        // this.loadingCargoListLatest = true;
+        // this.error = null;
+        try {
+            const data = await getCargoListOfLatest();
+            this.cargoListLatest = data;
+        } catch (error) {
+            // this.error = error.message;
+            console.error("Ошибка при получении списка грузов:", error);
+        } 
+        // finally {
+        //     this.loadingCargoListLatest = false;
+        // }
+    }
 
     constructor() {
         makeAutoObservable(this);

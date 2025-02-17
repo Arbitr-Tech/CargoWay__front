@@ -4,12 +4,21 @@ import { cargoStore } from "../../../stores/CargoStore";
 import CargoForm from "../../forms/CargoForm";
 import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
-import { addCargo } from "../../../api/cargoService";
-import { useNavigate } from "react-router-dom";
+import { addCargo, updateCargo } from "../../../api/cargoService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const CargoPostPage = observer(({ typePage }) => {
     const store = cargoStore;
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (!location.pathname.startsWith("/cargo/edit")) {
+            cargoStore.resetFormData();
+        }
+    }, [location.pathname]);
 
     const handleInputChange = ({ target: { name, value } }) => {
         const resValue = name === 'weight' || name === 'volume' ? +value : value;
@@ -19,15 +28,19 @@ const CargoPostPage = observer(({ typePage }) => {
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
         const resValue = name === 'dimensions' ? +value : value;
         store.setNestedFormData(name, dataset.path, resValue);
-        console.log(store.cargoFormData)
     };
 
     const handleClickButton = async () => {
-        console.log(store.cargoFormData);
         try {
-            await addCargo(toJS(store.cargoFormData));
-            store.resetFormData();
-            navigate('/cargo/list');
+            if (typePage === 'add') {
+                await addCargo(toJS(store.cargoFormData));
+                // console.log(toJS(store.cargoFormData))
+                navigate('/cargo/list');
+            } else {
+                const data = store.getUpdatedFields();
+                await updateCargo(store.editingCargoId, data);
+                navigate('/cargo/list');
+            }
         } catch (error) {
             console.log('Ошибка отправки формы: ', error);
         }

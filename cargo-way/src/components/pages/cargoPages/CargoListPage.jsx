@@ -5,15 +5,24 @@ import TopBar from "../../TopBar";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
+import { getDetailsCargo } from "../../../api/cargoService";
+import { cargoStore } from "../../../stores/CargoStore";
 
 
 const CargoListPage = observer(() => {
     const store = listStore;
+    const storeCargo = cargoStore;
     const navigate = useNavigate();
 
-    const handleEditClick = (item) => {
-        navigate('/cargo/edit');
-        console.log(item);
+    const handleEditClick = async (item) => {
+        try {
+            const data = await getDetailsCargo('b8c7e86d-76ad-4c00-ba9e-78943b90b074');
+            console.log(data)
+            storeCargo.setCargoFormDataFromServer('b8c7e86d-76ad-4c00-ba9e-78943b90b074', data);
+            navigate('/cargo/edit');
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const list = [

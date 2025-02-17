@@ -1570,6 +1570,16 @@ input[type=date]::-webkit-datetime-edit {
   overflow-y: auto;
   scrollbar-width: thin;
 }
+.popup__text-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.popup__text-title {
+  font-weight: 700;
+  color: #44403B;
+}
 .popup__buttons {
   display: flex;
   justify-content: center;

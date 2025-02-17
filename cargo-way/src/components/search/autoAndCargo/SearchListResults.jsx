@@ -22,7 +22,7 @@ const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo }) => {
                         from={item.route.from}
                         to={item.route.to}
                         price={item.price}
-                        typePrice={item.typePrice}
+                        typePrice={item.typePay}
                         typeButton={typeButton}
                         status={item.status}
                         onClickOne={() => {

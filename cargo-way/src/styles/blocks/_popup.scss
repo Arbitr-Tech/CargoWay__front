@@ -20,6 +20,17 @@
         overflow-y: auto;
         scrollbar-width: thin;
 
+        &-item {
+            @include m.center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        &-title {
+            font-weight: 700;
+            color: v.$font-dark-color;
+        }
+
     }
 
     &__buttons {
