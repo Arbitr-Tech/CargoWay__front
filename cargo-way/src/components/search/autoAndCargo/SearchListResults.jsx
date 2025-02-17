@@ -1,6 +1,6 @@
 import SearchItemCard from "./SearchItemCard";
 
-const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo }) => {
+const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo, onClickThree }) => {
     return (
         < div className="search__result" >
             <div className={`search__result-header ${typeButton === 'mylist' ? 'search__result-header--mylist' : ''}`}>
@@ -30,6 +30,7 @@ const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo }) => {
                             console.log(item)
                         }}
                         onClickTwo={onClickTwo}
+                        onClickThree={onClickThree}
                     />
                 ))}
             </div>

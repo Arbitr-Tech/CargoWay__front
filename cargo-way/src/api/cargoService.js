@@ -50,3 +50,27 @@ export const getCargoListOfLatest = async () => {
         throw error;
     }
 };
+
+export const changeStatusCargo = async (cargoId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/change-status/?status=PUBLISHED`, {
+            method: "PATCH"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка обновления статуса груза: ", error);
+        throw error;
+    }
+};
+
+export const deleteCargo = async (cargoId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}`, {
+            method: "DELETE"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка удаления груза: ", error);
+        throw error;
+    }
+};

@@ -1,18 +1,27 @@
-import { useState } from "react";
 import Popup from "../../Popup";
 import SearchListResults from "../../search/autoAndCargo/SearchListResults";
 import TopBar from "../../TopBar";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
-import { getDetailsCargo } from "../../../api/cargoService";
+import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
 import { cargoStore } from "../../../stores/CargoStore";
+import { useState } from "react";
 
 
 const CargoListPage = observer(() => {
     const store = listStore;
     const storeCargo = cargoStore;
     const navigate = useNavigate();
+    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "" });
+
+    const openPopup = (text, type) => {
+        setPopupData({ isOpen: true, text, type });
+    };
+
+    const closePopup = () => {
+        setPopupData({ isOpen: false, text: "", type: "" });
+    };
 
     const handleEditClick = async (item) => {
         try {
@@ -24,6 +33,30 @@ const CargoListPage = observer(() => {
             console.log(error)
         }
     }
+
+    const handleDeleteClick = async () => {
+        try {
+            const data = await deleteCargo('b8c7e86d-76ad-4c00-ba9e-78943b90b074');
+            console.log(data)
+            closePopup()
+            //обновление списка
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handlePublishClick = async () => {
+        try {
+            const data = await changeStatusCargo('b8c7e86d-76ad-4c00-ba9e-78943b90b074');
+            console.log(data)
+            console.log(popupData.type)
+            closePopup()
+            //обновление списка
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const list = [
         { id: 1, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePay: "Наличными", price: 12000, readyDate: "2025-01-18", deliveryDate: "2025-05-10", bodyType: "тент", loadType: "задняя", unloadType: "ручная", cargoPhoto: "photo_url_here", status: "Не опубликовано" },
@@ -40,12 +73,20 @@ const CargoListPage = observer(() => {
 
     return (
         <div className="cargoList">
-            <div className={`overlay ${store.isPopupOpen ? 'overlay--show' : ''} `}></div>
+            <div className={`overlay ${popupData.isOpen ? 'overlay--show' : ''} `}></div>
             <div className="container">
-                <Popup isOpen={store.isPopupOpen} text='Вы действительно хоите удалить эту запись?' typePopup='del' onClose={store.closePopup} />
+                <Popup isOpen={popupData.isOpen} text={popupData.text} typePopup={popupData.type} onClose={closePopup}
+                    onConfirm={popupData.type === 'del' ? handleDeleteClick : handlePublishClick}
+                />
                 <TopBar />
                 <h2 className="cargoList__title">Ваши грузы</h2>
-                <SearchListResults list={list} typeButton='mylist' onClickOne={handleEditClick} onClickTwo={store.openPopup} />
+                <SearchListResults
+                    list={list}
+                    typeButton='mylist'
+                    onClickOne={handleEditClick}
+                    onClickTwo={() => openPopup('Вы действительно хотите удалить эту запись?', 'del')}
+                    onClickThree={() => openPopup('Вы действительно хотите опубликовать эту запись?', 'edit')}
+                />
             </div>
         </div>
     )
