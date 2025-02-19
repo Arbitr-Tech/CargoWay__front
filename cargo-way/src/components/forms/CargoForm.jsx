@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import FormGroup from "./FormGroup";
-import { API_URL } from "../../api/config";
 
 const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage }) => {
 

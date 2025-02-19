@@ -7,16 +7,23 @@ import { mainSearchStore } from "../../stores/MainSearchStore";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { userStore } from "../../stores/UserStore";
+import { getCargoByFiltres } from "../../api/cargoService";
+import { useLocation } from "react-router-dom";
 
 const MainSearchPage = observer(() => {
 
     const store = mainSearchStore;
     const role = userStore.role;
+    const location = useLocation();
     console.log(role);
 
     useEffect(() => {
-        store.fetchCargoListLatest();
-    }, []);
+        const fetchData = async () => {
+            await store.fetchListsLatest(); // Вызываем асинхронную функцию
+        };
+
+        fetchData();
+    }, [location.pathname]);
 
     const handleInputChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -25,14 +32,9 @@ const MainSearchPage = observer(() => {
     };
 
     useEffect(() => {
-        if (store.isPopupOpen) {
-            document.body.style.overflow = "hidden"; // Отключаем прокрутку
-        } else {
-            document.body.style.overflow = ""; // Восстанавливаем прокрутку
-        }
-
+        document.body.style.overflow = store.isPopupOpen ? "hidden" : "";
         return () => {
-            document.body.style.overflow = ""; // Восстанавливаем при размонтировании
+            document.body.style.overflow = "";
         };
     }, [store.isPopupOpen]);
 
@@ -48,21 +50,31 @@ const MainSearchPage = observer(() => {
         { id: 9, name: "краска", description: "Грунтовка акриловая для стен и потолков", weight: 20, volume: 15, dimensions: { length: 30, width: 30, height: 40 }, route: { from: "Россия", to: "Турция" }, typePay: "Наличными", price: 12000, readyDate: "2025-01-18", bodyType: "тент", loadType: "задняя", unloadType: "ручная", photos: "photo_url_here" },
     ]
     const list2 = [
-        { id: 1, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 2, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 3, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 4, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 5, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 6, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 7, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 8, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
-        { id: 9, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transport_number: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailer_number: 54321 }, lifting_capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 1, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 2, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 3, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 4, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 5, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 6, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 7, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 8, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
+        { id: 9, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailer_details: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, capacity: 25000, bodyType: "тентованный", loadType: "задняя", date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", typePay: "Наличными", price: 15000 },
     ]
 
     const handleContactsClick = (item) => {
         console.log(item.id)
         store.openPopup(item);
         console.log(store.popupContent)
+    }
+
+    const handleCargoClick = async () => {
+        try {
+            const res = await getCargoByFiltres(store.formData);
+            console.log(res);
+            store.setCargoSearchList(res);
+        } catch (error) {
+            console.log("Ошибка удаления груза: ", error);
+        }
     }
 
     const getPageContent = () => {
@@ -76,7 +88,7 @@ const MainSearchPage = observer(() => {
                                 <SearchListResults list={store.cargoListLatest} typeButton='main' onClickOne={handleContactsClick} />
                             </motion.div>
                             <motion.div initial={{ x: 200, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }} className="searchPage__box-motion">
-                                <SearchListResults list={list2} typeButton='main' onClickOne={handleContactsClick} />
+                                <SearchListResults list={store.autoListLatest} typeButton='main' onClickOne={handleContactsClick} />
                             </motion.div>
                         </div>
                     </>
@@ -90,7 +102,7 @@ const MainSearchPage = observer(() => {
             case 'SearchCargoPage':
                 return (
                     <div className="searchPage__box">
-                        <SearchListResults list={list2} typeButton='main' onClickOne={handleContactsClick} />
+                        <SearchListResults list={store.cargoListSearch} typeButton='main' onClickOne={handleContactsClick} />
                     </div>
                 );
             default:
@@ -178,7 +190,7 @@ const MainSearchPage = observer(() => {
                                 data={store.formData}
                                 onChange={handleInputChange}
                                 onClickAuto={() => store.page === 'MainSearchPage' ? store.setPage('SearchAutoPage') : store.page === 'SearchCargoPage' ? store.setPage('MainSearchPage') : console.log(store.formData)}
-                                onClickCargo={() => store.page === 'MainSearchPage' ? store.setPage('SearchCargoPage') : store.page === 'SearchAutoPage' ? store.setPage('MainSearchPage') : console.log(store.formData)}
+                                onClickCargo={() => store.page === 'MainSearchPage' ? store.setPage('SearchCargoPage') : store.page === 'SearchAutoPage' ? store.setPage('MainSearchPage') : handleCargoClick()}
                                 page={store.page}
                             />
                         </div>

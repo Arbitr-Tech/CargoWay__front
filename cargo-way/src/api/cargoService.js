@@ -51,9 +51,9 @@ export const getCargoListOfLatest = async () => {
     }
 };
 
-export const changeStatusCargo = async (cargoId) => {
+export const changeStatusCargo = async (cargoId, status) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/change-status/?status=PUBLISHED`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/change-status/?status=${status === 'HIDDEN' ? 'PUBLISHED' : 'HIDDEN'}`, {
             method: "PATCH"
         })
         return data;
@@ -67,6 +67,40 @@ export const deleteCargo = async (cargoId) => {
     try {
         const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}`, {
             method: "DELETE"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка удаления груза: ", error);
+        throw error;
+    }
+};
+
+export const getCargoByFiltres = async (formData) => {
+
+    let path = '';
+
+    for(let el of Object.entries(formData)) {
+        if(el[1] !== '') {
+            path+=`${el[0]}=${el[1]}&`
+        }
+    }
+
+    try {
+        console.log(path);
+        const data = await fetchWithAuth(`/api/v1/cargos/?${path}`, {
+            method: "GET"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка удаления груза: ", error);
+        throw error;
+    }
+};
+
+export const getCargoByProfile = async () => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/profile/`, {
+            method: "GET"
         })
         return data;
     } catch (error) {

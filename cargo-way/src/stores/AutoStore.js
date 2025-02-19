@@ -9,14 +9,7 @@ class AutoStore {
         brand: "",
         model: "",
         year: 0,
-        dimensions: {
-            length: 0,
-            width: 0,
-            height: 0
-        },
-        volume: 0,
-        category: "",
-        transport_number: 0,
+        transportNumber: "",
         trailer_details: {
             dimensions: {
                 length: 0,
@@ -24,40 +17,30 @@ class AutoStore {
                 height: 0
             },
             volume: 0,
-            trailer_number: 0
+            trailerNumber: 0
         },
-        lifting_capacity: 0,
+        capacity: 0,
         bodyType: "",
-        loadingType: "",
-        date: "",
+        loadType: "",
+        unloadType: "",
+        readyDate: "",
         route: {
             from: "",
             to: ""
         },
-        autoPhoto: "",
-        typePrice: "",
+        typePay: "",
         price: 0,
-        status: "Не опубликовано",
-        driver: 0
+        status: "HIDDEN",
+        driver: {},
+        photos: []
     };
 
     constructor() {
         makeAutoObservable(this)
     };
 
-    setFormData = (name, value, type, file) => {
-        if (type === 'file') {
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    this.autoFormData = { ...this.autoFormData, autoPhoto: reader.result }
-                };
-                reader.readAsDataURL(file);
-            }
-            return;
-        } else {
-            this.autoFormData = { ...this.autoFormData, [name]: value }
-        }
+    setFormData = (name, value) => {
+        this.autoFormData = { ...this.autoFormData, [name]: value }
     }
 
     setNestedFormData = (formName, secondName, newData) => {
@@ -74,10 +57,6 @@ class AutoStore {
         this.setNestedFormData(formName, secondName, {...this.autoFormData[formName][secondName], [thirdName]: newData});
     }
 
-    setEditData = (name, value) => {
-        this.autoFormData = { ...this.autoFormData, [name]: value }
-    }
-
     setAutoTrailer = () => {
         this.autoTrailer = !this.autoTrailer
         if (!this.autoTrailer) {
@@ -90,7 +69,7 @@ class AutoStore {
                         height: 0
                     },
                     volume: 0,
-                    trailer_number: 0
+                    trailerNumber: 0
                 }
             };
         }

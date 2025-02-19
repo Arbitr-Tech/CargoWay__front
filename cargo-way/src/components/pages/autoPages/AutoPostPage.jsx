@@ -3,13 +3,18 @@ import TopBar from "../../TopBar";
 import AutoForm from "../../forms/AutoForm";
 import { observer } from "mobx-react-lite";
 import { autoStore } from "../../../stores/AutoStore";
+import { loadFile } from "../../../api/commonService";
+import { addAuto } from "../../../api/autoService";
+import { toJS } from "mobx";
+import { useNavigate } from "react-router-dom";
 
 
 const AutoPostPage = observer(({ typePage }) => {
     const store = autoStore;
+    const navigate = useNavigate();
 
-    const handleInputChange = ({ target: { name, value, type, file } }) => {
-        store.setFormData(name, value, type, file?.[0], 'auto');
+    const handleInputChange = ({ target: { name, value } }) => {
+        store.setFormData(name, value);
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
@@ -25,20 +30,41 @@ const AutoPostPage = observer(({ typePage }) => {
         store.setDriver(Number(event.target.dataset.id));
     };
 
-    const handleButton = () => {
-        console.log(store.autoFormData)
+    const handleButton = async () => {
+        try {
+            if (typePage === 'add') {
+                // await addAuto(toJS(store.autoFormData));
+                console.log(toJS(store.autoFormData))
+                // navigate('/auto/list');
+            } else {
+                // const data = store.getUpdatedFields();
+                // await updateCargo(store.editingCargoId, data);
+                // navigate('/cargo/list');
+            }
+        } catch (error) {
+            console.log('Ошибка отправки формы: ', error);
+        }
     };
 
     return (
         <div className="auto">
-
             <div className="container">
                 <TopBar />
                 <h2 className="auto__title">{typePage === 'add' ? 'Добавить машину' : 'Изменить машину'}</h2>
-                <AutoForm data={store.autoFormData} image={store.autoFormData.autoPhoto} autoTrailer={store.autoTrailer}
-                dropDown={store.autoDropDownDriver} onChange={handleInputChange} onNestedChange={handleNestedInputChange}
-                onTwiceNesctedChange={handleTwiceNestedInputChange} onClickButtonTrailer={store.setAutoTrailer}
-                onClickDriver={handleClickDriver} onClickMenu={store.setDropDown}/>
+                <AutoForm
+                    data={store.autoFormData}
+                    autoTrailer={store.autoTrailer}
+                    dropDown={store.autoDropDownDriver}
+                    onChange={handleInputChange}
+                    onNestedChange={handleNestedInputChange}
+                    onTwiceNesctedChange={handleTwiceNestedInputChange}
+                    onClickButtonTrailer={store.setAutoTrailer}
+                    onClickDriver={handleClickDriver}
+                    onClickMenu={store.setDropDown}
+                    onClickMenuButton={() => store.setFormData('driver', '')}
+                    onLoadImage={loadFile}
+                    onChangeImage={store.setFormData}
+                />
                 <div className="auto__btnBox">
                     <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Опубликовать запись' : 'Сохранить изменения'}</button>
                 </div>

@@ -55,11 +55,17 @@ export const fetchWithAuth = async (url, options = {}) => {
         return fetchWithAuth(url, options); // Повторный запрос
     }
 
-    // ❗️ Проверяем `response.ok` перед `response.json()`
+    // Проверяем, успешен ли запрос
     if (!response.ok) {
         const errorText = await response.text(); // Читаем текст ошибки с бэка
         throw new Error(`Ошибка ${response.status}: ${errorText}`);
     }
 
-    return response.json();
+    // Проверяем, есть ли тело в ответе
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+        return response.json(); // Возвращаем JSON, если тело есть
+    } else {
+        return null; // Возвращаем null, если тело отсутствует
+    }
 };

@@ -1,35 +1,46 @@
 import { makeAutoObservable } from "mobx";
 import { getCargoListOfLatest } from "../api/cargoService";
+import { getAutoListOfLatest } from "../api/autoService";
 
 class MainSearchStore {
     page = 'MainSearchPage';
     isPopupOpen = false;
     popupContent = {};
     formData = {
-        sending: "",
-        reception: "",
+        routeFrom: "",
+        routeTo: "",
         weightFrom: "",
         weightTo: "",
         volumeFrom: "",
         volumeTo: "",
-        loadingDate: "",
-        bodyType: [],
-        nameОfСargo: [],
-        loadingType: []
+        readyDate: "",
+        priceFrom: "",
+        priceTo: "",
+        bodyType: "",
+        loadType: "",
+        unloadType: ""
+        // bodyType: [],
+        // loadType: [],
+        // unloadType: []
     };
     cargoListLatest = [];
+    autoListLatest = [];
+    cargoListSearch = [];
     loadingCargoListLatest = false;
     error = null;
 
-    async fetchCargoListLatest() {
+    async fetchListsLatest() {
         // this.loadingCargoListLatest = true;
         // this.error = null;
         try {
-            const data = await getCargoListOfLatest();
-            this.cargoListLatest = data;
+            const dataCargo = await getCargoListOfLatest();
+            const dataAuto = await getAutoListOfLatest();
+            this.cargoListLatest = dataCargo;
+            this.cargoListSearch = dataCargo;
+            this.autoListLatest = dataAuto;
         } catch (error) {
             // this.error = error.message;
-            console.error("Ошибка при получении списка грузов:", error);
+            console.error("Ошибка при получении списков:", error);
         } 
         // finally {
         //     this.loadingCargoListLatest = false;
@@ -64,6 +75,10 @@ class MainSearchStore {
         } else {
             this.formData = { ...this.formData, [name]: value }
         }
+    }
+
+    setCargoSearchList = (list) => {
+        this.cargoListSearch = list
     }
 }
 

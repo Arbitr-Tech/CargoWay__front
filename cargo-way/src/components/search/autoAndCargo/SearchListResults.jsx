@@ -17,20 +17,20 @@ const SearchListResults = ({ list, typeButton, onClickOne, onClickTwo, onClickTh
                 {list.map((item) => (
                     <SearchItemCard key={item.id}
                         bodyType={item.bodyType}
-                        weight={item.weight || item.lifting_capacity}
+                        weight={item.weight || item.capacity}
                         volume={item.volume}
                         from={item.route.from}
                         to={item.route.to}
                         price={item.price}
-                        typePrice={item.typePay}
+                        typePay={item.typePay}
                         typeButton={typeButton}
                         status={item.status}
                         onClickOne={() => {
                             onClickOne(item)
                             console.log(item)
                         }}
-                        onClickTwo={onClickTwo}
-                        onClickThree={onClickThree}
+                        onClickTwo={() => onClickTwo(item)}
+                        onClickThree={() => onClickThree(item)}
                     />
                 ))}
             </div>

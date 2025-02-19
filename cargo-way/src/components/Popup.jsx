@@ -1,4 +1,4 @@
-const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
+const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, item }) => {
     if (!isOpen) return null;
 
     const fieldNames = {

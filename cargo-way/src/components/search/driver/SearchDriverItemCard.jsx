@@ -1,4 +1,4 @@
-const SearchDriverItemCard = ({ bodyType, weight, volume, from, to, price, typePrice, typeButton, status, onClickOne, onClickTwo, onClickThree }) => {
+const SearchDriverItemCard = ({ bodyType, weight, volume, from, to, price, typePay, typeButton, status, onClickOne, onClickTwo, onClickThree }) => {
     return (
         <div className="search__item">
             <div className={`search__item-text ${typeButton === 'mylist' ? 'search__item-text--mylist' : ''}`}>
@@ -7,7 +7,7 @@ const SearchDriverItemCard = ({ bodyType, weight, volume, from, to, price, typeP
                 <p className="search__item-content">{from}</p>
                 <p className="search__item-content">{to}</p>
                 <p className="search__item-content">{price}</p>
-                <p className="search__item-content">{typePrice}</p>
+                <p className="search__item-content">{typePay}</p>
                 {typeButton === 'mylist' ? <p className="search__item-content">{status}</p> : ''}
             </div>
             <div className="search__item-btns">

@@ -167,7 +167,11 @@
                 background-color: v.$active-color;
             }
         }
-    }
+
+        &-btn {
+            @include m.button(v.$primary-color, v.$font-light-color);
+        }
+    } 
 
     &__textarea {
         @include m.input-base;

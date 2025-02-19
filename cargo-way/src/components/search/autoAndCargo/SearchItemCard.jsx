@@ -1,4 +1,4 @@
-const SearchItemCard = ({ bodyType, weight, volume, from, to, price, typePrice, typeButton, status, onClickOne, onClickTwo, onClickThree }) => {
+const SearchItemCard = ({ bodyType, weight, volume, from, to, price, typePay, typeButton, status, onClickOne, onClickTwo, onClickThree }) => {
     return (
         <div className="search__item">
             <div className={`search__item-text ${typeButton === 'mylist' ? 'search__item-text--mylist' : ''}`}>
@@ -7,7 +7,7 @@ const SearchItemCard = ({ bodyType, weight, volume, from, to, price, typePrice, 
                 <p className="search__item-content search__item-content--hide">{from}</p>
                 <p className="search__item-content search__item-content--hide">{to}</p>
                 <p className="search__item-content search__item-content--yellow">{price}</p>
-                <p className="search__item-content search__item-content--brown search__item-content--hide">{typePrice}</p>
+                <p className="search__item-content search__item-content--brown search__item-content--hide">{typePay}</p>
                 {typeButton === 'mylist' ? <p className="search__item-content">{status}</p> : ''}
             </div>
             <div className="search__item-btns">
@@ -15,7 +15,7 @@ const SearchItemCard = ({ bodyType, weight, volume, from, to, price, typePrice, 
                 {typeButton === 'mylist' ?
                     <>
                         <button className="search__item-button" onClick={onClickTwo}>Удалить</button>
-                        <button className="search__item-button" onClick={onClickThree}>{status === 'Не опубликовано' ? 'Опубликовать' : 'Снять с публикации'}</button>
+                        <button className="search__item-button" onClick={onClickThree}>{status === 'HIDDEN' ? 'Опубликовать' : 'Снять с публикации'}</button>
                     </>
                     : ''}
             </div>
