@@ -1,4 +1,8 @@
 import { API_URL } from '../api/config';
+import { userStore } from '../stores/UserStore';
+import { toast } from "react-toastify";
+
+let hasShownToast = false;
 
 export const loadFile = async (file) => {
     const formData = new FormData();
@@ -17,20 +21,32 @@ export const loadFile = async (file) => {
 };
 
 export const refreshToken = async () => {
-    const response = await fetch(`${API_URL}/api/v1/auth/refresh-token/`, {
-        method: "POST",
-        credentials: "include",
-    });
+    try {
+        const response = await fetch(`${API_URL}/api/v1/auth/refresh-token/`, {
+            method: "POST",
+            credentials: "include",
+        });
 
-    if (!response.ok) {
+        if (!response.ok) {
+            throw new Error("Не удалось обновить токен");
+        }
+
+        const data = await response.json();
+        localStorage.setItem("accessToken", data.access_token);
+        console.log("Новый токен:", data.access_token);
+        hasShownToast = false; // Сбрасываем флаг, так как токен успешно обновлен
+        return data.access_token;
+    } catch (error) {
         localStorage.removeItem("accessToken");
-        throw new Error("Не удалось обновить токен");
-    }
+        userStore.setRole('');
+        
+        if (!hasShownToast) { // Показываем ошибку только один раз
+            toast.error("Сессия истекла. Войдите снова.");
+            hasShownToast = true;
+        }
 
-    const data = await response.json();
-    console.log(data.access_token);
-    localStorage.setItem("accessToken", data.access_token);
-    return data.accessToken;
+        throw new Error("Сессия истекла. Войдите снова.");
+    }
 };
 
 export const fetchWithAuth = async (url, options = {}) => {
@@ -49,10 +65,14 @@ export const fetchWithAuth = async (url, options = {}) => {
         headers: { ...defaultHeaders, ...(options.headers || {}) },
     });
 
-    if (response.status === 403) { 
-        console.log("403: Access Forbidden"); 
-        accessToken = await refreshToken();
-        return fetchWithAuth(url, options); // Повторный запрос
+    if (response.status === 403) {
+        console.log("403: Access Forbidden");
+        try {
+            accessToken = await refreshToken();
+            return fetchWithAuth(url, options); // Повторный запрос
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 
     // Проверяем, успешен ли запрос

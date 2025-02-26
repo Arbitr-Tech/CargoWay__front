@@ -1,3 +1,4 @@
+import React from "react";
 import ProgressBar from "../ProgressBar";
 import StepOne from "../steps/StepOne";
 import StepTwo from "../steps/StepTwo";
@@ -37,6 +38,7 @@ const RegistrationPage = observer(() => {
         const { name, value, type, checked } = event.target;
 
         store.setRegistrationFormData(name, value, type, checked);
+        console.log(store.registrationFormData)
     }
 
     const handleStepChange = (nextStep) => {

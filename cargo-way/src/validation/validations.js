@@ -4,7 +4,7 @@ const validateStepOne = (data) => {
     if (!data.role) errors.userRole = "Выберите одну из ролей";
     if (!data.username || !/^.{5,50}$/.test(data.username)) errors.username = "Логин должен состоять от 5 до 50 символов";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
-    if (!data.password || data.password.length < 6) errors.password = "Пароль должен быть не менее 6 символов";
+    if (!data.password || data.password.length < 8) errors.password = "Пароль должен быть не менее 8 символов";
     if (!data.agreement) errors.agreement = "Необходимо согласиться с условиями обработки данных";
 
     return errors;
@@ -21,7 +21,9 @@ const validateStepTwo = (userType, data) => {
             errors.passportSeries = "Серия паспорта должна содержать 4 цифры";
         }
         if (!data.whoGive) errors.whoGive = "Укажите, кем выдан паспорт";
-        if (!data.departmentCode) errors.departmentCode = "Код подразделения обязателен";
+        if (!data.departmentCode || !/^\d{3}-\d{3}$/.test(data.departmentCode)) {
+            errors.departmentCode = "Код подразделения обязателен и должен быть в формате '000-000'";
+        } 
     } else {
         if (!data.inn || !/^\d{10}$/.test(data.inn)) {
             errors.inn = "ИНН должен содержать 10 цифр";

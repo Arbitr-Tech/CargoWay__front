@@ -1,3 +1,4 @@
+import React from "react";
 import { IndividualForm } from "../forms/registrationForms/IndividualForm";
 import { CompanyForm } from "../forms/registrationForms/CompanyForm";
 

@@ -128,21 +128,12 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                 <FormGroup label="Грузоподъемность (т)">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="capacity"
-                        value={data.capacity === 0 ? null : data.capacity}
+                        name="liftingCapacity"
+                        value={data.liftingCapacity === 0 ? null : data.liftingCapacity}
                         placeholder="0"
                         onChange={onChange}
                     />
                 </FormGroup>
-                {/* <FormGroup label="Категория автомобиля">
-                    <input className="autoForm__input"
-                        type="text"
-                        name="category"
-                        value={data.category}
-                        placeholder="Например: Камаз"
-                        onChange={onChange}
-                    />
-                </FormGroup> */}
                 <FormGroup label="Номер автомобиля">
                     <input className="autoForm__input"
                         type="text"
@@ -152,7 +143,7 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                         onChange={onChange}
                     />
                 </FormGroup>
-                <FormGroup label="Водитель">
+                {/* <FormGroup label="Водитель">
                     <div className="autoForm__inputBox">
                         <div className="autoForm__inputBox-input">
                             <input
@@ -194,7 +185,7 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                         </div>
                     </div>
                     <button className="autoForm__inputBox-btn" onClick={onClickMenuButton}>Отмена</button>
-                </FormGroup>
+                </FormGroup> */}
                 <div className="autoForm__section">
                     <label className="autoForm__label">
                         <span className="autoForm__label-text">Тип кузова</span>
@@ -342,8 +333,8 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                 <FormGroup label="Габариты">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailer_details"
-                        value={data.trailer_details.dimensions['length'] === 0 ? null : data.trailer_details.dimensions['length']}
+                        name="trailerDetails"
+                        value={data.trailerDetails.dimensions['length'] === 0 ? null : data.trailerDetails.dimensions['length']}
                         placeholder="Длина (м)"
                         data-path="dimensions"
                         data-pathtwo="length"
@@ -351,8 +342,8 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                     />
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailer_details"
-                        value={data.trailer_details.dimensions.width === 0 ? null : data.trailer_details.dimensions.width}
+                        name="trailerDetails"
+                        value={data.trailerDetails.dimensions.width === 0 ? null : data.trailerDetails.dimensions.width}
                         placeholder="Ширина (м)"
                         data-path="dimensions"
                         data-pathtwo="width"
@@ -360,8 +351,8 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                     />
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailer_details"
-                        value={data.trailer_details.dimensions.height === 0 ? null : data.trailer_details.dimensions.height}
+                        name="trailerDetails"
+                        value={data.trailerDetails.dimensions.height === 0 ? null : data.trailerDetails.dimensions.height}
                         placeholder="Высота (м)"
                         data-path="dimensions"
                         data-pathtwo="height"
@@ -371,8 +362,8 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                 <FormGroup label="Объем прицепа (куб.м)">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailer_details"
-                        value={data.trailer_details.volume}
+                        name="trailerDetails"
+                        value={data.trailerDetails.volume}
                         data-path="volume"
                         onChange={onNestedChange}
                     />
@@ -380,8 +371,8 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                 <FormGroup label="Номер прицепа">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailer_details"
-                        value={data.trailer_details.trailerNumber}
+                        name="trailerDetails"
+                        value={data.trailerDetails.trailerNumber}
                         data-path="trailerNumber"
                         onChange={onNestedChange}
                     />

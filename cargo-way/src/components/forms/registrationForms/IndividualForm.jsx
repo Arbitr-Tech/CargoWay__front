@@ -1,3 +1,4 @@
+import React from "react";
 export const IndividualForm = ({ data, onChange }) => (
     <div className="step__form">
         <input className="step__form-input"

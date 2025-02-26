@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "../../TopBar";
 import AutoForm from "../../forms/AutoForm";
 import { observer } from "mobx-react-lite";
@@ -6,12 +6,19 @@ import { autoStore } from "../../../stores/AutoStore";
 import { loadFile } from "../../../api/commonService";
 import { addAuto } from "../../../api/autoService";
 import { toJS } from "mobx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const AutoPostPage = observer(({ typePage }) => {
     const store = autoStore;
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+            if (!location.pathname.startsWith("/auto/edit")) {
+                store.resetFormData();
+            }
+        }, [location.pathname]);
 
     const handleInputChange = ({ target: { name, value } }) => {
         store.setFormData(name, value);
@@ -24,6 +31,7 @@ const AutoPostPage = observer(({ typePage }) => {
 
     const handleTwiceNestedInputChange = ({ target: { name, dataset, value } }) => {
         store.setTwiceNestedFormData(name, dataset.path, dataset.pathtwo, Number(value));
+        console.log(store.autoFormData)
     };
 
     const handleClickDriver = (event) => {
@@ -33,9 +41,9 @@ const AutoPostPage = observer(({ typePage }) => {
     const handleButton = async () => {
         try {
             if (typePage === 'add') {
-                // await addAuto(toJS(store.autoFormData));
+                await addAuto(toJS(store.autoFormData));
                 console.log(toJS(store.autoFormData))
-                // navigate('/auto/list');
+                navigate('/auto/list');
             } else {
                 // const data = store.getUpdatedFields();
                 // await updateCargo(store.editingCargoId, data);
@@ -66,7 +74,7 @@ const AutoPostPage = observer(({ typePage }) => {
                     onChangeImage={store.setFormData}
                 />
                 <div className="auto__btnBox">
-                    <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Опубликовать запись' : 'Сохранить изменения'}</button>
+                    <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>
                 </div>
             </div>
         </div>

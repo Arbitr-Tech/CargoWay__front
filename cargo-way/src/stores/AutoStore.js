@@ -10,7 +10,7 @@ class AutoStore {
         model: "",
         year: 0,
         transportNumber: "",
-        trailer_details: {
+        trailerDetails: {
             dimensions: {
                 length: 0,
                 width: 0,
@@ -19,7 +19,7 @@ class AutoStore {
             volume: 0,
             trailerNumber: 0
         },
-        capacity: 0,
+        liftingCapacity: 0,
         bodyType: "",
         loadType: "",
         unloadType: "",
@@ -31,7 +31,7 @@ class AutoStore {
         typePay: "",
         price: 0,
         status: "HIDDEN",
-        driver: {},
+        // driver: {},
         photos: []
     };
 
@@ -54,7 +54,7 @@ class AutoStore {
     }
 
     setTwiceNestedFormData = (formName, secondName, thirdName, newData) => {
-        this.setNestedFormData(formName, secondName, {...this.autoFormData[formName][secondName], [thirdName]: newData});
+        this.setNestedFormData(formName, secondName, { ...this.autoFormData[formName][secondName], [thirdName]: newData });
     }
 
     setAutoTrailer = () => {
@@ -62,7 +62,7 @@ class AutoStore {
         if (!this.autoTrailer) {
             this.autoFormData = {
                 ...this.autoFormData,
-                trailer_details: {
+                trailerDetails: {
                     dimensions: {
                         length: 0,
                         width: 0,
@@ -80,8 +80,40 @@ class AutoStore {
     }
 
     setDriver = (driver) => {
-        this.autoFormData = {...this.autoFormData, driver: driver}
+        this.autoFormData = { ...this.autoFormData, driver: driver }
         this.autoDropDownDriver = false;
+    }
+
+    resetFormData = () => {
+        this.autoFormData = {
+            brand: "",
+            model: "",
+            year: 0,
+            transportNumber: "",
+            trailerDetails: {
+                dimensions: {
+                    length: 0,
+                    width: 0,
+                    height: 0
+                },
+                volume: 0,
+                trailerNumber: 0
+            },
+            liftingCapacity: 0,
+            bodyType: "",
+            loadType: "",
+            unloadType: "",
+            readyDate: "",
+            route: {
+                from: "",
+                to: ""
+            },
+            typePay: "",
+            price: 0,
+            status: "HIDDEN",
+            // driver: {},
+            photos: []
+        };
     }
 }
 

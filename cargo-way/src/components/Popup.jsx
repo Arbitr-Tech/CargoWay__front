@@ -20,27 +20,35 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, item }) => {
         bodyType: "Тип кузова",
         loadType: "Тип загрузки",
         unloadType: "Тип выгрузки",
-        photos: "Фото груза"
+        photos: "Фото груза",
+        brand: "Марка",
+        model: "Модель",
+        year: "Год выпуска",
+        transportNumber: "Номер транспорта",
+        trailerDetails: "Детали прицепа",
+        trailerNumber: "Номер прицепа",
+        liftingCapacity: "Грузоподъемность",
     };
 
     const renderText = (data) => {
-        return Object.entries(data).map(([key, value]) => (
-            <div key={key} className="popup__text-item">
-                <p className="popup__text-title">{fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:</p>
-                {typeof value === 'object' ? (
-                    <ul className="popup__text-subtitle">
-                        {Object.entries(value).map(([subKey, subValue]) => (
-                            <li key={subKey} className="popup__text-subValue">
-                                {fieldNames[subKey] || subKey.charAt(0).toUpperCase() + subKey.slice(1)}: {'subValue'}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    ` ${value}`
-                )}
-            </div>
-        ));
+        if (!data || typeof data !== "object") return null; // Проверяем, что data - объект
+
+        const renderEntries = (obj) => (
+            <ul className="popup__text-list">
+                {Object.entries(obj || {}).map(([key, value]) => (
+                    <li key={key} className="popup__text-item">
+                        <span className="popup__text-title">
+                            {fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:
+                        </span>
+                        {value && typeof value === "object" ? renderEntries(value) : ` ${value}`}
+                    </li>
+                ))}
+            </ul>
+        );
+
+        return renderEntries(data);
     };
+
 
     return (
         <div className="popup">
