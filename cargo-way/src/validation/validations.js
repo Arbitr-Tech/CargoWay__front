@@ -49,9 +49,10 @@ const validateStepThree = (userType, data) => {
         //     errors.driverLicenseNumber = "Номер водительских прав должен содержать 10 цифр";
         // }
         if (!data.phoneNumber || !/^\+?\d{11}$/.test(data.phoneNumber)) {
+            console.log('Ошибка номера телефона', data.phoneNumber);
             errors.phoneNumber = "Некорректный номер телефона";
         }
-        // if (!data.identityDocuments) errors.identityDocuments = "Добавьте скан-копии документов";
+        if (!data.photos || data.photos.length < 2) errors.photos = "Добавьте фото документов (основная страница и страница с пропиской)";
     } else {
         if (!data.name) errors.name = "Название компании обязательно";
         if (!data.registrationDate) errors.registrationDate = "Дата регистрации компании обязательна";

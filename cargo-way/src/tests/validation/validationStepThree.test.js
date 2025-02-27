@@ -1,11 +1,18 @@
 import { validateStepThree } from '../../validation/validations';
 
 const dataIndividualCorrect = {
-    phoneNumber: "88888888888"
+    phoneNumber: "88888888888",
+    photos: [
+        { guid: "" },
+        { guid: "" }
+    ]
 };
 
 const dataIndividualIncorrect = {
-    phoneNumber: "888888888888"
+    phoneNumber: "888888888888",
+    photos: [
+        { guid: "" }
+    ]
 };
 
 const dataCompanyCorrect = {
@@ -30,6 +37,7 @@ describe('Валидация данных третьего этапа', () => {
     test('Валидация некорректных данных третьего этапа регистрации физ.лиц', () => {
         expect(validateStepThree('individual', dataIndividualIncorrect)).toEqual({
             "phoneNumber": "Некорректный номер телефона",
+            "photos": "Добавьте фото документов (основная страница и страница с пропиской)"
         });
     })
 

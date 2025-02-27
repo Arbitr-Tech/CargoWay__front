@@ -1,3 +1,4 @@
+import React from "react";
 import Popup from "../Popup";
 import SearchForm from "../search/autoAndCargo/SearchForm";
 import SearchListResults from "../search/autoAndCargo/SearchListResults";

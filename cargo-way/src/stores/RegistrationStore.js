@@ -32,7 +32,7 @@ class RegistrationStore {
     }
 
     submitRegistration() {
-        console.log("Регистрация завершена", this.registrationFormData);
+        // console.log("Регистрация завершена", this.registrationFormData);
         this.registrationStep = 1;
         this.registrationFormData = {
             userType: "",

@@ -1,3 +1,4 @@
+import React from 'react';
 import { IndividualAdditionalForm } from '../forms/registrationForms/IndividualAssitionalForm';
 import { CompanyAdditionalForm } from '../forms/registrationForms/CompanyAdditionalForm';
 

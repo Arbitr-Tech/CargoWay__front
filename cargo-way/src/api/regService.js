@@ -10,7 +10,7 @@ export const registration = async (userType, formData) => {
         body: JSON.stringify(formData)
     });
 
-    if (!response.ok) throw new Error("Ошибка создания груза");
+    if (!response.ok) throw new Error("Ошибка регистрации");
 
     const data = await response.json();
     localStorage.setItem("accessToken", data.access_token);

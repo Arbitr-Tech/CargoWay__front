@@ -1,3 +1,4 @@
+import React from "react";
 import { toJS } from "mobx";
 import { useState } from "react";
 
@@ -86,6 +87,7 @@ export const IndividualAdditionalForm = ({ data, onChange, onChangeNested, onCha
                         type="file"
                         name={`photo${index}`}
                         accept="image/*"
+                        aria-label={`Фото паспорта ${index + 1}`}
                         onChange={(e) => handleFileUpload(e, index)}
                     />
                     {loading[index] ? <div className="step__form-loader"></div> :
