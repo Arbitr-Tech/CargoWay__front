@@ -22,13 +22,13 @@ const RegistrationPage = observer(() => {
 
     const validateStep = (currentStep) => {
         const { registrationFormData } = store;
-        const isIndividual = registrationFormData.userType === "individual";
-        const dataToValidate = isIndividual ? registrationFormData.individualData : registrationFormData.companyData;
+        const isIndividual = store.userType === "individual";
+        const dataToValidate = isIndividual ? registrationFormData.individual : registrationFormData.company;
 
         const validators = {
-            1: () => validateStepOne(registrationFormData),
-            2: () => validateStepTwo(registrationFormData.userType, dataToValidate),
-            3: () => validateStepThree(registrationFormData.userType, dataToValidate),
+            1: () => validateStepOne(registrationFormData, store),
+            2: () => validateStepTwo(store.userType, dataToValidate),
+            3: () => validateStepThree(store.userType, dataToValidate),
         };
 
         return validators[currentStep]?.() || {};
@@ -69,15 +69,15 @@ const RegistrationPage = observer(() => {
         console.log(toJS(store.registrationFormData))
 
         try {
-            await registration(store.registrationFormData.userType, toJS(store.registrationFormData))
+            await registration(store.userType, toJS(store.registrationFormData))
             storeUser.setRole(store.registrationFormData.role);
             navigate('/');
+            store.submitRegistration();
 
         } catch (error) {
-            console.error("Ошибка входа:", error);
+            console.error("Ошибка входа:", error.message);
         }
 
-        store.submitRegistration();
     };
 
     return (
@@ -89,11 +89,13 @@ const RegistrationPage = observer(() => {
                         formData={store.registrationFormData}
                         onChange={handleInputChange}
                         onNext={() => handleStepChange(2)}
+                        checkedUserType={store.userType}
+                        onChangeUserType={store.setUserType}
                     />
                 )}
                 {store.registrationStep === 2 && (
                     <StepTwo
-                        userType={store.registrationFormData.userType}
+                        userType={store.userType}
                         data={store.registrationFormData}
                         onBack={() => handleStepChange(1)}
                         onNext={() => handleStepChange(3)}
@@ -102,12 +104,12 @@ const RegistrationPage = observer(() => {
                 )}
                 {store.registrationStep === 3 && (
                     <StepThree
-                        userType={store.registrationFormData.userType}
+                        userType={store.userType}
                         data={store.registrationFormData}
                         onBack={() => handleStepChange(2)}
                         onSubmit={handleSubmit}
                         onNestedChange={store.setRegistrationNestedFormData}
-                        image={store.registrationFormData.individualData.identityDocuments}
+                        image={store.registrationFormData.individual.identityDocuments}
                         onChangeImage={loadFile}
                     />
                 )}

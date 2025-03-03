@@ -14,7 +14,7 @@ global.fetch = jest.fn(() =>
 
 
 
-describe('Регистрация физ.лица', () => {
+describe('Регистрация юр.лица', () => {
     let history;
 
     beforeEach(() => {

@@ -7,15 +7,15 @@ const StepThree = ({ userType, data, onBack, onSubmit, onNestedChange, onChangeI
         <div className='step'>
             {userType === "individual" ? (
                 <IndividualAdditionalForm
-                    data={data.individualData}
-                    onChange={(newData) => onNestedChange("individualData", newData)}
+                    data={data.individual}
+                    onChange={(newData) => onNestedChange("individual", newData)}
                     onChangeNested={onNestedChange}
                     onChangeImage={onChangeImage}
                 />
             ) : (
                 <CompanyAdditionalForm
-                    data={data.companyData}
-                    onChange={(newData) => onNestedChange("companyData", newData)}
+                    data={data.company}
+                    onChange={(newData) => onNestedChange("company", newData)}
                 />
             )}
             <button className='step__button' onClick={onBack}>Назад</button>

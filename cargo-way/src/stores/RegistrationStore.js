@@ -2,21 +2,25 @@ import { makeAutoObservable } from "mobx";
 
 class RegistrationStore {
 
+    userType = "";
     registrationStep = 1;
 
     registrationFormData = {
-        userType: "",
         username: "",
         email: "",
         password: "",
         role: "",
         agreement: false,
-        individualData: {},
-        companyData: {},
+        individual: {},
+        company: {},
     };
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setUserType = (type) => {
+        this.userType = type;
     }
 
     setRegistrationStep = (step) => {
@@ -35,15 +39,15 @@ class RegistrationStore {
         // console.log("Регистрация завершена", this.registrationFormData);
         this.registrationStep = 1;
         this.registrationFormData = {
-            userType: "",
             username: "",
             email: "",
             password: "",
             role: "",
             agreement: false,
-            individualData: {},
-            companyData: {},
+            individual: {},
+            company: {},
         }
+        this.userType = "";
     }
 }
 

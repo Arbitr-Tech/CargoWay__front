@@ -38,11 +38,11 @@ const dataWithUpperLimitValues = {
 
 describe('Валидация данных первого этапа', () => {
     test('Валидация корректных данных первого этапа регистрации', () => {
-        expect(validateStepOne(dataCorrect)).toEqual({});
+        expect(validateStepOne(dataCorrect, dataCorrect)).toEqual({});
     })
     
     test('Валидация некорректных данных первого этапа регистрации', () => {
-        expect(validateStepOne(dataIncorrect)).toEqual({
+        expect(validateStepOne(dataIncorrect, dataIncorrect)).toEqual({
             "agreement": "Необходимо согласиться с условиями обработки данных",
             "email": "Введите корректный email",
             "userType": "Тип пользователя обязателен",
@@ -53,10 +53,10 @@ describe('Валидация данных первого этапа', () => {
     })
 
     test('Валидация корректных данных первого этапа регистрации с нижними предельными значениями', () => {
-        expect(validateStepOne(dataWithLowerLimitValues)).toEqual({});
+        expect(validateStepOne(dataWithLowerLimitValues, dataWithLowerLimitValues)).toEqual({});
     })
 
     test('Валидация корректных данных первого этапа регистрации с верхними предельными значениями', () => {
-        expect(validateStepOne(dataWithUpperLimitValues)).toEqual({});
+        expect(validateStepOne(dataWithUpperLimitValues, dataWithUpperLimitValues)).toEqual({});
     })
 })

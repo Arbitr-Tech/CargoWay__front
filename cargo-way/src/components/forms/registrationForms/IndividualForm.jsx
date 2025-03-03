@@ -1,5 +1,13 @@
 import React from "react";
-export const IndividualForm = ({ data, onChange }) => (
+import { useMask } from '@react-input/mask';
+export const IndividualForm = ({ data, onChange }) => {
+    const inputDepartmentCodeMask = useMask({
+        mask: '___-___',
+        replacement: {_: /\d/},
+    })
+
+
+    return(
     <div className="step__form">
         <input className="step__form-input"
             type="text"
@@ -34,7 +42,8 @@ export const IndividualForm = ({ data, onChange }) => (
             name="departmentCode"
             value={data.departmentCode || ""}
             placeholder="Код подразделения"
+            ref={inputDepartmentCodeMask}
             onChange={(e) => onChange({ ...data, departmentCode: e.target.value })}
         />
     </div>
-);
+)};

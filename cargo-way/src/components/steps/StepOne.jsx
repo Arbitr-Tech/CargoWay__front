@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const StepOne = ({ formData, onChange, onNext }) => {
+const StepOne = ({ formData, onChange, onNext, checkedUserType, onChangeUserType }) => {
     return (
         <div className='form form--stepOne'>
             <h1 className='form__title'>Регистрация</h1>
@@ -11,8 +11,8 @@ const StepOne = ({ formData, onChange, onNext }) => {
                         type="radio"
                         name="userType"
                         value="individual"
-                        checked={formData.userType === "individual"}
-                        onChange={onChange}
+                        checked={checkedUserType === "individual"}
+                        onChange={() => onChangeUserType("individual")}
                     />
                     Физическое лицо
                 </label>
@@ -21,8 +21,8 @@ const StepOne = ({ formData, onChange, onNext }) => {
                         type="radio"
                         name="userType"
                         value="company"
-                        checked={formData.userType === "company"}
-                        onChange={onChange}
+                        checked={checkedUserType === "company"}
+                        onChange={() => onChangeUserType("company")}
                     />
                     Юридическое лицо
                 </label>

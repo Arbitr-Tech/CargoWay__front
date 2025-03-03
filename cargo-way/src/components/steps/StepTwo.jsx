@@ -7,13 +7,13 @@ const StepTwo = ({ userType, data, onBack, onNext, onNestedChange }) => {
         <div className="step">
             {userType === "individual" ? (
                 <IndividualForm
-                    data={data.individualData}
-                    onChange={(newData) => onNestedChange("individualData", newData)}
+                    data={data.individual}
+                    onChange={(newData) => onNestedChange("individual", newData)}
                 />
             ) : (
                 <CompanyForm
-                    data={data.companyData}
-                    onChange={(newData) => onNestedChange("companyData", newData)}
+                    data={data.company}
+                    onChange={(newData) => onNestedChange("company", newData)}
                 />
             )}
             <button className="step__button" onClick={onBack}>Назад</button>

@@ -31,7 +31,7 @@ export const IndividualAdditionalForm = ({ data, onChange, onChangeNested, onCha
             const existingPhotos = data.photos || [];
             const updatedPhotos = [...existingPhotos];
             updatedPhotos[index] = { guid: result.guid };
-            onChangeNested("individualData", {
+            onChangeNested("individual", {
                 ...data,
                 photos: updatedPhotos,
             });
@@ -61,7 +61,7 @@ export const IndividualAdditionalForm = ({ data, onChange, onChangeNested, onCha
         // Убираем фото по индексу
         const updatedPhotos = photos.filter((_, i) => i !== index);
 
-        onChangeNested("individualData", {
+        onChangeNested("individual", {
             ...data,
             photos: updatedPhotos,
         });

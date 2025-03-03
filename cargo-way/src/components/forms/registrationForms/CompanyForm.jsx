@@ -16,10 +16,10 @@ export const CompanyForm = ({ data, onChange }) => (
         />
         <input className="step__form-input"
             type="number"
-            name="bik"
-            value={data.bik || ""}
+            name="bic"
+            value={data.bic || ""}
             placeholder="БИК"
-            onChange={(e) => onChange({ ...data, bik: e.target.value })}
+            onChange={(e) => onChange({ ...data, bic: e.target.value })}
         />
         <input className="step__form-input"
             type="number"

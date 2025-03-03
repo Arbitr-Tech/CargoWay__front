@@ -1,6 +1,6 @@
-const validateStepOne = (data) => {
+const validateStepOne = (data, store) => {
     const errors = {};
-    if (!data.userType) errors.userType = "Тип пользователя обязателен";
+    if (!store.userType) errors.userType = "Тип пользователя обязателен";
     if (!data.role) errors.userRole = "Выберите одну из ролей";
     if (!data.username || !/^.{5,50}$/.test(data.username)) errors.username = "Логин должен состоять от 5 до 50 символов";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
@@ -31,8 +31,8 @@ const validateStepTwo = (userType, data) => {
         if (!data.ogrn || !/^\d{13}$/.test(data.ogrn)) {
             errors.ogrn = "ОГРН должен содержать 13 цифр";
         }
-        if (!data.bik || !/^\d{9}$/.test(data.bik)) {
-            errors.bik = "БИК должен содержать 9 цифр";
+        if (!data.bic || !/^\d{9}$/.test(data.bic)) {
+            errors.bic = "БИК должен содержать 9 цифр";
         }
         if (!data.correspondentAccount || !/^\d{20}$/.test(data.correspondentAccount)) {
             errors.correspondentAccount = "Корреспондентский счет должен содержать 20 цифр";

@@ -19,14 +19,14 @@ const dataIndividualIncorrect = {
 const dataCompanyCorrect = {
     inn: 1111111111,
     ogrn: 1111111111111,
-    bik: 111111111,
+    bic: 111111111,
     correspondentAccount: '11111111111111111111',
 };
 
 const dataCompanyIncorrect = {
     inn: "11111111111111111111111",
     ogrn: "",
-    bik: 11111111111,
+    bic: 11111111111,
     correspondentAccount: '0',
 };
 
@@ -51,7 +51,7 @@ describe('Валидация данных второго этапа', () => {
 
     test('Валидация некорректных данных второго этапа регистрации юр.лиц', () => {
         expect(validateStepTwo('company', dataCompanyIncorrect)).toEqual({
-            "bik": "БИК должен содержать 9 цифр",
+            "bic": "БИК должен содержать 9 цифр",
             "correspondentAccount": "Корреспондентский счет должен содержать 20 цифр",
             "inn": "ИНН должен содержать 10 цифр",
             "ogrn": "ОГРН должен содержать 13 цифр",
