@@ -11,7 +11,10 @@ export const login = async (formData) => {
         body: JSON.stringify(formData)
     });
 
-    if (!response.ok) throw new Error("Ошибка авторизации");
+    if (!response.ok){
+        const error = await response.json();
+        throw new Error(error.message)
+    }
 
     const data = await response.json();
     localStorage.setItem("accessToken", data.access_token);

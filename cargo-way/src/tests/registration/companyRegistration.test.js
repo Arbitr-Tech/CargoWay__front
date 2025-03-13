@@ -14,7 +14,7 @@ global.fetch = jest.fn(() =>
 
 
 
-describe('Регистрация юр.лица', () => {
+describe('Регистрация физ.лица', () => {
     let history;
 
     beforeEach(() => {
@@ -25,8 +25,8 @@ describe('Регистрация юр.лица', () => {
     });
 
     const fillFirstStep = async () => {
-        const inputUserType = screen.getByRole('radio', { name: /Физическое лицо/i });
-        const inputUserRole = screen.getByRole('radio', { name: /Перевозчик/i });
+        const inputUserType = screen.getByRole('radio', { name: /юридическое лицо/i });
+        const inputUserRole = screen.getByRole('radio', { name: /перевозчик/i });
         const inputUserName = screen.getByPlaceholderText(/логин/i);
         const inputPassword = screen.getByPlaceholderText(/пароль/i);
         const inputEmail = screen.getByPlaceholderText(/почта/i);
@@ -43,99 +43,53 @@ describe('Регистрация юр.лица', () => {
     };
 
     const fillSecondStep = async () => {
-        const inputFullName = screen.getByPlaceholderText(/фио/i);
-        const inputPassportNum = screen.getByPlaceholderText(/номер паспорта/i);
-        const inputPassportSeries = screen.getByPlaceholderText(/серия паспорта/i);
-        const inputWhoGive = screen.getByPlaceholderText(/кем выдан паспорт/i);
-        const inputDepartmentCode = screen.getByPlaceholderText(/код подразделения/i);
+        const inputInn = screen.getByPlaceholderText(/инн/i);
+        const inputOgrn = screen.getByPlaceholderText(/огрн/i);
+        const inputBic = screen.getByPlaceholderText(/бик/i);
+        const inputCorrespondentAccount = screen.getByPlaceholderText(/Корреспондентский сче/i);
         const button = screen.getByRole('button', { name: /Далее/i });
 
-        await userEvent.type(inputFullName, 'Иванов Иван Иванович');
-        await userEvent.type(inputPassportNum, '111111');
-        await userEvent.type(inputPassportSeries, '1111');
-        await userEvent.type(inputWhoGive, 'МВД ПО РО');
-        await userEvent.type(inputDepartmentCode, '000-000');
+        await userEvent.type(inputInn, '1111111111');
+        await userEvent.type(inputOgrn, '1111111111111');
+        await userEvent.type(inputBic, '111111111');
+        await userEvent.type(inputCorrespondentAccount, '11111111111111111111');
         await userEvent.click(button);
     };
 
     const fillThirdStep = async () => {
-        const inputPhoneNumber = screen.getByPlaceholderText(/номер телефона/i);
+        const inputName = screen.getByPlaceholderText(/название компании/i);
+        const inputDate = screen.getByLabelText(/Дата регистрации компании:/i);
         const button = screen.getByRole('button', { name: /отправить/i });
 
-        await userEvent.type(inputPhoneNumber, '88888888888');
-
-        const updatedPhotos = [{ guid: 'some-guid' }, { guid: 'some-other-guid' }];
-        registrationStore.setRegistrationNestedFormData('individual', {
-            ...registrationStore.registrationFormData.individual,
-            photos: updatedPhotos,
-        });
-
+        await userEvent.type(inputName, 'Гриб');
+        await userEvent.type(inputDate, '2020-01-14');
         await userEvent.click(button);
     };
 
-
-    test('Валидация на первом этапе регистрации при вводе некорректных данных физ.лица', async () => {
-        jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-        render(
-            renderWithRouter(null, '/reg')
-        );
-
-        const inputUserName = screen.getByPlaceholderText(/логин/i);
-        const inputPassword = screen.getByPlaceholderText(/пароль/i);
-        const inputEmail = screen.getByPlaceholderText(/почта/i);
-        const button = screen.getByRole('button', { name: /Далее/i });
-
-        await userEvent.type(inputUserName, 'test');
-        await userEvent.type(inputPassword, 'pass');
-        await userEvent.type(inputEmail, 'testexample.m');
-        await userEvent.click(button);
-
-
-        expect(window.alert).toBeCalledWith(
-            "Тип пользователя обязателен\n" +
-            "Выберите одну из ролей\n" +
-            "Логин должен состоять от 5 до 50 символов\n" +
-            "Введите корректный email\n" +
-            "Пароль должен быть не менее 8 символов\n" +
-            "Необходимо согласиться с условиями обработки данных"
-        );
-        expect(registrationStore.registrationStep).toBe(1);
-    });
-
-    test('Валидация на первом этапе регистрации при вводе корректных данных физ.лица', async () => {
-        render(
-            renderWithRouter(null, '/reg')
-        );
-
-        await fillFirstStep();
-
-        expect(registrationStore.registrationStep).toBe(2);
-    });
-
-    test('Валидация на втором этапе при вводе некорректных данных', async () => {
+    test('Валидация на втором этапе при вводе некорректных данных юр.лица', async () => {
         jest.spyOn(window, 'alert').mockImplementation(() => { });
 
         render(renderWithRouter(null, '/reg'));
 
         await fillFirstStep();
 
-        const inputPassportNum = screen.getByPlaceholderText(/номер паспорта/i);
-        const inputPassportSeries = screen.getByPlaceholderText(/серия паспорта/i);
-        const inputDepartmentCode = screen.getByPlaceholderText(/код подразделения/i);
+        const inputInn = screen.getByPlaceholderText(/инн/i);
+        const inputOgrn = screen.getByPlaceholderText(/огрн/i);
+        const inputBic = screen.getByPlaceholderText(/бик/i);
+        const inputCorrespondentAccount = screen.getByPlaceholderText(/Корреспондентский сче/i);
         const button = screen.getByRole('button', { name: /Далее/i });
 
-        await userEvent.type(inputPassportNum, '1');
-        await userEvent.type(inputPassportSeries, '11');
-        await userEvent.type(inputDepartmentCode, '0-000');
+        await userEvent.type(inputInn, '11111111');
+        await userEvent.type(inputOgrn, '11');
+        await userEvent.type(inputBic, 'm,');
+        await userEvent.type(inputCorrespondentAccount, '1111111');
         await userEvent.click(button);
 
         expect(window.alert).toBeCalledWith(
-            'ФИО обязательно\n' +
-            'Номер паспорта должен содержать 6 цифр\n' +
-            'Серия паспорта должна содержать 4 цифры\n' +
-            'Укажите, кем выдан паспорт\n' +
-            'Код подразделения обязателен и должен быть в формате \'000-000\''
+            'ИНН должен содержать 10 цифр\n' +
+            'ОГРН должен содержать 13 цифр\n' +
+            'БИК должен содержать 9 цифр\n' +
+            'Корреспондентский счет должен содержать 20 цифр'
         );
         expect(registrationStore.registrationStep).toBe(2);
     });
@@ -151,7 +105,7 @@ describe('Регистрация юр.лица', () => {
         expect(registrationStore.registrationStep).toBe(3);
     });
 
-    test('Валидация на третьем этапе при вводе некорректных данных', async () => {
+    test('Валидация на третьем этапе при вводе некорректных данных юр.лица', async () => {
         jest.spyOn(window, 'alert').mockImplementation(() => { });
 
         render(renderWithRouter(null, '/reg'));
@@ -159,20 +113,17 @@ describe('Регистрация юр.лица', () => {
         await fillFirstStep();
         await fillSecondStep();
 
-        const inputPhoneNumber = screen.getByPlaceholderText(/номер телефона/i);
         const button = screen.getByRole('button', { name: /отправить/i });
-
-        await userEvent.type(inputPhoneNumber, '899999999999999');
         await userEvent.click(button);
 
         expect(window.alert).toBeCalledWith(
-            'Некорректный номер телефона\n'+
-            'Добавьте фото документов (основная страница и страница с пропиской)'
+            'Название компании обязательно\n'+
+            'Дата регистрации компании обязательна'
         );
         expect(registrationStore.registrationStep).toBe(3);
     });
 
-    test('Валидация на третьем этапе регистрации при вводе корректных данных физ.лица', async () => {
+    test('Валидация на третьем этапе регистрации при вводе корректных данных юр.лица', async () => {
         jest.spyOn(window, 'alert').mockImplementation(() => { });
 
         render(renderWithRouter(null, '/reg'));
@@ -184,7 +135,7 @@ describe('Регистрация юр.лица', () => {
         expect(window.alert).not.toBeCalled();
     });
 
-    test('Успешная регистрация физ.лица', async () => {
+    test('Успешная регистрация юр.лица', async () => {
         render(
             renderWithRouter(null, '/reg')
         );

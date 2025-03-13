@@ -12,6 +12,12 @@ global.fetch = jest.fn(() =>
     })
 );
 
+jest.mock("react-toastify", () => ({
+    toast: {
+        error: jest.fn(),
+        success: jest.fn(),
+    }
+}));
 
 
 describe('Регистрация физ.лица', () => {
@@ -166,7 +172,7 @@ describe('Регистрация физ.лица', () => {
         await userEvent.click(button);
 
         expect(window.alert).toBeCalledWith(
-            'Некорректный номер телефона\n'+
+            'Некорректный номер телефона\n' +
             'Добавьте фото документов (основная страница и страница с пропиской)'
         );
         expect(registrationStore.registrationStep).toBe(3);

@@ -1,3 +1,5 @@
+import React from "react";
+
 export const CompanyForm = ({ data, onChange }) => (
     <div className="step__form">
         <input className="step__form-input"

@@ -11,6 +11,7 @@ import { loadFile } from "../../api/commonService";
 import { toJS } from "mobx";
 import { userStore } from "../../stores/UserStore";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const steps = ['Шаг 1', 'Шаг 2', 'Шаг 3'];
 
@@ -19,6 +20,13 @@ const RegistrationPage = observer(() => {
     const store = registrationStore;
     const storeUser = userStore;
     const navigate = useNavigate();
+    const errorMessages = {
+        "users_cargoway_username_key": "Имя пользователя уже занято. Выберите другое.",
+        "users_cargoway_email_key": "Этот email уже зарегистрирован. Попробуйте войти или используйте другой email.",
+        "companies_inn_key": "Компания с таким ИНН уже зарегистрирована.",
+        "companies_ogrn_key": "Компания с таким ОГРН уже существует в системе.",
+        "companies_correspondent_account_key": "Компания с таким корреспондентским счетом уже зарегистрирована."
+    };
 
     const validateStep = (currentStep) => {
         const { registrationFormData } = store;
@@ -76,6 +84,16 @@ const RegistrationPage = observer(() => {
 
         } catch (error) {
             console.error("Ошибка входа:", error.message);
+            if (error.message.includes("duplicate key value violates unique constraint")) {
+                const foundKey = Object.keys(errorMessages).find(key => error.message.includes(key));
+                
+                if (foundKey) {
+                    toast.error(errorMessages[foundKey]);
+                }
+            } else {
+                toast.error("Ошибка регистрации. Попробуйте еще раз позже.");
+            }
+            // toast.error
         }
 
     };

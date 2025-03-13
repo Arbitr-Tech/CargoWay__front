@@ -144,7 +144,12 @@ input[type=date]::-webkit-datetime-edit {
 .form__label {
   margin-bottom: 1rem;
 }
-.form__button {
+.form__transition {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.form__transition-button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -154,10 +159,18 @@ input[type=date]::-webkit-datetime-edit {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.form__button:hover {
+.form__transition-button:hover {
   transform: scale(1.05);
 }
-.form__transition a {
+.form__transition-textBox {
+  display: flex;
+  justify-content: space-between;
+}
+.form__transition-text {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.form__transition-text a {
   color: #E9C17D;
   cursor: pointer;
 }
@@ -175,18 +188,25 @@ input[type=date]::-webkit-datetime-edit {
   .form__simple-input {
     width: 70%;
   }
-  .form__button {
+  .form__transition {
+    font-size: 0.75rem;
+  }
+  .form__transition-button {
     width: 70%;
     align-self: center;
   }
-  .form__transition {
-    font-size: 0.75rem;
+  .form__transition-text {
+    display: flex;
+    flex-direction: column;
   }
 }
 @media (max-width: 768px) {
   .form {
     width: 75%;
     padding: 3rem 2rem;
+  }
+  .form__transition-textBox {
+    flex-direction: column;
   }
 }
 
@@ -1568,11 +1588,11 @@ input[type=date]::-webkit-datetime-edit {
   }
 }
 
-.popup {
+.popup, .popupWithInput {
   position: fixed;
   top: 8%;
   left: 27%;
-  z-index: 999999;
+  z-index: 9999999999999;
   width: 50rem;
   display: flex;
   justify-content: center;
@@ -1585,31 +1605,31 @@ input[type=date]::-webkit-datetime-edit {
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
 }
-.popup__icon {
+.popup__icon, .popupWithInput__icon {
   text-align: right;
 }
-.popup__text {
+.popup__text, .popupWithInput__text {
   margin-bottom: 1rem;
   max-height: 30rem;
   overflow-y: auto;
   scrollbar-width: thin;
 }
-.popup__text-item {
+.popup__text-item, .popupWithInput__text-item {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 }
-.popup__text-title {
+.popup__text-title, .popupWithInput__text-title {
   font-weight: 700;
   color: #44403B;
 }
-.popup__buttons {
+.popup__buttons, .popupWithInput__buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
-.popup__button {
+.popup__button, .popupWithInput__button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1619,8 +1639,75 @@ input[type=date]::-webkit-datetime-edit {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.popup__button:hover {
+.popup__button:hover, .popupWithInput__button:hover {
   transform: scale(1.05);
+}
+.popup__inputBox, .popupWithInput__inputBox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.popup__inputBox-input, .popupWithInput__inputBox-input {
+  border: 1px solid #44403B;
+  border-radius: 0.2rem;
+  padding: 0.625rem;
+  transition: all 0.3s;
+}
+.popup__inputBox-input::placeholder, .popupWithInput__inputBox-input::placeholder {
+  color: #44403B;
+}
+.popup__inputBox-input:focus, .popupWithInput__inputBox-input:focus {
+  border-color: #E9C17D;
+  outline: none;
+}
+
+.verification__boxImage {
+  width: 18.75rem;
+  height: 18.75rem;
+  animation: animationImage 3s ease-out forwards;
+}
+.verification__content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  margin-top: -6rem;
+  animation: animationContent 1s ease-out 3s forwards;
+}
+.verification__content-text {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 400;
+}
+.verification__content-btn {
+  font-size: 1em;
+  border-radius: 0.2rem;
+  border: 0;
+  background-color: #E9C17D;
+  color: #44403B;
+  padding: 1rem 2.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.verification__content-btn:hover {
+  transform: scale(1.05);
+}
+
+@keyframes animationImage {
+  0% {
+    display: block;
+  }
+  100% {
+    display: none;
+  }
+}
+@keyframes animationContent {
+  100% {
+    opacity: 1;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

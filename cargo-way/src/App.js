@@ -2,6 +2,8 @@ import './App.css';
 import '../src/styles/styles.css';
 import { ToastContainer } from 'react-toastify';
 import AppRouter from './routes/AppRouter';
+import VerificationSuccessPage from './components/pages/VerificationSuccessPage';
+import PasswordRecoveryPage from './components/pages/PasswordRecoveryPage';
 
 
 function App() {
@@ -22,7 +24,9 @@ function App() {
       {/* <Popup text={'Вы действительно хотите удалить запись?'} typePopup={'del'}/> */}
       {/* <DriverForm></DriverForm> */}
       {/* <DriverPostPage /> */}
-      <AppRouter />
+      {/* <AppRouter /> */}
+      {/* <VerificationSuccessPage /> */}
+      <PasswordRecoveryPage />
       
     </div>
   );

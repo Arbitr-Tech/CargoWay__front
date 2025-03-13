@@ -91,8 +91,10 @@ const StepOne = ({ formData, onChange, onNext, checkedUserType, onChangeUserType
                 />
                 Соглашаюсь с условиями обработки данных
             </label>
-            <button className='button form__button' onClick={onNext}>Далее</button>
-            <p className="form__transition">Уже зарегистрированы? <Link to='/auth'>Войти</Link></p>
+            <div className="form__transition">
+                <button className='button form__transition-button' onClick={onNext}>Далее</button>
+                <p className="form__transition-text">Уже зарегистрированы? <Link to='/auth'>Войти</Link></p>
+            </div>
         </div>
     )
 };

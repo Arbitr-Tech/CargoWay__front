@@ -1,11 +1,11 @@
 @use '../mixins' as m;
 @use '../variables' as v;
 
-.popup {
+.popup, .popupWithInput {
     position: fixed;
     top: 8%;
     left: 27%;
-    z-index: 999999;
+    z-index: 9999999999999;
     width: 50rem;
 
     @include m.form-step-base(column, 1rem 2.2rem, 40rem);
@@ -40,5 +40,16 @@
 
     &__button {
         @include m.button(v.$primary-color, v.$font-light-color)
+    }
+
+    &__inputBox {
+        @include m.center;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        &-input {
+            @include m.input-base;
+        }
     }
 }

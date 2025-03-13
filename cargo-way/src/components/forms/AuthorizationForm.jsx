@@ -1,6 +1,7 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
-const AuthorizationForm = ({ formData, onChange, onNext }) => {
+const AuthorizationForm = ({ formData, onChange, onNext, onClickLink }) => {
     return (
         <div className='form'>
             <h1 className='form__title'>Авторизация</h1>
@@ -20,8 +21,13 @@ const AuthorizationForm = ({ formData, onChange, onNext }) => {
                     onChange={onChange}
                 />
             </div>
-            <button className='button form__button' onClick={onNext}>Войти</button>
-            <p className="form__transition">Еще не зарегистрированы? <Link to='/reg'>Зарегистрироваться</Link></p>
+            <div className="form__transition">
+                <button className='button form__transition-button' onClick={onNext}>Войти</button>
+                <div className="form__transition-textBox">
+                    <p className="form__transition-text">Еще не зарегистрированы? <Link to='/reg'>Зарегистрироваться</Link></p>
+                    <p className="form__transition-text">Забыли пароль? <a onClick={onClickLink}>Восстановить</a></p>
+                </div>
+            </div>
         </div>
     )
 };
