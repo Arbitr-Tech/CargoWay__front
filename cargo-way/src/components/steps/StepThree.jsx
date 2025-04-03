@@ -1,6 +1,6 @@
 import React from 'react';
-import { IndividualAdditionalForm } from '../forms/registrationForms/IndividualAssitionalForm';
-import { CompanyAdditionalForm } from '../forms/registrationForms/CompanyAdditionalForm';
+import { IndividualAdditionalForm } from '../forms/individualForms/IndividualAssitionalForm';
+import { CompanyAdditionalForm } from '../forms/companyForms/CompanyAdditionalForm';
 
 const StepThree = ({ userType, data, onBack, onSubmit, onNestedChange, onChangeImage }) => {
     return (    

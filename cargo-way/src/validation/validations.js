@@ -1,11 +1,11 @@
-const validateStepOne = (data, store) => {
+const validateRegistration = (data, agreement) => {
     const errors = {};
-    if (!store.userType) errors.userType = "Тип пользователя обязателен";
-    if (!data.role) errors.userRole = "Выберите одну из ролей";
+    if (!data.legalTypeDto) errors.legalTypeDto = "Тип пользователя обязателен";
+    if (!data.role) errors.role = "Выберите одну из ролей";
     if (!data.username || !/^.{5,50}$/.test(data.username)) errors.username = "Логин должен состоять от 5 до 50 символов";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
     if (!data.password || data.password.length < 8) errors.password = "Пароль должен быть не менее 8 символов";
-    if (!data.agreement) errors.agreement = "Необходимо согласиться с условиями обработки данных";
+    if (!agreement) errors.agreement = "Необходимо согласиться с условиями обработки данных";
 
     return errors;
 };
@@ -62,4 +62,4 @@ const validateStepThree = (userType, data) => {
     return errors;
 };
 
-export {validateStepOne, validateStepTwo, validateStepThree};
+export {validateRegistration, validateStepTwo, validateStepThree};

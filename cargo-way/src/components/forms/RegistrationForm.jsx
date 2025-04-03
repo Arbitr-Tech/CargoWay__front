@@ -1,28 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const StepOne = ({ formData, onChange, onNext, checkedUserType, onChangeUserType }) => {
+const RegistrationForm = ({ formData, agreement, onChange, onSubmit, onChangeAgreement }) => {
     return (
-        <div className='form form--stepOne'>
+        <div className='form form--registration'>
             <h1 className='form__title'>Регистрация</h1>
             <div className='form__radio'>
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="userType"
-                        value="individual"
-                        checked={checkedUserType === "individual"}
-                        onChange={() => onChangeUserType("individual")}
+                        name="legalTypeDto"
+                        value="INDIVIDUAL"
+                        checked={formData.legalTypeDto === "INDIVIDUAL"}
+                        onChange={onChange}
                     />
                     Физическое лицо
                 </label>
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="userType"
-                        value="company"
-                        checked={checkedUserType === "company"}
-                        onChange={() => onChangeUserType("company")}
+                        name="legalTypeDto"
+                        value="COMPANY"
+                        checked={formData.legalTypeDto === "COMPANY"}
+                        onChange={onChange}
                     />
                     Юридическое лицо
                 </label>
@@ -47,16 +47,6 @@ const StepOne = ({ formData, onChange, onNext, checkedUserType, onChangeUserType
                         onChange={onChange}
                     />
                     Заказчик
-                </label>
-                <label className='form__radio-label'>
-                    <input className='form__radio-input'
-                        type="radio"
-                        name="role"
-                        value="FORWARDER"
-                        checked={formData.role === "FORWARDER"}
-                        onChange={onChange}
-                    />
-                    Экспедитор
                 </label>
             </div>
             <div className='form__simple'>
@@ -86,17 +76,17 @@ const StepOne = ({ formData, onChange, onNext, checkedUserType, onChangeUserType
                 <input className='form__input'
                     type="checkbox"
                     name="agreement"
-                    checked={formData.agreement}
-                    onChange={onChange}
+                    checked={agreement}
+                    onChange={onChangeAgreement}
                 />
                 Соглашаюсь с условиями обработки данных
             </label>
             <div className="form__transition">
-                <button className='button form__transition-button' onClick={onNext}>Далее</button>
+                <button className='button form__transition-button' onClick={onSubmit}>Далее</button>
                 <p className="form__transition-text">Уже зарегистрированы? <Link to='/auth'>Войти</Link></p>
             </div>
         </div>
     )
 };
 
-export default StepOne;
+export default RegistrationForm;

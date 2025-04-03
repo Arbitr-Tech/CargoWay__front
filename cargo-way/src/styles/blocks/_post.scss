@@ -3,11 +3,11 @@
 
 .cargoForm,
 .autoForm,
-.driverForm {
+.driverForm,
+.profileForm {
     @include m.form-step-base(column, 1rem 2.2rem, 70rem);
-    @include m.margin-center;
     padding-top: 3.5rem;
-    max-width: v.$max-width;
+    max-width: 100%;
 
     @include m.laptop {
         max-width: 90%;
@@ -126,7 +126,7 @@
             position: relative;
         }
 
-        &-ul {
+        &-ul { 
             position: absolute;
             top: 0.75rem;
             left: -5.375rem;
@@ -255,11 +255,27 @@
             margin-bottom: 0.5rem;
         }
     }
+
+    &__rating {
+        @include m.center;
+        gap: 2.2rem;
+        margin-bottom: 1rem;
+
+        & span {
+            color: v.$active-color; 
+            font-weight: 700;
+        }
+    }
+
+    &__title {
+        margin-bottom: 2.2rem;
+    }
 }
 
 .cargo,
 .auto,
 .driver,
+.profile, 
 .cargoList,
 .autoList {
     margin-bottom: 2rem;

@@ -1,6 +1,6 @@
 import React from "react";
-import { IndividualForm } from "../forms/registrationForms/IndividualForm";
-import { CompanyForm } from "../forms/registrationForms/CompanyForm";
+import { IndividualForm } from "../forms/individualForms/IndividualForm";
+import { CompanyForm } from "../forms/companyForms/CompanyForm";
 
 const StepTwo = ({ userType, data, onBack, onNext, onNestedChange }) => {
     return (

@@ -4,7 +4,7 @@
 .form {
     @include m.form-step-base(column, 6rem 5rem, 35rem);
 
-    &--stepOne {
+    &--registration {
         padding: 4rem 4rem 2rem;
     }
 

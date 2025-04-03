@@ -11,7 +11,7 @@ export const login = async (formData) => {
         body: JSON.stringify(formData)
     });
 
-    if (!response.ok){
+    if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message)
     }
@@ -22,12 +22,43 @@ export const login = async (formData) => {
     return data;
 };
 
-export const getProfileRole = async () => {
+export const logout = async () => {
     try {
-        const data = await fetchWithAuth("/api/v1/profile/", {method: "GET"});
-        return data.role;
-    }  catch (error) {
-        console.error("Ошибка полученя роли:", error);
+        const data = await fetchWithAuth("/api/v1/auth/logout/", {
+            method: "POST"
+        });
+        console.log("Успешный ответ:", data);
+        return data;
+    } catch (error) {
+        console.error("Ошибка отправки письма:", error);
+        throw error;
+    }
+};
+
+export const passwordReset = async (formData) => {
+    try {
+        const data = await fetchWithAuth("/api/v1/auth/password-recovery/", {
+            method: "POST",
+            body: JSON.stringify(formData),
+        });
+        console.log("Успешный ответ:", data);
+        return data;
+    } catch (error) {
+        console.error("Ошибка отправки письма:", error);
+        throw error;
+    }
+};
+
+export const passwordRecovery = async (token, formData) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/auth/reset-password/?token=${token}`, {
+            method: "POST",
+            body: JSON.stringify(formData),
+        });
+        console.log("Успешный ответ:", data);
+        return data;
+    } catch (error) {
+        console.error("Ошибка отправки письма:", error);
         throw error;
     }
 };

@@ -2,6 +2,18 @@ import { makeAutoObservable } from "mobx";
 
 class UserStore {
     role = localStorage.getItem('role') || '';
+    userFormData = {
+        userData: {
+            username: "",
+            email: "",
+            role: ""
+        },
+        company: null,
+        individual: null,
+        contactData: null,
+    };
+
+    originalUserFormData = {};
 
     constructor() {
         makeAutoObservable(this);
@@ -15,6 +27,52 @@ class UserStore {
         }
         this.role = newRole;
     }
+
+    setUserFormData(data) {
+        this.originalUserFormData = data;
+        this.userFormData = { ...data };
+        this.setRole(this.originalUserFormData.userData.role);
+    }
+
+    getUpdatedFields = () => {
+        const updatedFields = {};
+
+        Object.entries(this.userFormData).forEach(([key, value]) => {
+            if (typeof value === 'object' && value !== null) {
+                const changes = Object.entries(value).reduce((acc, [subKey, subValue]) => {
+                    if (!this.originalUserFormData[key] ||
+                        JSON.stringify(subValue) !== JSON.stringify(this.originalUserFormData[key][subKey])) {
+                        acc[subKey] = subValue;
+                    }
+                    return acc;
+                }, {});
+
+                if (Object.keys(changes).length > 0) {
+                    updatedFields[key] = changes;
+                }
+            } else if (value !== this.originalUserFormData[key]) {
+                updatedFields[key] = value;
+            }
+        });
+
+        return updatedFields;
+    }
+
+    setFieldsData = (name, value) => {
+        this.userFormData = { ...this.userFormData, [name]: value }
+    }
+
+
+    setNestedFieldsData = (formName, secondName, newData) => {
+        this.userFormData = {
+            ...this.userFormData,
+            [formName]: {
+                ...this.userFormData[formName],
+                [secondName]: newData
+            }
+        };
+    }
+
 }
 
 export const userStore = new UserStore();

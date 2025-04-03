@@ -105,7 +105,7 @@ input[type=date]::-webkit-datetime-edit {
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
 }
-.form--stepOne {
+.form--registration {
   padding: 4rem 4rem 2rem;
 }
 .form__title {
@@ -1030,7 +1030,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm,
 .autoForm,
-.driverForm {
+.driverForm,
+.profileForm {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1041,27 +1042,29 @@ input[type=date]::-webkit-datetime-edit {
   width: 70rem;
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
-  margin: 0 auto;
   padding-top: 3.5rem;
-  max-width: 70rem;
+  max-width: 100%;
 }
 @media (max-width: 1120px) {
   .cargoForm,
   .autoForm,
-  .driverForm {
+  .driverForm,
+  .profileForm {
     max-width: 90%;
   }
 }
 .cargoForm__section,
 .autoForm__section,
-.driverForm__section {
+.driverForm__section,
+.profileForm__section {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
 .cargoForm__section::before,
 .autoForm__section::before,
-.driverForm__section::before {
+.driverForm__section::before,
+.profileForm__section::before {
   content: "";
   position: absolute;
   display: block;
@@ -1074,13 +1077,15 @@ input[type=date]::-webkit-datetime-edit {
 @media (max-width: 768px) {
   .cargoForm__section::before,
   .autoForm__section::before,
-  .driverForm__section::before {
+  .driverForm__section::before,
+  .profileForm__section::before {
     top: 33.5rem;
   }
 }
 .cargoForm__section::after,
 .autoForm__section::after,
-.driverForm__section::after {
+.driverForm__section::after,
+.profileForm__section::after {
   content: "";
   position: absolute;
   display: block;
@@ -1093,29 +1098,34 @@ input[type=date]::-webkit-datetime-edit {
 @media (max-width: 768px) {
   .cargoForm__section,
   .autoForm__section,
-  .driverForm__section {
+  .driverForm__section,
+  .profileForm__section {
     flex-direction: column;
   }
 }
 .cargoForm__label,
 .autoForm__label,
-.driverForm__label {
+.driverForm__label,
+.profileForm__label {
   margin: 0 auto;
   margin-bottom: 2.8rem;
 }
 .cargoForm__label-text,
 .autoForm__label-text,
-.driverForm__label-text {
+.driverForm__label-text,
+.profileForm__label-text {
   font-weight: 700;
 }
 .cargoForm__photo,
 .autoForm__photo,
-.driverForm__photo {
+.driverForm__photo,
+.profileForm__photo {
   width: 90%;
 }
 .cargoForm__input,
 .autoForm__input,
-.driverForm__input {
+.driverForm__input,
+.profileForm__input {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -1123,32 +1133,37 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__input::placeholder,
 .autoForm__input::placeholder,
-.driverForm__input::placeholder {
+.driverForm__input::placeholder,
+.profileForm__input::placeholder {
   color: #44403B;
 }
 .cargoForm__input:focus,
 .autoForm__input:focus,
-.driverForm__input:focus {
+.driverForm__input:focus,
+.profileForm__input:focus {
   border-color: #E9C17D;
   outline: none;
 }
 @media (max-width: 1120px) {
   .cargoForm__input,
   .autoForm__input,
-  .driverForm__input {
+  .driverForm__input,
+  .profileForm__input {
     width: 80%;
   }
 }
 @media (max-width: 576px) {
   .cargoForm__input,
   .autoForm__input,
-  .driverForm__input {
+  .driverForm__input,
+  .profileForm__input {
     width: 75%;
   }
 }
 .cargoForm__input-group,
 .autoForm__input-group,
-.driverForm__input-group {
+.driverForm__input-group,
+.profileForm__input-group {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 1rem;
@@ -1162,43 +1177,50 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__input-icon,
 .autoForm__input-icon,
-.driverForm__input-icon {
+.driverForm__input-icon,
+.profileForm__input-icon {
   width: 30px;
   height: 30px;
   justify-self: center;
 }
 .cargoForm__input--img,
 .autoForm__input--img,
-.driverForm__input--img {
+.driverForm__input--img,
+.profileForm__input--img {
   max-width: 20rem;
 }
 .cargoForm__input--short,
 .autoForm__input--short,
-.driverForm__input--short {
+.driverForm__input--short,
+.profileForm__input--short {
   max-width: 6rem;
 }
 .cargoForm__input--long,
 .autoForm__input--long,
-.driverForm__input--long {
+.driverForm__input--long,
+.profileForm__input--long {
   width: 20rem;
 }
 @media (max-width: 1120px) {
   .cargoForm__input--long,
   .autoForm__input--long,
-  .driverForm__input--long {
+  .driverForm__input--long,
+  .profileForm__input--long {
     width: 13rem;
   }
 }
 @media (max-width: 576px) {
   .cargoForm__input--long,
   .autoForm__input--long,
-  .driverForm__input--long {
+  .driverForm__input--long,
+  .profileForm__input--long {
     width: 10rem;
   }
 }
 .cargoForm__inputBox,
 .autoForm__inputBox,
-.driverForm__inputBox {
+.driverForm__inputBox,
+.profileForm__inputBox {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -1211,30 +1233,35 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox::placeholder,
 .autoForm__inputBox::placeholder,
-.driverForm__inputBox::placeholder {
+.driverForm__inputBox::placeholder,
+.profileForm__inputBox::placeholder {
   color: #44403B;
 }
 .cargoForm__inputBox:focus,
 .autoForm__inputBox:focus,
-.driverForm__inputBox:focus {
+.driverForm__inputBox:focus,
+.profileForm__inputBox:focus {
   border-color: #E9C17D;
   outline: none;
 }
 @media (max-width: 576px) {
   .cargoForm__inputBox,
   .autoForm__inputBox,
-  .driverForm__inputBox {
+  .driverForm__inputBox,
+  .profileForm__inputBox {
     width: 70%;
   }
 }
 .cargoForm__inputBox-input,
 .autoForm__inputBox-input,
-.driverForm__inputBox-input {
+.driverForm__inputBox-input,
+.profileForm__inputBox-input {
   flex: 1;
 }
 .cargoForm__inputBox-input input,
 .autoForm__inputBox-input input,
-.driverForm__inputBox-input input {
+.driverForm__inputBox-input input,
+.profileForm__inputBox-input input {
   width: 100%;
   padding: 0;
   border-color: transparent;
@@ -1243,7 +1270,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox-menu,
 .autoForm__inputBox-menu,
-.driverForm__inputBox-menu {
+.driverForm__inputBox-menu,
+.profileForm__inputBox-menu {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1252,7 +1280,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox-ul,
 .autoForm__inputBox-ul,
-.driverForm__inputBox-ul {
+.driverForm__inputBox-ul,
+.profileForm__inputBox-ul {
   position: absolute;
   top: 0.75rem;
   left: -5.375rem;
@@ -1275,7 +1304,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox-ul.show,
 .autoForm__inputBox-ul.show,
-.driverForm__inputBox-ul.show {
+.driverForm__inputBox-ul.show,
+.profileForm__inputBox-ul.show {
   opacity: 1;
   /* Показывает элемент */
   transform: translateY(0);
@@ -1285,19 +1315,22 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox-li,
 .autoForm__inputBox-li,
-.driverForm__inputBox-li {
+.driverForm__inputBox-li,
+.profileForm__inputBox-li {
   cursor: pointer;
   width: 100%;
   padding: 1rem;
 }
 .cargoForm__inputBox-li:hover,
 .autoForm__inputBox-li:hover,
-.driverForm__inputBox-li:hover {
+.driverForm__inputBox-li:hover,
+.profileForm__inputBox-li:hover {
   background-color: #E9C17D;
 }
 .cargoForm__inputBox-btn,
 .autoForm__inputBox-btn,
-.driverForm__inputBox-btn {
+.driverForm__inputBox-btn,
+.profileForm__inputBox-btn {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1309,12 +1342,14 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__inputBox-btn:hover,
 .autoForm__inputBox-btn:hover,
-.driverForm__inputBox-btn:hover {
+.driverForm__inputBox-btn:hover,
+.profileForm__inputBox-btn:hover {
   transform: scale(1.05);
 }
 .cargoForm__textarea,
 .autoForm__textarea,
-.driverForm__textarea {
+.driverForm__textarea,
+.profileForm__textarea {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -1325,32 +1360,37 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__textarea::placeholder,
 .autoForm__textarea::placeholder,
-.driverForm__textarea::placeholder {
+.driverForm__textarea::placeholder,
+.profileForm__textarea::placeholder {
   color: #44403B;
 }
 .cargoForm__textarea:focus,
 .autoForm__textarea:focus,
-.driverForm__textarea:focus {
+.driverForm__textarea:focus,
+.profileForm__textarea:focus {
   border-color: #E9C17D;
   outline: none;
 }
 @media (max-width: 1120px) {
   .cargoForm__textarea,
   .autoForm__textarea,
-  .driverForm__textarea {
+  .driverForm__textarea,
+  .profileForm__textarea {
     max-width: 13rem;
   }
 }
 @media (max-width: 576px) {
   .cargoForm__textarea,
   .autoForm__textarea,
-  .driverForm__textarea {
+  .driverForm__textarea,
+  .profileForm__textarea {
     max-width: 10rem;
   }
 }
 .cargoForm__radio,
 .autoForm__radio,
-.driverForm__radio {
+.driverForm__radio,
+.profileForm__radio {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1359,21 +1399,24 @@ input[type=date]::-webkit-datetime-edit {
 @media (max-width: 1120px) {
   .cargoForm__radio,
   .autoForm__radio,
-  .driverForm__radio {
+  .driverForm__radio,
+  .profileForm__radio {
     flex-direction: column;
     align-items: start;
   }
 }
 .cargoForm__btnBox,
 .autoForm__btnBox,
-.driverForm__btnBox {
+.driverForm__btnBox,
+.profileForm__btnBox {
   display: flex;
   justify-content: start;
   position: relative;
 }
 .cargoForm__btnBox-button,
 .autoForm__btnBox-button,
-.driverForm__btnBox-button {
+.driverForm__btnBox-button,
+.profileForm__btnBox-button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1386,23 +1429,27 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__btnBox-button:hover,
 .autoForm__btnBox-button:hover,
-.driverForm__btnBox-button:hover {
+.driverForm__btnBox-button:hover,
+.profileForm__btnBox-button:hover {
   transform: scale(1.05);
 }
 .cargoForm__trailer,
 .autoForm__trailer,
-.driverForm__trailer {
+.driverForm__trailer,
+.profileForm__trailer {
   position: relative;
 }
 .cargoForm__trailer-label,
 .autoForm__trailer-label,
-.driverForm__trailer-label {
+.driverForm__trailer-label,
+.profileForm__trailer-label {
   font-size: 1.875rem;
   margin-bottom: 2.2rem;
 }
 .cargoForm__trailer::before,
 .autoForm__trailer::before,
-.driverForm__trailer::before {
+.driverForm__trailer::before,
+.profileForm__trailer::before {
   content: "";
   position: absolute;
   display: block;
@@ -1414,7 +1461,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__photos,
 .autoForm__photos,
-.driverForm__photos {
+.driverForm__photos,
+.profileForm__photos {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1422,7 +1470,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__imgBox,
 .autoForm__imgBox,
-.driverForm__imgBox {
+.driverForm__imgBox,
+.profileForm__imgBox {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1430,7 +1479,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__loader,
 .autoForm__loader,
-.driverForm__loader {
+.driverForm__loader,
+.profileForm__loader {
   width: 32px;
   height: 32px;
   border: 4px solid #E9C17D;
@@ -1441,7 +1491,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__preview,
 .autoForm__preview,
-.driverForm__preview {
+.driverForm__preview,
+.profileForm__preview {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1450,7 +1501,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__image,
 .autoForm__image,
-.driverForm__image {
+.driverForm__image,
+.profileForm__image {
   max-width: 30rem;
   max-height: 30rem;
   height: auto;
@@ -1461,20 +1513,23 @@ input[type=date]::-webkit-datetime-edit {
 @media (max-width: 576px) {
   .cargoForm__image,
   .autoForm__image,
-  .driverForm__image {
+  .driverForm__image,
+  .profileForm__image {
     width: 50%;
   }
 }
 @media (max-width: 1120px) {
   .cargoForm__image,
   .autoForm__image,
-  .driverForm__image {
+  .driverForm__image,
+  .profileForm__image {
     width: 90%;
   }
 }
 .cargoForm__button,
 .autoForm__button,
-.driverForm__button {
+.driverForm__button,
+.profileForm__button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1486,18 +1541,43 @@ input[type=date]::-webkit-datetime-edit {
 }
 .cargoForm__button:hover,
 .autoForm__button:hover,
-.driverForm__button:hover {
+.driverForm__button:hover,
+.profileForm__button:hover {
   transform: scale(1.05);
 }
 .cargoForm__button:last-child,
 .autoForm__button:last-child,
-.driverForm__button:last-child {
+.driverForm__button:last-child,
+.profileForm__button:last-child {
   margin-bottom: 0.5rem;
+}
+.cargoForm__rating,
+.autoForm__rating,
+.driverForm__rating,
+.profileForm__rating {
+  display: flex;
+  justify-content: center;
+  gap: 2.2rem;
+  margin-bottom: 1rem;
+}
+.cargoForm__rating span,
+.autoForm__rating span,
+.driverForm__rating span,
+.profileForm__rating span {
+  color: #E9C17D;
+  font-weight: 700;
+}
+.cargoForm__title,
+.autoForm__title,
+.driverForm__title,
+.profileForm__title {
+  margin-bottom: 2.2rem;
 }
 
 .cargo,
 .auto,
 .driver,
+.profile,
 .cargoList,
 .autoList {
   margin-bottom: 2rem;
@@ -1505,6 +1585,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargo__title,
 .auto__title,
 .driver__title,
+.profile__title,
 .cargoList__title,
 .autoList__title {
   text-align: center;
@@ -1515,6 +1596,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargo__btnBox,
 .auto__btnBox,
 .driver__btnBox,
+.profile__btnBox,
 .cargoList__btnBox,
 .autoList__btnBox {
   display: flex;
@@ -1523,6 +1605,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargo__button,
 .auto__button,
 .driver__button,
+.profile__button,
 .cargoList__button,
 .autoList__button {
   font-size: 1em;
@@ -1538,6 +1621,7 @@ input[type=date]::-webkit-datetime-edit {
 .cargo__button:hover,
 .auto__button:hover,
 .driver__button:hover,
+.profile__button:hover,
 .cargoList__button:hover,
 .autoList__button:hover {
   transform: scale(1.05);
@@ -1576,6 +1660,10 @@ input[type=date]::-webkit-datetime-edit {
   display: flex;
   flex-direction: column;
 }
+.formGroup__group--company {
+  justify-content: center;
+  width: 40%;
+}
 @media (max-width: 1120px) {
   .formGroup__group {
     flex-direction: column;
@@ -1587,12 +1675,15 @@ input[type=date]::-webkit-datetime-edit {
     align-items: center;
   }
 }
+.formGroup--company {
+  width: 80%;
+}
 
 .popup, .popupWithInput {
   position: fixed;
   top: 8%;
   left: 27%;
-  z-index: 9999999999999;
+  z-index: 999;
   width: 50rem;
   display: flex;
   justify-content: center;
@@ -1708,6 +1799,100 @@ input[type=date]::-webkit-datetime-edit {
   100% {
     opacity: 1;
   }
+}
+.profile__inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  justify-content: space-between;
+  gap: 2.2rem;
+}
+.profile__userInfo-main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 1rem;
+  color: #2C2C2C;
+  width: 100%;
+  border-radius: 0.2rem;
+  box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
+  background-color: #E9C17D;
+  color: #44403B;
+}
+.profile__userInfo-contact {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 1rem;
+  color: #2C2C2C;
+  width: 100%;
+  border-radius: 0.2rem;
+  box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+}
+.profile__main-rating {
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+.profile__main-title {
+  color: #2C2C2C;
+}
+.profile__main-data {
+  text-align: left;
+}
+.profile__companyInfo {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 1rem;
+  color: #2C2C2C;
+  width: 50%;
+  border-radius: 0.2rem;
+  box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  justify-content: end;
+}
+.profile__mainInfo {
+  display: flex;
+  justify-content: space-between;
+  gap: 2.2rem;
+}
+.profile__mainInfo-userData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+}
+.profile__rating-item span {
+  font-weight: 700;
+  color: #ffffff;
+}
+.profile__data-item span {
+  font-weight: 700;
+  color: #2C2C2C;
+}
+
+.profileForm--company {
+  padding: 0 0;
+  width: 100%;
+  box-shadow: none;
+}
+.profileForm__title--company {
+  margin-top: -4.2rem;
+  margin-bottom: 2.7rem;
+}
+.profileForm__button--company {
+  margin-top: 5rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

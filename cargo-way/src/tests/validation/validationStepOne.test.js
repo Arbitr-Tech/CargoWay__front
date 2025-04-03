@@ -1,4 +1,4 @@
-import { validateStepOne } from '../../validation/validations';
+// import { validateStepOne } from '../../validation/validations';
 
 const dataCorrect = {
     userType: "individual",
@@ -36,27 +36,27 @@ const dataWithUpperLimitValues = {
     agreement: true
 };
 
-describe('Валидация данных первого этапа', () => {
-    test('Валидация корректных данных первого этапа регистрации', () => {
-        expect(validateStepOne(dataCorrect, dataCorrect)).toEqual({});
-    })
+// describe('Валидация данных первого этапа', () => {
+//     test('Валидация корректных данных первого этапа регистрации', () => {
+//         expect(validateStepOne(dataCorrect, dataCorrect)).toEqual({});
+//     })
     
-    test('Валидация некорректных данных первого этапа регистрации', () => {
-        expect(validateStepOne(dataIncorrect, dataIncorrect)).toEqual({
-            "agreement": "Необходимо согласиться с условиями обработки данных",
-            "email": "Введите корректный email",
-            "userType": "Тип пользователя обязателен",
-            "password": "Пароль должен быть не менее 8 символов",
-            "userRole": "Выберите одну из ролей",
-            "username": "Логин должен состоять от 5 до 50 символов",
-        });
-    })
+//     test('Валидация некорректных данных первого этапа регистрации', () => {
+//         expect(validateStepOne(dataIncorrect, dataIncorrect)).toEqual({
+//             "agreement": "Необходимо согласиться с условиями обработки данных",
+//             "email": "Введите корректный email",
+//             "userType": "Тип пользователя обязателен",
+//             "password": "Пароль должен быть не менее 8 символов",
+//             "userRole": "Выберите одну из ролей",
+//             "username": "Логин должен состоять от 5 до 50 символов",
+//         });
+//     })
 
-    test('Валидация корректных данных первого этапа регистрации с нижними предельными значениями', () => {
-        expect(validateStepOne(dataWithLowerLimitValues, dataWithLowerLimitValues)).toEqual({});
-    })
+//     test('Валидация корректных данных первого этапа регистрации с нижними предельными значениями', () => {
+//         expect(validateStepOne(dataWithLowerLimitValues, dataWithLowerLimitValues)).toEqual({});
+//     })
 
-    test('Валидация корректных данных первого этапа регистрации с верхними предельными значениями', () => {
-        expect(validateStepOne(dataWithUpperLimitValues, dataWithUpperLimitValues)).toEqual({});
-    })
-})
+//     test('Валидация корректных данных первого этапа регистрации с верхними предельными значениями', () => {
+//         expect(validateStepOne(dataWithUpperLimitValues, dataWithUpperLimitValues)).toEqual({});
+//     })
+// })

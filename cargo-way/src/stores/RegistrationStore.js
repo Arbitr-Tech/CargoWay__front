@@ -2,52 +2,37 @@ import { makeAutoObservable } from "mobx";
 
 class RegistrationStore {
 
-    userType = "";
-    registrationStep = 1;
+    agreement = false;
 
     registrationFormData = {
         username: "",
         email: "",
         password: "",
+        legalTypeDto: "",
         role: "",
-        agreement: false,
-        individual: {},
-        company: {},
     };
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    setUserType = (type) => {
-        this.userType = type;
+    switchAgreement = () => {
+        this.agreement = !this.agreement;
     }
 
-    setRegistrationStep = (step) => {
-        this.registrationStep = step
-    }
-
-    setRegistrationFormData = (name, value, type, checked) => {
-        this.registrationFormData = { ...this.registrationFormData, [name]: type === "checkbox" ? checked : value }
-    }
-
-    setRegistrationNestedFormData = (formName, newData) => {
-        this.registrationFormData = { ...this.registrationFormData, [formName]: newData }
+    setRegistrationFormData = (name, value) => {
+        this.registrationFormData = { ...this.registrationFormData, [name]: value }
     }
 
     submitRegistration() {
-        // console.log("Регистрация завершена", this.registrationFormData);
-        this.registrationStep = 1;
         this.registrationFormData = {
             username: "",
             email: "",
             password: "",
+            legalTypeDto: "",
             role: "",
-            agreement: false,
-            individual: {},
-            company: {},
         }
-        this.userType = "";
+        this.agreement = false;
     }
 }
 

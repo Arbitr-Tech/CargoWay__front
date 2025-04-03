@@ -40,10 +40,10 @@ export const refreshToken = async () => {
         localStorage.removeItem("accessToken");
         userStore.setRole('');
         
-        if (!hasShownToast) { // Показываем ошибку только один раз
-            toast.error("Сессия истекла. Войдите снова.");
-            hasShownToast = true;
-        }
+        // if (!hasShownToast) { // Показываем ошибку только один раз
+        //     toast.error("Сессия истекла. Войдите снова.");
+        //     hasShownToast = true;
+        // }
 
         throw new Error("Сессия истекла. Войдите снова.");
     }

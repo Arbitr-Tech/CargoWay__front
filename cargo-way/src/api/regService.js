@@ -1,9 +1,8 @@
 import { API_URL } from '../api/config';
 
-export const registration = async (userType, formData) => {
-    console.log(userType)
+export const registration = async (formData) => {
 
-    const response = await fetch(`${API_URL}/api/v1/auth/register/?profile_type=${userType}`, {
+    const response = await fetch(`${API_URL}/api/v1/auth/register/`, {
         method: "POST",
         credentials: "include",
         headers: {

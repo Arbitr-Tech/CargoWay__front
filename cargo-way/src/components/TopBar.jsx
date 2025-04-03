@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { userStore } from "../stores/UserStore";
 import Popup from "./Popup";
 import { useState } from "react";
+import { logout } from "../api/authService";
+import { toast } from "react-toastify";
 
 const TopBar = () => {
 
@@ -16,9 +18,16 @@ const TopBar = () => {
     };
 
     const handleConfirmLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            toast.error('Произошла ошибка. Попробуйте позже');
+            return;
+        }
         userStore.setRole('');
         localStorage.removeItem('accessToken');
-        navigate('/');
         setIsPopupOpen(false);
 
     };
@@ -41,7 +50,7 @@ const TopBar = () => {
                     </>
                 )}
                 <li className="topbar__list-item topbar__list-item"><Link to={'/'}>Найти транспорт / грузы</Link></li>
-                {role === 'FORWARDER' && (
+                {/* {role === 'FORWARDER' && (
                     <li className="topbar__list-item topbar__list-item--dropdown">
                         <p className="topbar__list-dropbtn">Еще</p>
                         <ul className="topbar__list-dropdownContent">
@@ -53,7 +62,7 @@ const TopBar = () => {
                             <li className="topbar__list-dropItem"><Link to={'/driver/add'}>Добавить водителя</Link></li>
                         </ul>
                     </li>
-                )}
+                )} */}
             </ul>
             {role && role !== '' ? (
                 <div className="topbar__profile">
@@ -67,7 +76,7 @@ const TopBar = () => {
                         </defs>
                     </svg>
                     <div className="topbar__profile-text">
-                        <p>Профиль</p>
+                        <p onClick={() => navigate('/profile')}>Профиль</p>
                         <p onClick={handleLogoutClick}>Выйти</p>
                     </div>
                 </div>

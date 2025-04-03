@@ -8,6 +8,8 @@ import AutoPostPage from '../components/pages/autoPages/AutoPostPage';
 import CargoListPage from '../components/pages/cargoPages/CargoListPage';
 import AutoListPage from '../components/pages/autoPages/AutoListPage';
 import DriverPostPage from '../components/pages/driverPages/DriverPostPage';
+import PasswordRecoveryPage from '../components/pages/PasswordRecoveryPage';
+import ProfilePage from '../components/pages/ProfilePage';
 
 const AppRouter = () => {
     return (
@@ -24,6 +26,8 @@ const AppRouter = () => {
             <Route path='/driver/edit' element={<DriverPostPage typePage='edit' />} />
             <Route path='/reg' element={<RegistrationPage />} />
             <Route path='/auth' element={<AuthorizationPage />} />
+            <Route path="/password-reset/" element={<PasswordRecoveryPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
         </Routes>
     );
 }

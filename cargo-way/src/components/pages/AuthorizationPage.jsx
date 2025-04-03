@@ -3,13 +3,14 @@ import AuthorizationForm from "../forms/AuthorizationForm";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
 import { autorizationStore } from "../../stores/AutorizationStore";
-import { getProfileRole, login } from "../../api/authService";
-import { useNavigate } from "react-router-dom";
+import { login, passwordReset } from "../../api/authService";
+import { data, useNavigate } from "react-router-dom";
 import { userStore } from "../../stores/UserStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PopupWithInput from "../PopupWithInput";
 import { popupWithInputStore } from "../../stores/PopupWithInputStore";
+import { getProfileData } from "../../api/profileService";
 
 const AuthorizationPage = observer(() => {
     const store = autorizationStore;
@@ -17,10 +18,6 @@ const AuthorizationPage = observer(() => {
     const storePopup = popupWithInputStore;
     const navigate = useNavigate();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    // const errorMessages = [
-    //     "Неверный логин или пароль. Попробуйте еще раз!",
-    //     "Участник с почтой random.useыr@examplecom не был найден!",
-    // ];
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
@@ -33,8 +30,8 @@ const AuthorizationPage = observer(() => {
 
         try {
             await login(toJS(store.autorizationFormData));
-            const role = await getProfileRole(localStorage.getItem('accessToken'));
-            storeUser.setRole(role);
+            const data = await getProfileData();
+            storeUser.setUserFormData(data);
             navigate('/');
             store.reset();
         } catch (error) {
@@ -47,13 +44,33 @@ const AuthorizationPage = observer(() => {
         }
     };
 
+    const handlePasswordReset = async () => {
+        if (!storePopup.email) {
+            toast.error('Заполните поле ввода почты');
+            return;
+        };
+        try {
+            await passwordReset({ "email": storePopup.email });
+            storePopup.reset();
+            setIsPopupOpen(false);
+        } catch (error) {
+            if (error.message.includes("не был найден!")) {
+                toast.error("Участник с такой почтой не был найден");
+            } else {
+                toast.error("Произошла ошибка. Попробуйте позже");
+            };
+            return;
+        };
+        toast.success('Письмо направлено на вашу почту');
+    }
+
     return (
         <div className="authorization">
             <div className={`overlay ${isPopupOpen ? 'overlay--show' : ''} `}></div>
             <PopupWithInput
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}
-                // onSend={}
+                onSend={handlePasswordReset}
                 email={storePopup.email}
                 onChangeEmail={storePopup.setEmail}
             />
