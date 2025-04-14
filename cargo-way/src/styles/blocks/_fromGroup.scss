@@ -36,7 +36,9 @@
             flex-direction: column;
         }
 
-        &--company {
+        &--company,
+        &--individual,
+        &--contact {
             justify-content: center;
             width: 40%;
         }
@@ -53,7 +55,9 @@
 
     }
 
-    &--company {
+    &--company,
+    &--individual,
+    &--contact {
         width: 80%;
     }
 }

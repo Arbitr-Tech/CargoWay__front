@@ -8,7 +8,7 @@ class RegistrationStore {
         username: "",
         email: "",
         password: "",
-        legalTypeDto: "",
+        legalType: "",
         role: "",
     };
 
@@ -29,7 +29,7 @@ class RegistrationStore {
             username: "",
             email: "",
             password: "",
-            legalTypeDto: "",
+            legalType: "",
             role: "",
         }
         this.agreement = false;

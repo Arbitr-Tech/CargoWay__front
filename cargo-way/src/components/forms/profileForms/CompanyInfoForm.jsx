@@ -1,10 +1,59 @@
 import React, { useState } from "react";
 import FormGroup from "../FormGroup";
+import { useMask } from "@react-input/mask";
+import { validateCompanyData } from "../../../validation/validations";
+import { toast } from "react-toastify";
 
 const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
 
     const [isEdit, setIsEdit] = useState(false);
-    // if (data.legalType === "INDIVIDUAL") return null; //ЭТО ВАЖНО. НЕ УДАЛЯТЬ
+
+    const inputInnMask = useMask({
+        mask: '__________',
+        replacement: { _: /\d/ },
+    })
+
+    const inputOgrnMask = useMask({
+        mask: '_____________',
+        replacement: { _: /\d/ },
+    })
+
+    const inputBicMask = useMask({
+        mask: '_________',
+        replacement: { _: /\d/ },
+    })
+    
+    const inputCorrespondentAccountMask = useMask({
+        mask: '____________________',
+        replacement: { _: /\d/ },
+    })
+
+    const handleSubmit = () => {
+        const companyData = data.company || {};
+        const errors = validateCompanyData(companyData, isNull);
+
+        if (Object.keys(errors).length > 0) {
+            Object.values(errors).forEach(errorMessage => {
+                toast.error(errorMessage);
+            });
+            return false; // валидация не прошла
+        }
+
+        onClickButton();
+        setIsEdit(false); // валидация прошла
+        return true;
+    };
+
+    const handleButtonClick = () => {
+        if (!isEdit) {
+            setIsEdit(true);
+        } else {
+            const success = handleSubmit();
+            if (!success) return; // не валидно — не трогаем кнопку
+        }
+    };
+
+    if (data.legalType === "INDIVIDUAL") return null;
 
     return (
         <div className="profileForm profileForm--company">
@@ -26,6 +75,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
                     value={data.company?.inn || ""}
                     data-path="inn"
                     disabled={!isEdit}
+                    ref={inputInnMask}
                     onChange={onNestedChange}
                 />
             </FormGroup>
@@ -36,6 +86,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
                     value={data.company?.ogrn || ""}
                     data-path="ogrn"
                     disabled={!isEdit}
+                    ref={inputOgrnMask}
                     onChange={onNestedChange}
                 />
             </FormGroup>
@@ -46,6 +97,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
                     value={data.company?.bic || ""}
                     data-path="bic"
                     disabled={!isEdit}
+                    ref={inputBicMask}
                     onChange={onNestedChange}
                 />
             </FormGroup>
@@ -56,6 +108,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
                     value={data.company?.correspondentAccount || ""}
                     data-path="correspondentAccount"
                     disabled={!isEdit}
+                    ref={inputCorrespondentAccountMask}
                     onChange={onNestedChange}
                 />
             </FormGroup>
@@ -70,12 +123,8 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
                     onChange={onNestedChange}
                 />
             </FormGroup>
-            <button className="profileForm__button profileForm__button--company"
-                onClick={() => {
-                    if (!isEdit) return setIsEdit(true);
-                    onClickButton();
-                    setIsEdit(false);
-                }}>
+            <button className={`profileForm__button profileForm__button--company ${isEdit ? 'profileForm__button--yellow' : ''}`} 
+                onClick={handleButtonClick}>
                 {!isEdit ? isNull ? 'Заполнить данные компании' : 'Редактировать' : 'Отправить новые данные'}
             </button>
         </div >

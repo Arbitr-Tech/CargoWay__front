@@ -39,7 +39,7 @@
         }
 
         &-data {
-            text-align: left; 
+            text-align: left;
         }
     }
 
@@ -82,20 +82,32 @@
 }
 
 .profileForm {
-    &--company {
+
+    &--company,
+    &--individual,
+    &--contact {
         padding: 0 0;
         width: 100%;
         box-shadow: none;
     }
 
     &__title {
-        &--company {
+
+        &--company,
+        &--individual {
             margin-top: -4.2rem;
             margin-bottom: 2.7rem;
         }
     }
 
-    &__button--company {
-        margin-top: 5rem;
+    &__button {
+        &--company,
+        &--individual {
+            margin-top: 5rem;
+        }
+
+        &--yellow {
+            background-color: v.$active-color;
+        }
     }
 }

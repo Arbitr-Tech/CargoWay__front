@@ -9,9 +9,9 @@ const RegistrationForm = ({ formData, agreement, onChange, onSubmit, onChangeAgr
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="legalTypeDto"
+                        name="legalType"
                         value="INDIVIDUAL"
-                        checked={formData.legalTypeDto === "INDIVIDUAL"}
+                        checked={formData.legalType === "INDIVIDUAL"}
                         onChange={onChange}
                     />
                     Физическое лицо
@@ -19,9 +19,9 @@ const RegistrationForm = ({ formData, agreement, onChange, onSubmit, onChangeAgr
                 <label className='form__radio-label'>
                     <input className='form__radio-input'
                         type="radio"
-                        name="legalTypeDto"
+                        name="legalType"
                         value="COMPANY"
-                        checked={formData.legalTypeDto === "COMPANY"}
+                        checked={formData.legalType === "COMPANY"}
                         onChange={onChange}
                     />
                     Юридическое лицо

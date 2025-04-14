@@ -73,6 +73,10 @@ class UserStore {
         };
     }
 
+    reset = () => {
+        this.userFormData = {...this.originalUserFormData}
+    }
+
 }
 
 export const userStore = new UserStore();

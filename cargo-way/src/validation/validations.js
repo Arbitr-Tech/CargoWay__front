@@ -1,6 +1,6 @@
 const validateRegistration = (data, agreement) => {
     const errors = {};
-    if (!data.legalTypeDto) errors.legalTypeDto = "Тип пользователя обязателен";
+    if (!data.legalType) errors.legalType = "Тип пользователя обязателен";
     if (!data.role) errors.role = "Выберите одну из ролей";
     if (!data.username || !/^.{5,50}$/.test(data.username)) errors.username = "Логин должен состоять от 5 до 50 символов";
     if (!data.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) errors.email = "Введите корректный email";
@@ -10,56 +10,96 @@ const validateRegistration = (data, agreement) => {
     return errors;
 };
 
-const validateStepTwo = (userType, data) => {
+const validateContactData = (data, isFirstTime = false) => {
     const errors = {};
-    if (userType === "individual") {
-        if (!data.fullname) errors.fullname = "ФИО обязательно";
-        if (!data.passportNum || !/^\d{6}$/.test(data.passportNum)) {
-            errors.passportNum = "Номер паспорта должен содержать 6 цифр";
-        }
-        if (!data.passportSeries || !/^\d{4}$/.test(data.passportSeries)) {
-            errors.passportSeries = "Серия паспорта должна содержать 4 цифры";
-        }
-        if (!data.whoGive) errors.whoGive = "Укажите, кем выдан паспорт";
-        if (!data.departmentCode || !/^\d{3}-\d{3}$/.test(data.departmentCode)) {
-            errors.departmentCode = "Код подразделения обязателен и должен быть в формате '000-000'";
-        } 
-    } else {
-        if (!data.inn || !/^\d{10}$/.test(data.inn)) {
-            errors.inn = "ИНН должен содержать 10 цифр";
-        }
-        if (!data.ogrn || !/^\d{13}$/.test(data.ogrn)) {
-            errors.ogrn = "ОГРН должен содержать 13 цифр";
-        }
-        if (!data.bic || !/^\d{9}$/.test(data.bic)) {
-            errors.bic = "БИК должен содержать 9 цифр";
-        }
-        if (!data.correspondentAccount || !/^\d{20}$/.test(data.correspondentAccount)) {
-            errors.correspondentAccount = "Корреспондентский счет должен содержать 20 цифр";
-        }
+    const { telegramLink, whatsappLink, phoneNumber } = data;
+
+    if (isFirstTime) {
+        if (!telegramLink) errors.telegramLink = "Ссылка на Telegram обязательна";
+        if (!whatsappLink) errors.whatsappLink = "Ссылка на WhatsApp обязательна";
+        if (!phoneNumber) errors.phoneNumber = "Номер телефона обязателен";
+    }
+
+    if (!/^(https?:\/\/)?(t\.me\/|@)[a-zA-Z0-9_]{5,}$/.test(telegramLink)) {
+        errors.telegramLink = "Некорректная ссылка Telegram. Пример: @username или https://t.me/username";
+    }
+
+    if (whatsappLink && !/^(\+?\d{10,15})$/.test(whatsappLink)) {
+        errors.whatsappLink = "Некорректная ссылка WhatsApp. Пример: 89991234567";
+    }
+
+    if (phoneNumber && !/^(\+?\d{10,15})$/.test(phoneNumber)) {
+        errors.phoneNumber = "Введите номер телефона в формате 89991234567";
     }
 
     return errors;
-};
+}
 
-const validateStepThree = (userType, data) => {
+const validateIndividaulData = (data, isFirstTime = false) => {
     const errors = {};
-    if (userType === "individual") {
-        // if (data.driverLicenseNumber && !/^\d{10}$/.test(data.driverLicenseNumber)) {
-        //     errors.driverLicenseNumber = "Номер водительских прав должен содержать 10 цифр";
-        // }
-        if (!data.phoneNumber || !/^\+?\d{11}$/.test(data.phoneNumber)) {
-            console.log('Ошибка номера телефона', data.phoneNumber);
-            errors.phoneNumber = "Некорректный номер телефона";
-        }
-        if (!data.photos || data.photos.length < 2) errors.photos = "Добавьте фото документов (основная страница и страница с пропиской)";
-    } else {
-        if (!data.name) errors.name = "Название компании обязательно";
-        if (!data.registrationDate) errors.registrationDate = "Дата регистрации компании обязательна";
-        // if (!data.dateRegInSystem) errors.dateRegInSystem = "Дата регистрации в системе обязательна";
+    const { fullName, passportNumber, issuedBy, issueDate, departmentCode, registrationAddress } = data;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (isFirstTime) {
+        if (!fullName) errors.fullName = "ФИО обязательно для заполнения";
+        if (!passportNumber) errors.passportNumber = "Серия и номер паспорта обязательны для заполнения";
+        if (!issuedBy) errors.issuedBy = "Укажите, кем выдан паспорт";
+        if (!issueDate) errors.issueDate = "Укажите, когда был выдан паспорт";
+        if (!departmentCode) errors.departmentCode = "Код подразделения обязателен дл заполнения";
+        if (!registrationAddress) errors.registrationAddress = "Адрес регистрации обязателен для заполнения";
     }
 
-    return errors;
-};
+    const cleanValuePassportNum = passportNumber.replace(/\s/g, '');
 
-export {validateRegistration, validateStepTwo, validateStepThree};
+    if(!/^\d{10}$/.test(cleanValuePassportNum)) {
+        errors.passportNum = "Серия и номер паспорта должны быть в формате: 1234 567891";
+    }
+
+    if (!/^\d{3}-\d{3}$/.test(departmentCode)) {
+        errors.departmentCode = "Код подразделения должен быть в формате '000-000'";
+    }
+
+    const inputDate = new Date(issueDate);
+    inputDate.setHours(0, 0, 0, 0);
+    if (inputDate > today) errors.issueDate = "Дата выдачи паспорта не может быть позднее текущей даты";
+
+    return errors;
+}
+
+const validateCompanyData = (data, isFirstTime = false) => {
+    const errors = {};
+    const { name, inn, ogrn, bic, correspondentAccount, registrationDate } = data;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
+
+    if (isFirstTime) {
+        if (!name) errors.name = "Название компании обязательно для заполнения";
+        if (!inn) errors.inn = "ИНН обязателен для заполнения";
+        if (!ogrn) errors.ogrn = "ОГРН обязателен для заполнения";
+        if (!bic) errors.bic = "БИК обязателен для заполнения";
+        if (!correspondentAccount) errors.correspondentAccount = "Корреспондентский счет обязателен для заполнения";
+        if (!registrationDate) errors.registrationDate = "Укажите дату регистрации компании";
+    }
+
+    if (!/^\d{10}$/.test(inn)) {
+        errors.inn = "ИНН должен содержать 10 цифр";
+    }
+    if (!/^\d{13}$/.test(ogrn)) {
+        errors.ogrn = "ОГРН должен содержать 13 цифр";
+    }
+    if (!/^\d{9}$/.test(bic)) {
+        errors.bic = "БИК должен содержать 9 цифр";
+    }
+    if (!/^\d{20}$/.test(correspondentAccount)) {
+        errors.correspondentAccount = "Корреспондентский счет должен содержать 20 цифр";
+    }
+
+    const inputDate = new Date(registrationDate);
+    inputDate.setHours(0, 0, 0, 0);
+    if (inputDate > today) errors.registrationDate = "Дата регистрации не может быть позднее текущей даты";
+
+    return errors;
+}
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthorizationForm from "../forms/AuthorizationForm";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
@@ -18,6 +18,12 @@ const AuthorizationPage = observer(() => {
     const storePopup = popupWithInputStore;
     const navigate = useNavigate();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    useEffect(() => {
+        return () => {
+            store.reset(); // Очистка формы при размонтировании
+        };
+    }, [store]);
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;

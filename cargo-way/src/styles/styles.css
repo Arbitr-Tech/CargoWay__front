@@ -1660,7 +1660,7 @@ input[type=date]::-webkit-datetime-edit {
   display: flex;
   flex-direction: column;
 }
-.formGroup__group--company {
+.formGroup__group--company, .formGroup__group--individual, .formGroup__group--contact {
   justify-content: center;
   width: 40%;
 }
@@ -1675,7 +1675,7 @@ input[type=date]::-webkit-datetime-edit {
     align-items: center;
   }
 }
-.formGroup--company {
+.formGroup--company, .formGroup--individual, .formGroup--contact {
   width: 80%;
 }
 
@@ -1882,17 +1882,20 @@ input[type=date]::-webkit-datetime-edit {
   color: #2C2C2C;
 }
 
-.profileForm--company {
+.profileForm--company, .profileForm--individual, .profileForm--contact {
   padding: 0 0;
   width: 100%;
   box-shadow: none;
 }
-.profileForm__title--company {
+.profileForm__title--company, .profileForm__title--individual {
   margin-top: -4.2rem;
   margin-bottom: 2.7rem;
 }
-.profileForm__button--company {
+.profileForm__button--company, .profileForm__button--individual {
   margin-top: 5rem;
+}
+.profileForm__button--yellow {
+  background-color: #E9C17D;
 }
 
 /*# sourceMappingURL=styles.css.map */
