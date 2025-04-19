@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { getCargoListOfLatest } from "../api/cargoService";
 import { getAutoListOfLatest } from "../api/autoService";
 
-class MainSearchStore {
+class MainStore {
     page = 'MainSearchPage';
     isPopupOpen = false;
     popupContent = {};
@@ -82,4 +82,4 @@ class MainSearchStore {
     }
 }
 
-export const mainSearchStore = new MainSearchStore();
+export const mainStore = new MainStore();

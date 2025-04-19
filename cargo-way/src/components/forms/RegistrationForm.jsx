@@ -82,7 +82,7 @@ const RegistrationForm = ({ formData, agreement, onChange, onSubmit, onChangeAgr
                 Соглашаюсь с условиями обработки данных
             </label>
             <div className="form__transition">
-                <button className='button form__transition-button' onClick={onSubmit}>Далее</button>
+                <button className='button form__transition-button' onClick={onSubmit}>Зарегистрироваться</button>
                 <p className="form__transition-text">Уже зарегистрированы? <Link to='/auth'>Войти</Link></p>
             </div>
         </div>

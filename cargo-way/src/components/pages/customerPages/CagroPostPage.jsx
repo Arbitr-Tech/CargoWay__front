@@ -6,7 +6,8 @@ import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
 import { addCargo, updateCargo } from "../../../api/cargoService";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const CargoPostPage = observer(({ typePage }) => {
     const store = cargoStore;
@@ -34,14 +35,15 @@ const CargoPostPage = observer(({ typePage }) => {
         try {
             if (typePage === 'add') {
                 await addCargo(toJS(store.cargoFormData));
-                // console.log(toJS(store.cargoFormData))
-                navigate('/cargo/list');
+                toast.success("Успешно создано")
+                navigate('/');
             } else {
                 const data = store.getUpdatedFields();
                 await updateCargo(store.editingCargoId, data);
                 navigate('/cargo/list');
             }
         } catch (error) {
+            toast.error('Ошибка');
             console.log('Ошибка отправки формы: ', error);
         }
     };

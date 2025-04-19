@@ -37,11 +37,10 @@ const TopBar = () => {
             <ul className="topbar__list">
                 {(role === 'CUSTOMER') && (
                     <>
-                        {/* <li className="topbar__list-item"><Link to={'/cargo/list'}>Ваши грузы</Link></li> */}
+                        <li className="topbar__list-item"><Link to={'/cargo/list/general'}>Общие записи</Link></li>
+                        <li className="topbar__list-item"><Link to={'/cargo/list/active'}>Активные</Link></li>
+                        <li className="topbar__list-item"><Link to={'/cargo/list/history'}>Архив</Link></li>
                         <li className="topbar__list-item"><Link to={'/cargo/add'}>Добавить грузы</Link></li>
-                        <li className="topbar__list-item"><Link to={'/'}>Общие записи</Link></li>
-                        <li className="topbar__list-item"><Link to={'/'}>Активные</Link></li>
-                        <li className="topbar__list-item"><Link to={'/'}>Архив</Link></li>
                     </>
                 )}
                 {(role === 'CARRIER') && (
@@ -52,7 +51,7 @@ const TopBar = () => {
                         <li className="topbar__list-item"><Link to={'/driver/add'}>Добавить водителя</Link></li>
                     </>
                 )}
-                <li className="topbar__list-item topbar__list-item"><Link to={'/'}>Найти транспорт / грузы</Link></li>
+                {role !== 'CUSTOMER' ? <li className="topbar__list-item"><Link to={'/'}>Найти транспорт / грузы</Link></li> : ''}
             </ul>
             {role && role !== '' ? (
                 <div className="topbar__profile">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FormGroup from "./FormGroup";
+import React from "react";
 
 const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage }) => {
 
@@ -8,12 +9,12 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
         { id: 2, name: "Option 2" },
         { id: 3, name: "Option 3" },
         { id: 4, name: "Option 4" },
-        { id: 25, name: "Option 2" },
-        { id: 35, name: "Option 3" },
-        { id: 43, name: "Option 4" },
-        { id: 27, name: "Option 2" },
-        { id: 32, name: "Option 3" },
-        { id: 49, name: "Option 4" },
+        { id: 25, name: "Option 5" },
+        { id: 35, name: "Option 6" },
+        { id: 43, name: "Option 7" },
+        { id: 27, name: "Option 8" },
+        { id: 32, name: "Option 9" },
+        { id: 49, name: "Option 10" },
     ];
 
     const [previewImages, setPreviewImages] = useState([null, null, null, null, null]);

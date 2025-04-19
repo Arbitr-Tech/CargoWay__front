@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { React, useEffect } from "react";
 import { userStore } from "../../stores/UserStore";
 import CompanyInfoForm from "../forms/profileForms/CompanyInfoForm";
 import ContactInfoForm from "../forms/profileForms/ContactInfoForm";

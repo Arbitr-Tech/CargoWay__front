@@ -1,26 +1,48 @@
 import { makeAutoObservable } from "mobx";
-import { getCargoByProfile } from "../api/cargoService";
+import { getCargoByStatus } from "../api/cargoService";
 
 class ListStore {
-    isPopupOpen = false;
-    listCargo = [];
+    cargoLists = {
+        DRAFT: [],
+        COMPLETED: [],
+        IN_PROGRESS: [],
+    };
 
-    openPopup = () => {
-        this.isPopupOpen = true;
+    pages = {
+        DRAFT: { current: 0, total: 1 },
+        COMPLETED: { current: 0, total: 1 },
+        IN_PROGRESS: { current: 0, total: 1 },
+    };
+
+    constructor() {
+        makeAutoObservable(this);
     }
 
-    closePopup = () => {
-        this.isPopupOpen = false;
-    }
-
-    async fetchCargoList() {
-            try {
-                const dataCargo = await getCargoByProfile();
-                this.listCargo = dataCargo;
-            } catch (error) {
-                console.error("Ошибка при получении списков:", error);
-            } 
+    async fetchCargoList(status, pageNumber) {
+        try {
+            const dataCargo = await getCargoByStatus(status, pageNumber);
+            console.log(dataCargo.content)
+            this.cargoLists[status] = dataCargo.content;
+            this.pages[status] = {
+                current: dataCargo.pageNumber,
+                total: dataCargo.totalPages,
+            };
+        } catch (error) {
+            console.error("Ошибка при получении списка грузов:", error);
         }
+    }
+
+    getCurrentPage(status) {
+        return this.pages[status]?.current ?? 0;
+    }
+
+    setCurrentPage(status, page) {
+        this.pages[status] = {...this.pages[status], current: page};
+    }
+
+    getTotalPages(status) {
+        return this.pages[status]?.total ?? 1;
+    }
 }
 
 export const listStore = new ListStore();

@@ -97,14 +97,14 @@ export const getCargoByFiltres = async (formData) => {
     }
 };
 
-export const getCargoByProfile = async () => {
+export const getCargoByStatus = async (status, pageNumber) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/profile/`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/general/?visibilityStatus=${status}&pageNumber=${pageNumber}&pageSize=10`, {
             method: "GET"
         })
         return data;
     } catch (error) {
-        console.log("Ошибка удаления груза: ", error);
+        console.log("Ошибка получения общего списка: ", error);
         throw error;
     }
 };

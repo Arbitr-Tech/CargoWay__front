@@ -22,8 +22,7 @@ class CargoStore {
         bodyType: "",
         loadType: "",
         unloadType: "",
-        status: "HIDDEN",
-        photos: []
+        // photos: []
     };
 
     originalCargoFormData = {};

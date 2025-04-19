@@ -1,3 +1,5 @@
+import React from "react";
+
 const FormGroup = ({ label, children, image, modification }) => (
     <label className={`formGroup ${modification ? `formGroup--${modification}` : ''}`}>
         <span className="formGroup__label">{label}</span>

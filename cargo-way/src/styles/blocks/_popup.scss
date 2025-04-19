@@ -3,7 +3,7 @@
 
 .popup, .popupWithInput {
     position: fixed;
-    top: 8%;
+    top: 20%;
     left: 27%;
     z-index: 999;
     width: 50rem;
@@ -51,5 +51,26 @@
         &-input {
             @include m.input-base;
         }
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999; 
+    background-color: rgba(0, 0, 0, 0.349);
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s;
+    width: 100vw;
+    height: 100vh;
+    
+
+    &--show {
+        opacity: 1;
+        visibility: visible;
     }
 }

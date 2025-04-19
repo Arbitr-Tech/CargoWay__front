@@ -72,7 +72,6 @@ const AuthorizationPage = observer(() => {
 
     return (
         <div className="authorization">
-            <div className={`overlay ${isPopupOpen ? 'overlay--show' : ''} `}></div>
             <PopupWithInput
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}

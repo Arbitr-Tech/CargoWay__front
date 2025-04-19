@@ -278,13 +278,24 @@
 .profile, 
 .cargoList,
 .autoList {
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
 
     &__title {
         text-align: center;
         font-size: 2.875em;
         color: v.$font-light-color;
         font-weight: 400;
+    }
+
+    &__empty{
+        @include m.form-step-base(column, 1rem 2.2rem, 70rem);
+        text-align: center; 
+        color: v.$font-dark-color;
+        font-weight: 400;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+        }
     }
 
     &__btnBox {

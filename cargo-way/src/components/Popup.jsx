@@ -1,4 +1,7 @@
-const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, item }) => {
+import ReactDOM from "react-dom";
+import { useEffect } from "react";
+
+const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
     if (!isOpen) return null;
 
     const fieldNames = {
@@ -50,21 +53,24 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, item }) => {
     };
 
 
-    return (
-        <div className="popup">
-            <div className="popup__icon">
-                <img src="/assets/img/close.svg" alt="close" onClick={onClose} />
-            </div>
-            <div className="popup__text">
-                {typePopup === 'contacts' ? renderText(text) : text}
-            </div>
-            {(typePopup === 'del' || typePopup === 'exit' || typePopup === 'edit') && (
-                <div className="popup__buttons">
-                    <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
-                    <button className="popup__button" onClick={onClose}>Отменить</button>
+    return ReactDOM.createPortal(
+        <div className={`overlay ${isOpen ? "overlay--show" : ""}`}>
+            <div className="popup">
+                <div className="popup__icon">
+                    <img src="/assets/img/close.svg" alt="close" onClick={onClose} />
                 </div>
-            )}
-        </div>
+                <div className="popup__text">
+                    {typePopup === 'contacts' ? renderText(text) : text}
+                </div>
+                {(typePopup === 'del' || typePopup === 'exit' || typePopup === 'edit') && (
+                    <div className="popup__buttons">
+                        <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
+                        <button className="popup__button" onClick={onClose}>Отменить</button>
+                    </div>
+                )}
+            </div>
+        </div>,
+        document.getElementById("popup-root")
     );
 };
 
