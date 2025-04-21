@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
-import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
+import { deleteCargo, getDetailsCargo, publishCargo, unpublishCargo } from "../../../api/cargoService";
 import Popup from "../../Popup";
 import { cargoStore } from "../../../stores/CargoStore";
 import Pagination from "../../Pagination";
 import ListItems from "../../ListItems";
+import { toast } from "react-toastify";
 
 const GeneralListPage = observer(() => {
     const navigate = useNavigate();
@@ -15,11 +16,11 @@ const GeneralListPage = observer(() => {
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
     const [isLoading, setIsLoading] = useState(true);
 
-    const loadCargoList = async (page = listStore.getCurrentPage("DRAFT")) => {
+    const loadCargoList = async (page = listStore.getCurrentPage("INTERNAL")) => {
         try {
             setIsLoading(true);
-            listStore.setCurrentPage("DRAFT", page);
-            await listStore.fetchCargoList("DRAFT", page);
+            listStore.setCurrentPage("INTERNAL", page);
+            await listStore.fetchCargoList("INTERNAL", page);
         } catch (error) {
             console.error("Ошибка загрузки списка грузов:", error);
         } finally {
@@ -44,7 +45,7 @@ const GeneralListPage = observer(() => {
             },
         ];
 
-        if (item.status === "PUBLISHED") {
+        if (item.visibilityStatus === "PUBLISHED") {
             return [
                 ...commonButtons,
                 {
@@ -77,7 +78,7 @@ const GeneralListPage = observer(() => {
     const handleEditClick = async (item) => {
         try {
             const data = await getDetailsCargo(item.id);
-            storeCargo.setCargoFormDataFromServer(item.id, data);
+            storeCargo.setCargoFormDataFromServer(item.id, data.cargo);
             navigate('/cargo/edit');
         } catch (error) {
             console.log(error);
@@ -89,6 +90,7 @@ const GeneralListPage = observer(() => {
         try {
             await deleteCargo(popupData.item.id);
             closePopup();
+            toast.success("Успешно удалено")
             await loadCargoList();
         } catch (error) {
             console.error("Ошибка при удалении груза:", error);
@@ -98,7 +100,12 @@ const GeneralListPage = observer(() => {
     const handlePublishClick = async () => {
         if (!popupData.item) return;
         try {
-            await changeStatusCargo(popupData.item.id, popupData.item.status);
+            console.log(popupData.item);
+            if (popupData.item.visibilityStatus === "DRAFT") {
+                await publishCargo(popupData.item.id);
+            } else {
+                await unpublishCargo(popupData.item.id);
+            };
             closePopup();
             await loadCargoList();
         } catch (error) {
@@ -120,16 +127,16 @@ const GeneralListPage = observer(() => {
                 <div className="cargoList__empty">
                     <p className="cargoList__subtitle">Загрузка списка...</p>
                 </div>
-            ) : listStore.cargoLists.DRAFT.length > 0 ? (
+            ) : listStore.cargoLists.INTERNAL.length > 0 ? (
                 <div className="cargoList__content">
                     <ListItems
-                        list={listStore.cargoLists.DRAFT}
+                        list={listStore.cargoLists.INTERNAL}
                         type="myListCargo"
                         getButtons={getButtonsByStatus}
                     />
                     <Pagination
-                        currentPage={listStore.getCurrentPage("DRAFT")}
-                        totalPages={listStore.getTotalPages("DRAFT")}
+                        currentPage={listStore.getCurrentPage("INTERNAL")}
+                        totalPages={listStore.getTotalPages("INTERNAL")}
                         onPageChange={(page) => loadCargoList(page)}
                     />
                 </div>

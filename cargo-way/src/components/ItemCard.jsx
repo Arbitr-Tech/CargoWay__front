@@ -1,4 +1,4 @@
-const ItemCard = ({ bodyType, weight, volume, from, to, price, typePay, type, status, buttons = [] }) => {
+const ItemCard = ({ bodyType = '', name = '', weight, volume, from, to, price, typePay, type, status, buttons = [] }) => {
 
     const STATUS_LABELS = {
         DRAFT: "Черновик",
@@ -16,7 +16,7 @@ const ItemCard = ({ bodyType, weight, volume, from, to, price, typePay, type, st
     return (
         <div className={`search__item ${isHighlighted ? 'search__item--yellow' : ''}`}>
             <div className={`search__item-text ${type !== 'main' ? 'search__item-text--mylist' : ''}`}>
-                <p className="search__item-content">{bodyType}</p>
+                <p className="search__item-content">{type === 'myListCargo' ? name : bodyType}</p>
                 <p className="search__item-content">{weight} т / {volume} кв.м</p>
                 <p className="search__item-content search__item-content--hide">{from}</p>
                 <p className="search__item-content search__item-content--hide">{to}</p>

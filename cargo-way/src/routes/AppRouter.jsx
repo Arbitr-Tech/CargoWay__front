@@ -21,11 +21,12 @@ const AppRouter = () => {
             <Route path='/cargo/add' element={<CargoPostPage typePage='add'/>} />
             <Route path='/cargo/list/history' element={<HistoryListPage />} />
             <Route path='/cargo/list/active' element={<ActiveListPage />} />
+            <Route path='/cargo/edit' element={<CargoPostPage typePage='edit' />} />
+            
             <Route path='/auto/list' element={<AutoListPage />} />
             {/* <Route path='/driver/list' element={<CargoListPage />} /> */}
             <Route path='/auto/add' element={<AutoPostPage typePage='add' />} />
             <Route path='/driver/add' element={<DriverPostPage typePage='add' />} />
-            <Route path='/cargo/edit' element={<CargoPostPage typePage='edit' />} />
             <Route path='/auto/edit' element={<AutoPostPage typePage='edit' />} />
             <Route path='/driver/edit' element={<DriverPostPage typePage='edit' />} />
             <Route path='/reg' element={<RegistrationPage />} />

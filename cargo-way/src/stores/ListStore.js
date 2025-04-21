@@ -1,29 +1,29 @@
 import { makeAutoObservable } from "mobx";
-import { getCargoByStatus } from "../api/cargoService";
+import { getCargoByCategory } from "../api/cargoService";
 
 class ListStore {
     cargoLists = {
-        DRAFT: [],
-        COMPLETED: [],
-        IN_PROGRESS: [],
+        INTERNAL: [],
+        EXTERNAL: [],
+        HISTORY: [],
     };
 
     pages = {
-        DRAFT: { current: 0, total: 1 },
-        COMPLETED: { current: 0, total: 1 },
-        IN_PROGRESS: { current: 0, total: 1 },
+        INTERNAL: { current: 0, total: 1 },
+        EXTERNAL: { current: 0, total: 1 },
+        HISTORY: { current: 0, total: 1 },
     };
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    async fetchCargoList(status, pageNumber) {
+    async fetchCargoList(category, pageNumber) {
         try {
-            const dataCargo = await getCargoByStatus(status, pageNumber);
-            console.log(dataCargo.content)
-            this.cargoLists[status] = dataCargo.content;
-            this.pages[status] = {
+            const dataCargo = await getCargoByCategory(category, pageNumber);
+            console.log(dataCargo.content);
+            this.cargoLists[category] = dataCargo.content;
+            this.pages[category] = {
                 current: dataCargo.pageNumber,
                 total: dataCargo.totalPages,
             };
@@ -32,16 +32,16 @@ class ListStore {
         }
     }
 
-    getCurrentPage(status) {
-        return this.pages[status]?.current ?? 0;
+    getCurrentPage(category) {
+        return this.pages[category]?.current ?? 0;
     }
 
-    setCurrentPage(status, page) {
-        this.pages[status] = {...this.pages[status], current: page};
+    setCurrentPage(category, page) {
+        this.pages[category] = {...this.pages[category], current: page};
     }
 
-    getTotalPages(status) {
-        return this.pages[status]?.total ?? 1;
+    getTotalPages(category) {
+        return this.pages[category]?.total ?? 1;
     }
 }
 

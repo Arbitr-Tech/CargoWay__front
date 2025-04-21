@@ -201,7 +201,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                                     type="radio"
                                     name="bodyType"
                                     value={option.name || ''}
-                                    // checked={data.bodyType.includes(option.name)}
+                                    checked={data.bodyType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -218,7 +218,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                                     type="radio"
                                     name="loadType"
                                     value={option.name || ''}
-                                    // checked={data.loadType.includes(option.name)}
+                                    checked={data.loadType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -235,7 +235,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                                     type="radio"
                                     name="unloadType"
                                     value={option.name || ''}
-                                    // checked={data.unloadType.includes(option.name)}
+                                    checked={data.unloadType.includes(option.name)}
                                     onChange={onChange}
                                 />
                                 {option.name}
@@ -258,7 +258,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                             type="radio"
                             name="typePay"
                             value="Без НДС, безнал"
-                            // checked={data.priceType === "Без НДС, безнал"}
+                            checked={data.typePay === "Без НДС, безнал"}
                             onChange={onChange}
                         />
                         Без НДС, безнал
@@ -268,7 +268,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                             type="radio"
                             name="typePay"
                             value="С НДС, безнал"
-                            // checked={data.priceType === "С НДС, безнал"}
+                            checked={data.typePay === "С НДС, безнал"}
                             onChange={onChange}
                         />
                         С НДС, безнал
@@ -278,7 +278,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage 
                             type="radio"
                             name="typePay"
                             value="Наличными"
-                            // checked={data.priceType === "Наличными"}
+                            checked={data.typePay === "Наличными"}
                             onChange={onChange}
                         />
                         Наличными

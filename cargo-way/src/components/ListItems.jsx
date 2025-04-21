@@ -19,7 +19,7 @@ const ListItems = ({ list, type, buttons = [], getButtons }) => {
                         {...item.cargo}
                         from={item.cargo.route.from}
                         to={item.cargo.route.to}
-                        status={item.visibility}
+                        status={item.visibilityStatus}
                         type={type}
                         buttons={getButtons ? getButtons(item) : buttons}
                     />

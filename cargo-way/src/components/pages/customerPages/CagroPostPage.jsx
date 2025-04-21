@@ -40,7 +40,8 @@ const CargoPostPage = observer(({ typePage }) => {
             } else {
                 const data = store.getUpdatedFields();
                 await updateCargo(store.editingCargoId, data);
-                navigate('/cargo/list');
+                toast.success("Успешно изменено")
+                navigate('/');
             }
         } catch (error) {
             toast.error('Ошибка');
