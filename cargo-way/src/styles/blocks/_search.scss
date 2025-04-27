@@ -3,7 +3,7 @@
 @use '../utils' as u;
 
 .search {
-    @include m.form-step-base(column, 1rem 2.2rem, auto);
+    @include m.form-step-base(column, 1rem 2.2rem, 58rem); 
     margin-top: 5rem;
     margin-inline: auto;
     margin-bottom: 2rem;
@@ -43,7 +43,7 @@
             margin-top: 1rem;
 
             &--fromTo {
-                max-width: 2rem;
+                width: 5rem;
             }
         }
 
@@ -224,4 +224,12 @@
             font-size: 2rem;
         }
     }
+
+    &__empty{
+        @include m.form-step-base(column, 1rem 2.2rem, 58rem);
+        text-align: center; 
+        color: v.$font-dark-color;
+        font-weight: 400;
+    }
+
 }

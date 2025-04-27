@@ -89,3 +89,21 @@ export const fetchWithAuth = async (url, options = {}) => {
         return null; // Возвращаем null, если тело отсутствует
     }
 };
+
+export const getCargoListOfLatest = async () => {
+    const response = await fetch(`${API_URL}/api/v1/cargos/last5/`, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.text(); // Читаем текст ошибки
+        throw new Error(`Ошибка ${response.status}: ${errorData}`);
+    }
+
+    const data = await response.json();
+    return data;
+};

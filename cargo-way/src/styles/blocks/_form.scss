@@ -37,6 +37,10 @@
 
     &__label {
         margin-bottom: 1rem;
+
+        & a {
+            color: v.$active-color;
+        }
     }
 
     // &__button {

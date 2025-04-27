@@ -52,7 +52,7 @@ const validateIndividaulData = (data, isFirstTime = false) => {
 
     const cleanValuePassportNum = passportNumber.replace(/\s/g, '');
 
-    if(!/^\d{10}$/.test(cleanValuePassportNum)) {
+    if (!/^\d{10}$/.test(cleanValuePassportNum)) {
         errors.passportNum = "Серия и номер паспорта должны быть в формате: 1234 567891";
     }
 
@@ -102,4 +102,50 @@ const validateCompanyData = (data, isFirstTime = false) => {
     return errors;
 }
 
-export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData };
+const validateCargo = (data) => {
+    const errors = {};
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (!data.name) errors.name = "Название груза обязательно";
+    if (!data.description) errors.description = "Описание обязательно";
+    if (data.weight <= 0) errors.weight = "Вес должен быть положительным";
+    if (data.volume <= 0) errors.volume = "Объем должен быть положительным";
+    if (data.price <= 0) errors.price = "Цена должна быть положительной";
+    if (!data.typePay) errors.typePay = "Укажите тип оплаты";
+    if (!data.bodyType) errors.bodyType = "Выберите тип кузова";
+    if (!data.loadType) errors.loadType = "Укажите тип загрузки";
+    if (!data.unloadType) errors.unloadType = "Укажите тип выгрузки";
+
+    if (!data.readyDate) {
+        errors.readyDate = "Укажите дату готовности";
+    } else {
+        const readyDate = new Date(data.readyDate);
+        readyDate.setHours(0, 0, 0, 0);
+        if (readyDate < today) errors.readyDate = "Дата готовности не может быть в прошлом";
+    }
+
+    if (!data.deliveryDate) {
+        errors.deliveryDate = "Укажите дату доставки";
+    } else {
+        const deliveryDate = new Date(data.deliveryDate);
+        deliveryDate.setHours(0, 0, 0, 0);
+        if (data.readyDate && deliveryDate < new Date(data.readyDate)) {
+            errors.deliveryDate = "Дата доставки не может быть раньше даты готовности";
+        }
+    }
+
+    if (!data.route.from) errors['route.from'] = "Укажите пункт отправления";
+    if (!data.route.to) errors['route.to'] = "Укажите пункт назначения";
+    if (data.route.from && data.route.to && data.route.from === data.route.to) {
+        errors['route.to'] = "Пункты отправления и назначения не должны совпадать";
+    }
+
+    if (!data.dimensions.length) errors['dimensions.length'] = "Длина обязательна и должна быть положительной";
+    if (!data.dimensions.width) errors['dimensions.width'] = "Ширина обязательна и должна быть положительной";
+    if (!data.dimensions.height) errors['dimensions.height'] = "Высота обязательна и должна быть положительной";
+
+    return errors;
+};
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo };

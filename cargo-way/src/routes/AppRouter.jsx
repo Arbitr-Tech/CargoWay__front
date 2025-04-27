@@ -2,14 +2,12 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AuthorizationPage from '../components/pages/AuthorizationPage';
 import RegistrationPage from '../components/pages/RegistrationPage';
-import MainSearchPage from '../components/pages/MainSearchPage';
 import CargoPostPage from '../components/pages/customerPages/CagroPostPage';
 import AutoPostPage from '../components/pages/carrierPages/AutoPostPage';
 import AutoListPage from '../components/pages/carrierPages/AutoListPage';
 import DriverPostPage from '../components/pages/driverPages/DriverPostPage';
 import PasswordRecoveryPage from '../components/pages/PasswordRecoveryPage';
 import ProfilePage from '../components/pages/ProfilePage';
-import GeneralListPage from '../components/pages/customerPages/GeneralListPage';
 import HistoryListPage from '../components/pages/customerPages/HistoryListPage';
 import ActiveListPage from '../components/pages/customerPages/ActiveListPage';
 import MainPage from '../components/pages/MainPage';
@@ -17,7 +15,7 @@ import MainPage from '../components/pages/MainPage';
 const AppRouter = () => {
     return (
         <Routes>
-            <Route path='*' element={<MainSearchPage />} />
+            <Route path='*' element={<MainPage />} />
             <Route path='/cargo/add' element={<CargoPostPage typePage='add'/>} />
             <Route path='/cargo/list/history' element={<HistoryListPage />} />
             <Route path='/cargo/list/active' element={<ActiveListPage />} />

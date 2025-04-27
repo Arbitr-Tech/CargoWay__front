@@ -8,6 +8,7 @@ import { addCargo, updateCargo } from "../../../api/cargoService";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { validateCargo } from "../../../validation/validations";
 
 const CargoPostPage = observer(({ typePage }) => {
     const store = cargoStore;
@@ -21,17 +22,36 @@ const CargoPostPage = observer(({ typePage }) => {
         }
     }, [location.pathname]);
 
-    const handleInputChange = ({ target: { name, value } }) => {
-        const resValue = name === 'weight' || name === 'volume' ? +value : value;
-        store.setFormData(name, resValue);
+    const handleInputChange = ({ target: { name, value, valueAsNumber, type } }) => {
+        if (type === 'number') {
+            const valNum = Math.max(0, valueAsNumber || 0);
+            store.setFormData(name, valNum);
+        } else {
+            store.setFormData(name, value);
+        }
     };
 
-    const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
-        const resValue = name === 'dimensions' ? +value : value;
-        store.setNestedFormData(name, dataset.path, resValue);
+    const handleNestedInputChange = ({ target: { name, dataset, value, valueAsNumber, type } }) => {
+        if (type === 'number') {
+            const valNum = Math.max(0, valueAsNumber || 0);
+            store.setNestedFormData(name, dataset.path, valNum);
+        } else {
+            store.setNestedFormData(name, dataset.path, value);
+        }
     };
 
     const handleClickButton = async () => {
+        console.log(toJS(store.cargoFormData))
+        const errors = validateCargo(store.cargoFormData);
+
+        if (Object.keys(errors).length > 0) {
+            console.log("Ошибки отправки формы:", errors);
+            Object.values(errors).forEach(errorMessage => {
+                toast.error(errorMessage);
+            });
+            return;
+        }
+
         try {
             if (typePage === 'add') {
                 await addCargo(toJS(store.cargoFormData));

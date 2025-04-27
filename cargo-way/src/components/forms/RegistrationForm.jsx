@@ -79,7 +79,7 @@ const RegistrationForm = ({ formData, agreement, onChange, onSubmit, onChangeAgr
                     checked={agreement}
                     onChange={onChangeAgreement}
                 />
-                Соглашаюсь с условиями обработки данных
+                <a className="form__label-a" href="/docs/user-agreement.docx" target="_blank" rel="noopener noreferrer">Соглашаюсь с условиями обработки данных →</a>
             </label>
             <div className="form__transition">
                 <button className='button form__transition-button' onClick={onSubmit}>Зарегистрироваться</button>

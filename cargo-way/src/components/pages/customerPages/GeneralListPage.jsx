@@ -35,10 +35,6 @@ const GeneralListPage = observer(() => {
     const getButtonsByStatus = (item) => {
         const commonButtons = [
             {
-                label: "Редактировать",
-                onClick: () => handleEditClick(item),
-            },
-            {
                 label: "Удалить",
                 onClick: () =>
                     openPopup("Вы действительно хотите удалить эту запись?", "del", item),
@@ -51,7 +47,12 @@ const GeneralListPage = observer(() => {
                 {
                     label: "Снять с публикации",
                     onClick: () =>
-                        openPopup("Вы действительно хотите снять с публикации?", "edit", item),
+                        openPopup("Вы действительно хотите снять с публикации?", "change", item),
+                },
+                {
+                    label: "Редактировать",
+                    onClick: () =>
+                        openPopup("Перед редактированием запись будет снята с публикации автоматически. Продолжить?", "edit", item),
                 },
             ];
         } else {
@@ -60,7 +61,11 @@ const GeneralListPage = observer(() => {
                 {
                     label: "Опубликовать",
                     onClick: () =>
-                        openPopup("Вы действительно хотите опубликовать эту запись?", "edit", item),
+                        openPopup("Вы действительно хотите опубликовать эту запись?", "change", item),
+                },
+                {
+                    label: "Редактировать",
+                    onClick: () => handleEditClick(item)
                 },
             ];
         }
@@ -77,6 +82,12 @@ const GeneralListPage = observer(() => {
 
     const handleEditClick = async (item) => {
         try {
+            if (popupData.item && popupData.item.visibilityStatus === "PUBLISHED"){
+                item = popupData.item
+                console.log(popupData.item.id)
+                await unpublishCargo(popupData.item.id);
+                closePopup();
+            };
             const data = await getDetailsCargo(item.id);
             storeCargo.setCargoFormDataFromServer(item.id, data.cargo);
             navigate('/cargo/edit');
@@ -120,7 +131,12 @@ const GeneralListPage = observer(() => {
                 text={popupData.text}
                 typePopup={popupData.type}
                 onClose={closePopup}
-                onConfirm={popupData.type === "del" ? handleDeleteClick : handlePublishClick}
+                onConfirm={popupData.type === "del"
+                    ? handleDeleteClick
+                    : popupData.type === "edit"
+                        ? handleEditClick
+                        : handlePublishClick
+                }
             />
             <h2 className="cargoList__title">Общие записи</h2>
             {isLoading ? (

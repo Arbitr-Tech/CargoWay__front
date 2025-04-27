@@ -1,8 +1,8 @@
 import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    const canGoBack = currentPage > 0;
-    const canGoForward = currentPage + 1 < totalPages;
+    const canGoBack = currentPage > 1;
+    const canGoForward = currentPage < totalPages;
 
     return (
         <div className="pagination">
@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             </button>
 
             <span className="pagination__info">
-                Страница {currentPage + 1} из {totalPages}
+                Страница {currentPage} из {totalPages}
             </span>
 
             <button

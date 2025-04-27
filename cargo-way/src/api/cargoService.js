@@ -39,17 +39,17 @@ export const updateCargo = async (cargoId, updatedData) => {
     }
 };
 
-export const getCargoListOfLatest = async () => {
+// export const getCargoListOfLatest = async () => {
 //     try {
-//         const data = await fetchWithAuth(`/api/v1/cargos/count/5/`, {
+//         const data = await fetchWithAuth('/api/v1/cargos/last5/', {
 //             method: "GET"
 //         })
 //         return data;
 //     } catch (error) {
-//         console.log("Ошибка обновления груза: ", error);
+//         console.log("Ошибка получения последних 5-ти грузов: ", error);
 //         throw error;
 //     }
-};
+// };
 
 export const publishCargo = async (cargoId) => {
     try {
@@ -87,26 +87,17 @@ export const deleteCargo = async (cargoId) => {
     }
 };
 
-export const getCargoByFiltres = async (formData) => {
-
-    // let path = '';
-
-    // for(let el of Object.entries(formData)) {
-    //     if(el[1] !== '') {
-    //         path+=`${el[0]}=${el[1]}&`
-    //     }
-    // }
-
-    // try {
-    //     console.log(path);
-    //     const data = await fetchWithAuth(`/api/v1/cargos/?${path}`, {
-    //         method: "GET"
-    //     })
-    //     return data;
-    // } catch (error) {
-    //     console.log("Ошибка удаления груза: ", error);
-    //     throw error;
-    // }
+export const getCargoByFiltres = async (formData, pageNumber) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/search/?pageNumber=${pageNumber}&pageSize=5`, {
+            method: "POST",
+            body: JSON.stringify(formData)
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка получения списка по фильтрам: ", error);
+        throw error;
+    }
 };
 
 export const getCargoByCategory = async (category, pageNumber) => {

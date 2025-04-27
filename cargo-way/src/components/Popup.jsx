@@ -62,7 +62,7 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
                 <div className="popup__text">
                     {typePopup === 'contacts' ? renderText(text) : text}
                 </div>
-                {(typePopup === 'del' || typePopup === 'exit' || typePopup === 'edit') && (
+                {(typePopup !== 'contacts' && typePopup !== 'auth') && (
                     <div className="popup__buttons">
                         <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
                         <button className="popup__button" onClick={onClose}>Отменить</button>

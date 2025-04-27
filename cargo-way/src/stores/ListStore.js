@@ -1,17 +1,21 @@
 import { makeAutoObservable } from "mobx";
-import { getCargoByCategory } from "../api/cargoService";
+import { getCargoByCategory, getCargoByFiltres } from "../api/cargoService";
+import { getCargoListOfLatest } from "../api/commonService";
 
 class ListStore {
     cargoLists = {
         INTERNAL: [],
         EXTERNAL: [],
         HISTORY: [],
+        FILTERS: [],
+        LATEST: [],
     };
 
     pages = {
-        INTERNAL: { current: 0, total: 1 },
-        EXTERNAL: { current: 0, total: 1 },
-        HISTORY: { current: 0, total: 1 },
+        INTERNAL: { current: 1, total: 1 },
+        EXTERNAL: { current: 1, total: 1 },
+        HISTORY: { current: 1, total: 1 },
+        FILTERS: { current: 1, total: 1 },
     };
 
     constructor() {
@@ -32,8 +36,35 @@ class ListStore {
         }
     }
 
+    async fetchCargoListByFilters(formData, pageNumber) {
+        try {
+            const dataCargo = await getCargoByFiltres(formData, pageNumber);
+            console.log(dataCargo.content);
+            this.cargoLists['FILTERS'] = dataCargo.content;
+            this.pages['FILTERS'] = {
+                current: dataCargo.pageNumber,
+                total: dataCargo.totalPages,
+            };
+        } catch (error) {
+            console.error("Ошибка при получении списка грузов:", error);
+        }
+    }
+
+    async fetchCargoListOfLatest() {
+        try {
+            const dataCargo = await getCargoListOfLatest();
+            this.cargoLists['LATEST'] = dataCargo;
+        } catch (error) {
+            console.error("Ошибка при получении списка грузов:", error);
+        }
+    }
+
+    resetLatestCargo() {
+        this.cargoLists.LATEST = [];
+    }
+
     getCurrentPage(category) {
-        return this.pages[category]?.current ?? 0;
+        return this.pages[category]?.current ?? 1;
     }
 
     setCurrentPage(category, page) {
