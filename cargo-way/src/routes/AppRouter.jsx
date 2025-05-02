@@ -5,12 +5,12 @@ import RegistrationPage from '../components/pages/RegistrationPage';
 import CargoPostPage from '../components/pages/customerPages/CagroPostPage';
 import AutoPostPage from '../components/pages/carrierPages/AutoPostPage';
 import AutoListPage from '../components/pages/carrierPages/AutoListPage';
-import DriverPostPage from '../components/pages/driverPages/DriverPostPage';
 import PasswordRecoveryPage from '../components/pages/PasswordRecoveryPage';
 import ProfilePage from '../components/pages/ProfilePage';
 import HistoryListPage from '../components/pages/customerPages/HistoryListPage';
 import ActiveListPage from '../components/pages/customerPages/ActiveListPage';
 import MainPage from '../components/pages/MainPage';
+import DriverPostPage from '../components/pages/carrierPages/DriverPostPage';
 
 const AppRouter = () => {
     return (

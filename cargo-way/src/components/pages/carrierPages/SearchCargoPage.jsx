@@ -68,7 +68,6 @@ const SearchCargoPage = observer(() => {
             openPopup("Необходимо авторизоваться, чтобы узнать детали заказа", "auth");
             return;
         }
-        // handleSearch(1);
     };
 
     const handleSearch = async (page) => {

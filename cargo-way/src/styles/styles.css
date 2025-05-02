@@ -1158,6 +1158,10 @@ input[type=date]::-webkit-datetime-edit {
   transform: scale(1.05);
 }
 
+.driverForm {
+  max-width: 50%;
+}
+
 .formGroup {
   display: flex;
   gap: 5rem;
@@ -1208,6 +1212,13 @@ input[type=date]::-webkit-datetime-edit {
 }
 .formGroup--company, .formGroup--individual, .formGroup--contact {
   width: 80%;
+}
+.formGroup--driver {
+  width: 100%;
+  justify-content: space-between;
+}
+.formGroup--driver span {
+  min-width: 50%;
 }
 
 .popup, .popupWithInput {

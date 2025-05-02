@@ -1,69 +1,114 @@
 import FormGroup from "./FormGroup";
+import Select from 'react-select';
+import { useMask } from "@react-input/mask";
 
-const DriverForm = () => {
+const DriverForm = ({ data, onChange, categoryChange }) => {
+
+    const VALID_CATEGORIES = [
+        'A', 'A1', 'B', 'BE', 'B1',
+        'C', 'CE', 'C1', 'C1E',
+        'D', 'DE', 'D1', 'D1E',
+        'M', 'Tm', 'Tb'
+    ];
+
+    const customStyles = {
+        container: (provided) => ({
+            ...provided,
+            maxWidth: '75%',
+        }),
+        control: (provided, state) => ({
+            ...provided,
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            borderColor: state.isFocused ? '#E9C17D' : '#2C2C2C', // ваши цвета
+            boxShadow: 'none',
+            '&:hover': {
+                borderColor: '#E9C17D',
+            }
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: '#2C2C2C'
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: '#2C2C2C',
+            padding: '8px',
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused ? 'rgba(233, 193, 125, 0.551)' : provided.backgroundColor,
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            marginLeft: '0.7rem',
+            backgroundColor: '#E9C17D',
+        }),
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            width: '100%',
+            overflow: 'hidden',
+        }),
+    };
+
+    const inputLicenseNumberMask = useMask({
+        mask: '____ ______',
+        replacement: { _:  /\d/ }, // разрешает латинские буквы и цифры
+        // replacement: { _: /[a-zA-Z0-9]/ }, // разрешает латинские буквы и цифры
+    });
+
     return (
         <div className="driverForm">
-            <FormGroup label="Полное имя">
+            <FormGroup label="ФИО" modification="driver">
                 <input className="driverForm__input"
                     type="text"
-                    // name="name"
-                    // value={data.name}
-                    placeholder="Фамилия"
-                // onChange={onChange}
-                />
-                <input className="driverForm__input"
-                    type="text"
-                    // name="name"
-                    // value={data.name}
-                    placeholder="Имя"
-                // onChange={onChange}
-                />
-                <input className="driverForm__input"
-                    type="text"
-                    // name="name"
-                    // value={data.name}
-                    placeholder="Отчество"
+                // name="name"
+                // value={data.name}
+                // placeholder="Фамилия"
                 // onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Дата рождения">
+            <FormGroup label="Категория водительских прав" modification="driver">
+                <div className="driverForm__categories">
+                    <Select
+                        styles={customStyles}
+                        isMulti
+                        options={VALID_CATEGORIES.map(c => ({ value: c, label: c }))}
+                        value={data.licenseCategory ? data.licenseCategory.split(',').map(c => ({ value: c, label: c })) : []}
+                        onChange={selected => {
+                            const value = selected.map(c => c.value).join(',');
+                            onChange({
+                                target: { name: 'licenseCategory', value }
+                            })
+                        }}
+                        placeholder="Категории"
+                    />
+                </div>
+            </FormGroup>
+            <FormGroup label="Номер водительских прав" modification="driver">
+                <input className="driverForm__input"
+                    type="text"
+                    name="licenseNumber"
+                    value={data.licenseNumber}
+                    onChange={onChange}
+                    ref={inputLicenseNumberMask}
+                    placeholder="Например: АА12345678"
+                />
+            </FormGroup>
+            <FormGroup label="Дата выдачи водительских прав" modification="driver">
                 <input className="driverForm__input"
                     type="date"
-                    // name="name"
-                    // value={data.name}
-                // onChange={onChange}
+                    name="issueDate"
+                    value={data.issueDate}
+                    onChange={onChange}
                 />
             </FormGroup>
-            <FormGroup label="Серия и номер паспорта">
-                <input className="driverForm__input"
-                    type="number"
-                    // name="name"
-                    // value={data.name}
-                // onChange={onChange}
-                />
-            </FormGroup>
-            <FormGroup label="Кем выдан">
-                <input className="driverForm__input"
-                    type="text"
-                    // name="name"
-                    // value={data.name}
-                // onChange={onChange}
-                />
-            </FormGroup>
-            <FormGroup label="Дата выдачи">
+            <FormGroup label="Дата окончания срока действия" modification="driver">
                 <input className="driverForm__input"
                     type="date"
-                    // name="name"
-                    // value={data.name}
-                // onChange={onChange}
-                />
-            </FormGroup>
-            <FormGroup label="Код подразделения">
-                <input className="driverForm__input"
-                    type="number"
-                    // name="name"
-                    // value={data.name}
-                // onChange={onChange}
+                    name="expirationDate"
+                    value={data.expirationDate}
+                    onChange={onChange}
                 />
             </FormGroup>
         </div>

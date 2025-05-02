@@ -60,4 +60,12 @@
     &--contact {
         width: 80%;
     }
+
+    &--driver {
+        width: 100%;
+        justify-content: space-between;
+        & span {
+            min-width: 50%;
+        }
+    }
 }

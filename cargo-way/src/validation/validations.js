@@ -148,4 +148,36 @@ const validateCargo = (data) => {
     return errors;
 };
 
-export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo };
+
+const validateDriverData = (data) => {
+    const errors = {};
+    const { licenseCategory, licenseNumber, issueDate, expirationDate} = data;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
+
+    if (!licenseCategory) errors.licenseCategory = "Категория прав обязательная для ввода";
+    if (!licenseNumber || !/^\d{4} \d{6}$/.test(licenseNumber)) errors.licenseNumber = "Номер водительских прав содержать иметь 10 символов";
+    // if (!licenseNumber || !/^[a-zA-Z0-9]{4} [a-zA-Z0-9]{6}$/.test(licenseNumber)) errors.licenseNumber = "Номер водительских прав содержать иметь 10 символов";
+
+    if (!issueDate) {
+        errors.issueDate = "Укажите дату выдачи";
+    } else {
+        const issue = new Date(issueDate);
+        issue.setHours(0, 0, 0, 0);
+        if (issue > today) errors.issueDate = "Дата выдачи не может быть позже сегодняшнего числа";
+    }
+
+    if (!expirationDate) {
+        errors.expirationDate = "Укажите дату окончания срока выдачи";
+    } else {
+        const expiration = new Date(expirationDate);
+        expiration.setHours(0, 0, 0, 0);
+        if (issueDate && expiration < new Date(issueDate)) {
+            errors.expirationDate = "Дата окончания не может быть раньше даты выдачи";
+        }
+    }
+
+    return errors;
+}
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData };
