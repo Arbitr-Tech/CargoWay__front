@@ -27,7 +27,7 @@ class CargoStore {
 
     originalCargoFormData = {};
 
-    currentCargoId = null;
+    editingCargoId = null;
 
     constructor() {
         makeAutoObservable(this)

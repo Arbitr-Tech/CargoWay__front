@@ -2,7 +2,7 @@
 @use '../variables' as v;
 @use '../utils' as u;
 
-.search {
+.search, .driverList { 
     @include m.form-step-base(column, 1rem 2.2rem, auto); 
     margin-top: 5rem;
     margin-inline: auto;
@@ -241,4 +241,14 @@
         width: 100%;
     }
 
+}
+
+.driverList {
+    &__result-header {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    &__item-text {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }

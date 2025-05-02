@@ -4,7 +4,7 @@ import { validateDriverData } from "../../../validation/validations";
 import DriverForm from "../../forms/DriverForm";
 import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
-import { addDriver } from "../../../api/driverService";
+import { addDriver, updateDriver } from "../../../api/driverService";
 import { toJS } from "mobx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -36,15 +36,20 @@ const DriverPostPage = observer(({ typePage }) => {
         }
 
         try {
-            await addDriver(toJS(store.driverFormData));
-            toast.success('Успешно создано');
-            navigate('/');
+            if (typePage === 'add') {
+                await addDriver(toJS(store.driverFormData));
+                toast.success('Успешно создано');
+                navigate('/driver/list');
+            } else {
+                const data = store.getUpdatedFields();
+                await updateDriver(data, store.editingDriverId);
+                toast.success("Успешно изменено");
+                navigate('/driver/list');
+            }
         } catch (error) {
             console.log(error);
-            toast.error('Не удалось создать водителя');
+            toast.error('Ошибка, попробуйте позже');
         }
-
-        console.log(toJS(store.driverFormData))
     };
 
 

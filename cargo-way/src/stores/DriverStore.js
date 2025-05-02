@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { getDriversByProfile } from "../api/driverService";
 
 class DriverStore {
     driverFormData = {
@@ -8,9 +9,12 @@ class DriverStore {
         expirationDate: ""
     };
 
-    // originalCargoFormData = {};
+    originalDriverFormData = {};
+    editingDriverId = null;
 
-    // currentCargoId = null;
+    driverList = [];
+
+    page = { current: 1, total: 1 };
 
     constructor() {
         makeAutoObservable(this)
@@ -20,34 +24,46 @@ class DriverStore {
         this.driverFormData = { ...this.driverFormData, [name]: value }
     }
 
+    async fetchDriverList(pageNumber) {
+        try {
+            const dataDrivers = await getDriversByProfile(pageNumber);
+            console.log(dataDrivers.content);
+            this.driverList = dataDrivers.content;
+            this.page = {current: dataDrivers.pageNumber, total: dataDrivers.totalPages};
+        } catch (error) {
+            console.error("Ошибка при получении списка грузов:", error);
+        }
+    }
 
-    // setNestedFormData = (formName, secondName, newData) => {
-    //     this.cargoFormData = {
-    //         ...this.cargoFormData,
-    //         [formName]: {
-    //             ...this.cargoFormData[formName],
-    //             [secondName]: newData
-    //         }
-    //     };
-    // }
+    getCurrentPage() {
+        return this.page?.current ?? 1;
+    }
 
-    // setCargoFormDataFromServer = (id, data) => {
-    //     this.editingCargoId = id;
-    //     this.originalCargoFormData = data;
-    //     this.cargoFormData = { ...data };
-    // }
+    setCurrentPage(page) {
+        this.page = {...this.page, current: page};
+    }
 
-    // getUpdatedFields = () => {
-    //     const updatedFields = {};
+    getTotalPages() {
+        return this.page?.total ?? 1;
+    }
 
-    //     for (const key in this.cargoFormData) {
-    //         if (JSON.stringify(this.cargoFormData[key]) !== JSON.stringify(this.originalCargoFormData[key])) {
-    //             updatedFields[key] = this.cargoFormData[key];
-    //         }
-    //     }
+    setDriverFormDataFromServer = (id, data) => {
+        this.editingDriverId = id;
+        this.originalDriverFormData = data;
+        this.driverFormData = { ...data };
+    }
 
-    //     return updatedFields;
-    // }
+    getUpdatedFields = () => {
+        const updatedFields = {};
+
+        for (const key in this.driverFormData) {
+            if (JSON.stringify(this.driverFormData[key]) !== JSON.stringify(this.originalDriverFormData[key])) {
+                updatedFields[key] = this.driverFormData[key];
+            }
+        }
+
+        return updatedFields;
+    }
 
     resetFormData = () => {
         this.driverFormData = {
@@ -56,7 +72,7 @@ class DriverStore {
             issueDate: "",
             expirationDate: ""
         };
-        // this.editingCargoId = null;
+        this.editingDriverId = null;
     }
 }
 

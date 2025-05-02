@@ -11,6 +11,7 @@ import HistoryListPage from '../components/pages/customerPages/HistoryListPage';
 import ActiveListPage from '../components/pages/customerPages/ActiveListPage';
 import MainPage from '../components/pages/MainPage';
 import DriverPostPage from '../components/pages/carrierPages/DriverPostPage';
+import DriverListPage from '../components/pages/carrierPages/DriverListPage';
 
 const AppRouter = () => {
     return (
@@ -22,7 +23,7 @@ const AppRouter = () => {
             <Route path='/cargo/edit' element={<CargoPostPage typePage='edit' />} />
             
             <Route path='/auto/list' element={<AutoListPage />} />
-            {/* <Route path='/driver/list' element={<CargoListPage />} /> */}
+            <Route path='/driver/list' element={<DriverListPage/>} />
             <Route path='/auto/add' element={<AutoPostPage typePage='add' />} />
             <Route path='/driver/add' element={<DriverPostPage typePage='add' />} />
             <Route path='/auto/edit' element={<AutoPostPage typePage='edit' />} />
