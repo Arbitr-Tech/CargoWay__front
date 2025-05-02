@@ -39,18 +39,6 @@ export const updateCargo = async (cargoId, updatedData) => {
     }
 };
 
-// export const getCargoListOfLatest = async () => {
-//     try {
-//         const data = await fetchWithAuth('/api/v1/cargos/last5/', {
-//             method: "GET"
-//         })
-//         return data;
-//     } catch (error) {
-//         console.log("Ошибка получения последних 5-ти грузов: ", error);
-//         throw error;
-//     }
-// };
-
 export const publishCargo = async (cargoId) => {
     try {
         const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/publish`, {
@@ -102,7 +90,7 @@ export const getCargoByFiltres = async (formData, pageNumber) => {
 
 export const getCargoByCategory = async (category, pageNumber) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/general/?cargoCategory=${category}&pageNumber=${pageNumber}&pageSize=10`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/general/?cargoCategory=${category}&pageNumber=1&pageSize=10`, {
             method: "GET"
         })
         return data;

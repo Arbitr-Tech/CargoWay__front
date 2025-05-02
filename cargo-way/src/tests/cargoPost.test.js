@@ -44,7 +44,7 @@ const fillElements = async (readyDate, deliveryDate) => {
     await userEvent.type(inputReady, readyDate);
     await userEvent.type(inputDelivery, deliveryDate);
     await userEvent.type(inputFrom, "ghjkl;");
-    await userEvent.type(inputTo, "ghjkl;");
+    await userEvent.type(inputTo, "ghjkриl;");
 
     for (const radio of radios) {
         await userEvent.click(radio);
@@ -82,6 +82,6 @@ describe("CargoPostPage", () => {
 
         await fillElements("2025-04-16", "2025-12-21");
 
-        expect(toast.error).toHaveBeenCalledWith("Ошибка");
+        expect(toast.error).toHaveBeenCalledWith("Дата готовности не может быть в прошлом");
     });
 });

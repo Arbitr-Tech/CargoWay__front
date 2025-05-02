@@ -33,17 +33,13 @@ const GeneralListPage = observer(() => {
     }, [location.pathname]);
 
     const getButtonsByStatus = (item) => {
-        const commonButtons = [
-            {
-                label: "Удалить",
-                onClick: () =>
-                    openPopup("Вы действительно хотите удалить эту запись?", "del", item),
-            },
-        ];
-
         if (item.visibilityStatus === "PUBLISHED") {
             return [
-                ...commonButtons,
+                {
+                    label: "Удалить",
+                    onClick: () =>
+                        openPopup("Перед удалением необходимо снять запись с публикации", "auth", null),
+                },
                 {
                     label: "Снять с публикации",
                     onClick: () =>
@@ -57,7 +53,11 @@ const GeneralListPage = observer(() => {
             ];
         } else {
             return [
-                ...commonButtons,
+                {
+                    label: "Удалить",
+                    onClick: () =>
+                        openPopup("Вы действительно хотите удалить эту запись?", "del", item),
+                },
                 {
                     label: "Опубликовать",
                     onClick: () =>

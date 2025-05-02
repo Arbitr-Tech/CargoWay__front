@@ -55,13 +55,20 @@ const SearchCargoPage = observer(() => {
         store.setNestedFormData(name, dataset.path, value);
     };
 
-
     const handleSearchClick = () => {
         if (role === null) {
             openPopup("Для использования поиска необходимо авторизоваться", "auth");
             return;
         }
         handleSearch(1);
+    };
+
+    const handleDetailsClick = () => {
+        if (role === null) {
+            openPopup("Необходимо авторизоваться, чтобы узнать детали заказа", "auth");
+            return;
+        }
+        // handleSearch(1);
     };
 
     const handleSearch = async (page) => {
@@ -99,12 +106,6 @@ const SearchCargoPage = observer(() => {
                 text={popupData.text}
                 typePopup={popupData.type}
                 onClose={closePopup}
-            // onConfirm={popupData.type === "del"
-            //     ? handleDeleteClick
-            //     : popupData.type === "edit"
-            //         ? handleEditClick
-            //         : handlePublishClick
-            // }
             />
             <motion.div className="searchPage__formBox"
                 initial={
@@ -139,7 +140,7 @@ const SearchCargoPage = observer(() => {
                 </div>
             ) : showSearchResults ? (
                 <div className="searchPage__list">
-                    <ListItems type="main" list={listStore.cargoLists.FILTERS} buttons={[{ label: "Узнать подробности", onClick: {} }]} />
+                    <ListItems type="main" list={listStore.cargoLists.FILTERS} buttons={[{ label: "Узнать подробности", onClick: handleDetailsClick }]} />
                     <Pagination
                         currentPage={listStore.getCurrentPage("FILTERS")}
                         totalPages={listStore.getTotalPages("FILTERS")}
@@ -151,7 +152,7 @@ const SearchCargoPage = observer(() => {
                     <ListItems
                         type="main"
                         list={listStore.cargoLists.LATEST}
-                        buttons={[{ label: "Узнать подробности", onClick: {} }]}
+                        buttons={[{ label: "Узнать подробности", onClick: handleDetailsClick }]}
                     />
                 </div>
             ) : showEmptyState ? (

@@ -247,17 +247,12 @@ input[type=date]::-webkit-datetime-edit {
   background-color: #ffffff;
   padding: 1rem 2.2rem;
   color: #2C2C2C;
-  width: 58rem;
+  width: auto;
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
   margin-top: 5rem;
   margin-inline: auto;
   margin-bottom: 2rem;
-}
-@media (max-width: 1120px) {
-  .search {
-    max-width: 87%;
-  }
 }
 .search__form {
   display: flex;
@@ -479,7 +474,14 @@ input[type=date]::-webkit-datetime-edit {
 }
 
 .searchPage {
+  display: flex;
+  justify-content: center;
   margin-bottom: 3rem;
+  flex-direction: column;
+  align-items: center;
+}
+.searchPage__formBox {
+  width: 100%;
 }
 .searchPage__title {
   text-align: center;
@@ -498,14 +500,18 @@ input[type=date]::-webkit-datetime-edit {
   flex-direction: column;
   text-align: center;
   background-color: #ffffff;
-  padding: 1rem 2.2rem;
+  padding: 0;
   color: #2C2C2C;
-  width: 58rem;
+  width: 100%;
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  height: 5rem;
   text-align: center;
   color: #44403B;
   font-weight: 400;
+}
+.searchPage__list {
+  width: 100%;
 }
 
 .cargoForm,
@@ -1084,11 +1090,12 @@ input[type=date]::-webkit-datetime-edit {
   flex-direction: column;
   text-align: center;
   background-color: #ffffff;
-  padding: 1rem 2.2rem;
+  padding: 0;
   color: #2C2C2C;
-  width: 70rem;
+  width: 100%;
   border-radius: 0.2rem;
   box-shadow: 10px 8px 29.2px 0px rgba(0, 0, 0, 0.25);
+  height: 8rem;
   text-align: center;
   color: #44403B;
   font-weight: 400;
@@ -1107,6 +1114,7 @@ input[type=date]::-webkit-datetime-edit {
   padding: 1rem 2.2rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-inline: 2.2rem;
 }
 .cargo__empty-button:hover,
 .auto__empty-button:hover,
@@ -1617,6 +1625,9 @@ input[type=date]::-webkit-datetime-edit {
     left: 0;
     top: -6rem;
   }
+}
+.main__content {
+  width: 100%;
 }
 .main__packageBox {
   display: flex;
