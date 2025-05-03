@@ -8,7 +8,7 @@ const DriverList = ({ list, onClickEdit, onClickDelete}) => {
                 <p className="driverList__result-title">Категория ВУ</p>
                 <p className="driverList__result-title">Номер ВУ</p>
                 <p className="driverList__result-title">Дата выдачи ВУ</p>
-                <p className="driverList__result-title">Срок окончания выдачи ВУ</p>
+                <p className="driverList__result-title driverList__result-title--hide">Срок окончания выдачи ВУ</p>
             </div>
             <div className="driverList__result-list">
                 {list.map((item) => (

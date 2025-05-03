@@ -6,7 +6,7 @@ const DriverItem = ({ name = '', licenseCategory, licenseNumber, issueDate, expi
                 <p className="driverList__item-content">{licenseCategory}</p>
                 <p className="driverList__item-content">{licenseNumber}</p>
                 <p className="driverList__item-content">{issueDate}</p>
-                <p className="driverList__item-content">{expirationDate}</p>
+                <p className="driverList__item-content driverList__item-content--hide">{expirationDate}</p>
             </div>
             <div className="driverList__item-btns">
                 <button className="driverList__item-button" onClick={onClickEdit}>

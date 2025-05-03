@@ -280,9 +280,13 @@
 
     &__title {
         text-align: center;
-        font-size: 2.875em;
+        font-size: 2.875rem;
         color: v.$font-light-color;
         font-weight: 400;
+
+        @include m.tablet {
+            font-size: 2.2rem;
+        }
     }
 
     &__empty {

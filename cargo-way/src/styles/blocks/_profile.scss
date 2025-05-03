@@ -8,6 +8,10 @@
         width: 100%;
         justify-content: space-between;
         gap: 2.2rem;
+
+        @include m.tablet {
+            flex-direction: column
+        }
     }
 
     &__userInfo {
@@ -46,6 +50,12 @@
     &__companyInfo {
         @include m.form-step-base(column, 1rem, 50%);
         justify-content: end;
+
+        @include m.tablet {
+            width: 100%;
+            margin-top: 2.2rem;
+            height: auto;
+        }
     }
 
     &__mainInfo {
@@ -97,6 +107,9 @@
         &--individual {
             margin-top: -4.2rem;
             margin-bottom: 2.7rem;
+            @include m.tablet {
+                margin-top: 0;
+            }
         }
     }
 

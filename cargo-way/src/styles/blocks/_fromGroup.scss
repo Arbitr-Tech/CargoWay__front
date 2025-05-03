@@ -17,13 +17,20 @@
 
     &__label {
         @include m.laptop {
-            max-width: 20%;
+            width: 20%;
+        }
+        @include m.tablet {
+            width: 100%;
         }
     }
 
     @include m.laptop {
         width: 100%;
         gap: 2rem;
+    }
+
+    @include m.tablet {
+        flex-direction: column;
     }
 
     &__group {
@@ -43,6 +50,14 @@
             width: 40%;
         }
 
+        // &--driver {
+        //     &__group {
+        //         @include m.tablet {
+        //             width: 10%;
+        //         }
+        //     }
+        // }
+
         @include m.laptop {
             flex-direction: column;
             align-items: start;
@@ -51,6 +66,8 @@
 
         @include m.tablet {
             align-items: center;
+            width: 100%;
+            gap: 1rem;
         }
 
     }
@@ -67,5 +84,9 @@
         & span {
             min-width: 50%;
         }
+
+        // @include m.tablet {
+        //     align-items: center;
+        // }
     }
 }
