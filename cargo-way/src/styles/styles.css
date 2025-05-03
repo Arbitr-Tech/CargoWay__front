@@ -276,9 +276,18 @@ input[type=date]::-webkit-datetime-edit {
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.topbar__auth-link:hover {
+  border-top: 1px solid #E9C17D;
+  color: #E9C17D;
 }
 .topbar__auth-link--secondary {
   background-color: #E9C17D;
+}
+.topbar__auth-link--secondary:hover {
+  color: #ffffff;
+  transform: scale(1.05);
 }
 .topbar__mobile-toggle {
   display: none;
@@ -455,7 +464,8 @@ input[type=date]::-webkit-datetime-edit {
 }
 
 .search,
-.driverList {
+.driverList,
+.trailerList {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -471,7 +481,8 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 2rem;
 }
 .search__form,
-.driverList__form {
+.driverList__form,
+.trailerList__form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -480,19 +491,22 @@ input[type=date]::-webkit-datetime-edit {
   color: #44403B;
 }
 .search__form-row,
-.driverList__form-row {
+.driverList__form-row,
+.trailerList__form-row {
   display: flex;
   justify-content: space-between;
 }
 @media (max-width: 1120px) {
   .search__form-row,
-  .driverList__form-row {
+  .driverList__form-row,
+  .trailerList__form-row {
     flex-wrap: wrap;
     gap: 1rem;
   }
 }
 .search__form-label,
-.driverList__form-label {
+.driverList__form-label,
+.trailerList__form-label {
   display: flex;
   justify-content: center;
   align-items: start;
@@ -500,7 +514,8 @@ input[type=date]::-webkit-datetime-edit {
   font-weight: 700;
 }
 .search__form-input,
-.driverList__form-input {
+.driverList__form-input,
+.trailerList__form-input {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -509,32 +524,38 @@ input[type=date]::-webkit-datetime-edit {
   margin-top: 1rem;
 }
 .search__form-input::placeholder,
-.driverList__form-input::placeholder {
+.driverList__form-input::placeholder,
+.trailerList__form-input::placeholder {
   color: #44403B;
 }
 .search__form-input:focus,
-.driverList__form-input:focus {
+.driverList__form-input:focus,
+.trailerList__form-input:focus {
   border-color: #E9C17D;
   outline: none;
 }
 .search__form-input--fromTo,
-.driverList__form-input--fromTo {
+.driverList__form-input--fromTo,
+.trailerList__form-input--fromTo {
   width: 5rem;
 }
 .search__form-inputBox,
-.driverList__form-inputBox {
+.driverList__form-inputBox,
+.trailerList__form-inputBox {
   display: flex;
   gap: 0.5rem;
 }
 .search__choice,
-.driverList__choice {
+.driverList__choice,
+.trailerList__choice {
   display: flex;
   justify-content: space-around;
   margin: 2.2rem 0;
   position: relative;
 }
 .search__choice-box,
-.driverList__choice-box {
+.driverList__choice-box,
+.trailerList__choice-box {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 1rem;
@@ -547,23 +568,27 @@ input[type=date]::-webkit-datetime-edit {
   position: relative;
 }
 .search__choice-box-label,
-.driverList__choice-box-label {
+.driverList__choice-box-label,
+.trailerList__choice-box-label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
 }
 .search__choice-box span,
-.driverList__choice-box span {
+.driverList__choice-box span,
+.trailerList__choice-box span {
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 .search__choice-box:last-child::after,
-.driverList__choice-box:last-child::after {
+.driverList__choice-box:last-child::after,
+.trailerList__choice-box:last-child::after {
   display: none;
 }
 .search__choice::before,
-.driverList__choice::before {
+.driverList__choice::before,
+.trailerList__choice::before {
   content: "";
   position: absolute;
   display: block;
@@ -574,7 +599,8 @@ input[type=date]::-webkit-datetime-edit {
   width: 100%;
 }
 .search__choice::after,
-.driverList__choice::after {
+.driverList__choice::after,
+.trailerList__choice::after {
   content: "";
   position: absolute;
   display: block;
@@ -585,13 +611,15 @@ input[type=date]::-webkit-datetime-edit {
   width: 100%;
 }
 .search__btnBox,
-.driverList__btnBox {
+.driverList__btnBox,
+.trailerList__btnBox {
   display: flex;
   gap: 1rem;
   position: relative;
 }
 .search__btnBox-button,
-.driverList__btnBox-button {
+.driverList__btnBox-button,
+.trailerList__btnBox-button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -603,11 +631,13 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 1rem;
 }
 .search__btnBox-button:hover,
-.driverList__btnBox-button:hover {
+.driverList__btnBox-button:hover,
+.trailerList__btnBox-button:hover {
   transform: scale(1.05);
 }
 .search__item,
-.driverList__item {
+.driverList__item,
+.trailerList__item {
   border-bottom: 1px solid #2C2C2C;
   border-radius: 0.2rem;
   display: grid;
@@ -617,41 +647,48 @@ input[type=date]::-webkit-datetime-edit {
   margin: 1rem;
 }
 .search__item-text,
-.driverList__item-text {
+.driverList__item-text,
+.trailerList__item-text {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
 .search__item-text--mylist,
-.driverList__item-text--mylist {
+.driverList__item-text--mylist,
+.trailerList__item-text--mylist {
   grid-template-columns: repeat(7, 1fr);
 }
 @media (max-width: 768px) {
   .search__item-text,
-  .driverList__item-text {
+  .driverList__item-text,
+  .trailerList__item-text {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 576px) {
   .search__item-text,
-  .driverList__item-text {
+  .driverList__item-text,
+  .trailerList__item-text {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 .search__item-btns,
-.driverList__item-btns {
+.driverList__item-btns,
+.trailerList__item-btns {
   display: flex;
   gap: 1rem;
   justify-content: center;
 }
 @media (max-width: 768px) {
   .search__item-btns,
-  .driverList__item-btns {
+  .driverList__item-btns,
+  .trailerList__item-btns {
     flex-direction: column;
     width: 100%;
   }
 }
 .search__item-button,
-.driverList__item-button {
+.driverList__item-button,
+.trailerList__item-button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -664,51 +701,60 @@ input[type=date]::-webkit-datetime-edit {
   margin-bottom: 1rem;
 }
 .search__item-button:hover,
-.driverList__item-button:hover {
+.driverList__item-button:hover,
+.trailerList__item-button:hover {
   transform: scale(1.05);
 }
 .search__item-content,
-.driverList__item-content {
+.driverList__item-content,
+.trailerList__item-content {
   padding: 0.5rem;
   text-align: center;
 }
 @media (max-width: 768px) {
   .search__item-content,
-  .driverList__item-content {
+  .driverList__item-content,
+  .trailerList__item-content {
     padding: 0.5rem;
     margin-inline: 0;
   }
 }
 @media (max-width: 768px) {
   .search__item-content--hide,
-  .driverList__item-content--hide {
+  .driverList__item-content--hide,
+  .trailerList__item-content--hide {
     display: none;
   }
 }
 @media (max-width: 576px) {
   .search__item-content--hide,
-  .driverList__item-content--hide {
+  .driverList__item-content--hide,
+  .trailerList__item-content--hide {
     display: none;
   }
 }
 .search__item-content--status,
-.driverList__item-content--status {
+.driverList__item-content--status,
+.trailerList__item-content--status {
   font-weight: 700;
   color: #44403B;
 }
 .search__item--yellow,
-.driverList__item--yellow {
+.driverList__item--yellow,
+.trailerList__item--yellow {
   background-color: #E9C17D;
 }
 @media (max-width: 768px) {
   .search__item,
-  .driverList__item {
+  .driverList__item,
+  .trailerList__item {
     width: 90%;
     justify-content: center;
   }
 }
 .search__result,
-.driverList__result {
+.driverList__result,
+.trailerList__result {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -722,7 +768,8 @@ input[type=date]::-webkit-datetime-edit {
   width: 100%;
 }
 .search__result-header,
-.driverList__result-header {
+.driverList__result-header,
+.trailerList__result-header {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   font-weight: 700;
@@ -730,45 +777,53 @@ input[type=date]::-webkit-datetime-edit {
   border-bottom: 1px solid #2C2C2C;
 }
 .search__result-header--mylist,
-.driverList__result-header--mylist {
+.driverList__result-header--mylist,
+.trailerList__result-header--mylist {
   grid-template-columns: repeat(7, 1fr);
 }
 @media (max-width: 768px) {
   .search__result-header,
-  .driverList__result-header {
+  .driverList__result-header,
+  .trailerList__result-header {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 576px) {
   .search__result-header,
-  .driverList__result-header {
+  .driverList__result-header,
+  .trailerList__result-header {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 .search__result-list,
-.driverList__result-list {
+.driverList__result-list,
+.trailerList__result-list {
   max-height: 30rem;
   overflow-y: auto;
   scrollbar-width: thin;
 }
 .search__result-list--mylist,
-.driverList__result-list--mylist {
+.driverList__result-list--mylist,
+.trailerList__result-list--mylist {
   max-height: 43rem;
 }
 @media (max-width: 768px) {
   .search__result-title--hide,
-  .driverList__result-title--hide {
+  .driverList__result-title--hide,
+  .trailerList__result-title--hide {
     display: none;
   }
 }
 @media (max-width: 576px) {
   .search__result-title--hide,
-  .driverList__result-title--hide {
+  .driverList__result-title--hide,
+  .trailerList__result-title--hide {
     display: none;
   }
 }
 .search__result-title--stash,
-.driverList__result-title--stash {
+.driverList__result-title--stash,
+.trailerList__result-title--stash {
   display: none;
 }
 
@@ -823,7 +878,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm,
 .autoForm,
 .driverForm,
-.profileForm {
+.profileForm,
+.trailerForm {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -841,14 +897,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm,
   .autoForm,
   .driverForm,
-  .profileForm {
+  .profileForm,
+  .trailerForm {
     max-width: 90%;
   }
 }
 .cargoForm__section,
 .autoForm__section,
 .driverForm__section,
-.profileForm__section {
+.profileForm__section,
+.trailerForm__section {
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -856,7 +914,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__section::before,
 .autoForm__section::before,
 .driverForm__section::before,
-.profileForm__section::before {
+.profileForm__section::before,
+.trailerForm__section::before {
   content: "";
   position: absolute;
   display: block;
@@ -870,14 +929,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__section::before,
   .autoForm__section::before,
   .driverForm__section::before,
-  .profileForm__section::before {
+  .profileForm__section::before,
+  .trailerForm__section::before {
     top: 33.5rem;
   }
 }
 .cargoForm__section::after,
 .autoForm__section::after,
 .driverForm__section::after,
-.profileForm__section::after {
+.profileForm__section::after,
+.trailerForm__section::after {
   content: "";
   position: absolute;
   display: block;
@@ -891,33 +952,38 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__section,
   .autoForm__section,
   .driverForm__section,
-  .profileForm__section {
+  .profileForm__section,
+  .trailerForm__section {
     flex-direction: column;
   }
 }
 .cargoForm__label,
 .autoForm__label,
 .driverForm__label,
-.profileForm__label {
+.profileForm__label,
+.trailerForm__label {
   margin: 0 auto;
   margin-bottom: 2.8rem;
 }
 .cargoForm__label-text,
 .autoForm__label-text,
 .driverForm__label-text,
-.profileForm__label-text {
+.profileForm__label-text,
+.trailerForm__label-text {
   font-weight: 700;
 }
 .cargoForm__photo,
 .autoForm__photo,
 .driverForm__photo,
-.profileForm__photo {
+.profileForm__photo,
+.trailerForm__photo {
   width: 90%;
 }
 .cargoForm__input,
 .autoForm__input,
 .driverForm__input,
-.profileForm__input {
+.profileForm__input,
+.trailerForm__input {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -926,13 +992,15 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__input::placeholder,
 .autoForm__input::placeholder,
 .driverForm__input::placeholder,
-.profileForm__input::placeholder {
+.profileForm__input::placeholder,
+.trailerForm__input::placeholder {
   color: #44403B;
 }
 .cargoForm__input:focus,
 .autoForm__input:focus,
 .driverForm__input:focus,
-.profileForm__input:focus {
+.profileForm__input:focus,
+.trailerForm__input:focus {
   border-color: #E9C17D;
   outline: none;
 }
@@ -940,7 +1008,8 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__input,
   .autoForm__input,
   .driverForm__input,
-  .profileForm__input {
+  .profileForm__input,
+  .trailerForm__input {
     width: 80%;
   }
 }
@@ -948,14 +1017,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__input,
   .autoForm__input,
   .driverForm__input,
-  .profileForm__input {
+  .profileForm__input,
+  .trailerForm__input {
     width: 75%;
   }
 }
 .cargoForm__input-group,
 .autoForm__input-group,
 .driverForm__input-group,
-.profileForm__input-group {
+.profileForm__input-group,
+.trailerForm__input-group {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 1rem;
@@ -970,7 +1041,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__input-icon,
 .autoForm__input-icon,
 .driverForm__input-icon,
-.profileForm__input-icon {
+.profileForm__input-icon,
+.trailerForm__input-icon {
   width: 30px;
   height: 30px;
   justify-self: center;
@@ -978,26 +1050,30 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__input--img,
 .autoForm__input--img,
 .driverForm__input--img,
-.profileForm__input--img {
+.profileForm__input--img,
+.trailerForm__input--img {
   max-width: 20rem;
 }
 .cargoForm__input--short,
 .autoForm__input--short,
 .driverForm__input--short,
-.profileForm__input--short {
-  max-width: 6rem;
+.profileForm__input--short,
+.trailerForm__input--short {
+  max-width: 6.5rem;
 }
 .cargoForm__input--long,
 .autoForm__input--long,
 .driverForm__input--long,
-.profileForm__input--long {
+.profileForm__input--long,
+.trailerForm__input--long {
   width: 20rem;
 }
 @media (max-width: 1120px) {
   .cargoForm__input--long,
   .autoForm__input--long,
   .driverForm__input--long,
-  .profileForm__input--long {
+  .profileForm__input--long,
+  .trailerForm__input--long {
     width: 13rem;
   }
 }
@@ -1005,14 +1081,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__input--long,
   .autoForm__input--long,
   .driverForm__input--long,
-  .profileForm__input--long {
+  .profileForm__input--long,
+  .trailerForm__input--long {
     width: 10rem;
   }
 }
 .cargoForm__inputBox,
 .autoForm__inputBox,
 .driverForm__inputBox,
-.profileForm__inputBox {
+.profileForm__inputBox,
+.trailerForm__inputBox {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -1026,13 +1104,15 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox::placeholder,
 .autoForm__inputBox::placeholder,
 .driverForm__inputBox::placeholder,
-.profileForm__inputBox::placeholder {
+.profileForm__inputBox::placeholder,
+.trailerForm__inputBox::placeholder {
   color: #44403B;
 }
 .cargoForm__inputBox:focus,
 .autoForm__inputBox:focus,
 .driverForm__inputBox:focus,
-.profileForm__inputBox:focus {
+.profileForm__inputBox:focus,
+.trailerForm__inputBox:focus {
   border-color: #E9C17D;
   outline: none;
 }
@@ -1040,20 +1120,23 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__inputBox,
   .autoForm__inputBox,
   .driverForm__inputBox,
-  .profileForm__inputBox {
+  .profileForm__inputBox,
+  .trailerForm__inputBox {
     width: 70%;
   }
 }
 .cargoForm__inputBox-input,
 .autoForm__inputBox-input,
 .driverForm__inputBox-input,
-.profileForm__inputBox-input {
+.profileForm__inputBox-input,
+.trailerForm__inputBox-input {
   flex: 1;
 }
 .cargoForm__inputBox-input input,
 .autoForm__inputBox-input input,
 .driverForm__inputBox-input input,
-.profileForm__inputBox-input input {
+.profileForm__inputBox-input input,
+.trailerForm__inputBox-input input {
   width: 100%;
   padding: 0;
   border-color: transparent;
@@ -1063,7 +1146,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-menu,
 .autoForm__inputBox-menu,
 .driverForm__inputBox-menu,
-.profileForm__inputBox-menu {
+.profileForm__inputBox-menu,
+.trailerForm__inputBox-menu {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1073,7 +1157,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-ul,
 .autoForm__inputBox-ul,
 .driverForm__inputBox-ul,
-.profileForm__inputBox-ul {
+.profileForm__inputBox-ul,
+.trailerForm__inputBox-ul {
   position: absolute;
   top: 0.75rem;
   left: -5.375rem;
@@ -1097,7 +1182,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-ul.show,
 .autoForm__inputBox-ul.show,
 .driverForm__inputBox-ul.show,
-.profileForm__inputBox-ul.show {
+.profileForm__inputBox-ul.show,
+.trailerForm__inputBox-ul.show {
   opacity: 1;
   /* Показывает элемент */
   transform: translateY(0);
@@ -1108,7 +1194,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-li,
 .autoForm__inputBox-li,
 .driverForm__inputBox-li,
-.profileForm__inputBox-li {
+.profileForm__inputBox-li,
+.trailerForm__inputBox-li {
   cursor: pointer;
   width: 100%;
   padding: 1rem;
@@ -1116,13 +1203,15 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-li:hover,
 .autoForm__inputBox-li:hover,
 .driverForm__inputBox-li:hover,
-.profileForm__inputBox-li:hover {
+.profileForm__inputBox-li:hover,
+.trailerForm__inputBox-li:hover {
   background-color: #E9C17D;
 }
 .cargoForm__inputBox-btn,
 .autoForm__inputBox-btn,
 .driverForm__inputBox-btn,
-.profileForm__inputBox-btn {
+.profileForm__inputBox-btn,
+.trailerForm__inputBox-btn {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1135,13 +1224,15 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__inputBox-btn:hover,
 .autoForm__inputBox-btn:hover,
 .driverForm__inputBox-btn:hover,
-.profileForm__inputBox-btn:hover {
+.profileForm__inputBox-btn:hover,
+.trailerForm__inputBox-btn:hover {
   transform: scale(1.05);
 }
 .cargoForm__textarea,
 .autoForm__textarea,
 .driverForm__textarea,
-.profileForm__textarea {
+.profileForm__textarea,
+.trailerForm__textarea {
   border: 1px solid #44403B;
   border-radius: 0.2rem;
   padding: 0.625rem;
@@ -1153,13 +1244,15 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__textarea::placeholder,
 .autoForm__textarea::placeholder,
 .driverForm__textarea::placeholder,
-.profileForm__textarea::placeholder {
+.profileForm__textarea::placeholder,
+.trailerForm__textarea::placeholder {
   color: #44403B;
 }
 .cargoForm__textarea:focus,
 .autoForm__textarea:focus,
 .driverForm__textarea:focus,
-.profileForm__textarea:focus {
+.profileForm__textarea:focus,
+.trailerForm__textarea:focus {
   border-color: #E9C17D;
   outline: none;
 }
@@ -1167,7 +1260,8 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__textarea,
   .autoForm__textarea,
   .driverForm__textarea,
-  .profileForm__textarea {
+  .profileForm__textarea,
+  .trailerForm__textarea {
     max-width: 13rem;
   }
 }
@@ -1175,14 +1269,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__textarea,
   .autoForm__textarea,
   .driverForm__textarea,
-  .profileForm__textarea {
+  .profileForm__textarea,
+  .trailerForm__textarea {
     max-width: 10rem;
   }
 }
 .cargoForm__radio,
 .autoForm__radio,
 .driverForm__radio,
-.profileForm__radio {
+.profileForm__radio,
+.trailerForm__radio {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1192,7 +1288,8 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__radio,
   .autoForm__radio,
   .driverForm__radio,
-  .profileForm__radio {
+  .profileForm__radio,
+  .trailerForm__radio {
     flex-direction: column;
     align-items: start;
   }
@@ -1200,7 +1297,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__btnBox,
 .autoForm__btnBox,
 .driverForm__btnBox,
-.profileForm__btnBox {
+.profileForm__btnBox,
+.trailerForm__btnBox {
   display: flex;
   justify-content: start;
   position: relative;
@@ -1208,7 +1306,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__btnBox-button,
 .autoForm__btnBox-button,
 .driverForm__btnBox-button,
-.profileForm__btnBox-button {
+.profileForm__btnBox-button,
+.trailerForm__btnBox-button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1222,26 +1321,30 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__btnBox-button:hover,
 .autoForm__btnBox-button:hover,
 .driverForm__btnBox-button:hover,
-.profileForm__btnBox-button:hover {
+.profileForm__btnBox-button:hover,
+.trailerForm__btnBox-button:hover {
   transform: scale(1.05);
 }
 .cargoForm__trailer,
 .autoForm__trailer,
 .driverForm__trailer,
-.profileForm__trailer {
+.profileForm__trailer,
+.trailerForm__trailer {
   position: relative;
 }
 .cargoForm__trailer-label,
 .autoForm__trailer-label,
 .driverForm__trailer-label,
-.profileForm__trailer-label {
+.profileForm__trailer-label,
+.trailerForm__trailer-label {
   font-size: 1.875rem;
   margin-bottom: 2.2rem;
 }
 .cargoForm__trailer::before,
 .autoForm__trailer::before,
 .driverForm__trailer::before,
-.profileForm__trailer::before {
+.profileForm__trailer::before,
+.trailerForm__trailer::before {
   content: "";
   position: absolute;
   display: block;
@@ -1254,7 +1357,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__photos,
 .autoForm__photos,
 .driverForm__photos,
-.profileForm__photos {
+.profileForm__photos,
+.trailerForm__photos {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1263,7 +1367,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__imgBox,
 .autoForm__imgBox,
 .driverForm__imgBox,
-.profileForm__imgBox {
+.profileForm__imgBox,
+.trailerForm__imgBox {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1272,7 +1377,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__loader,
 .autoForm__loader,
 .driverForm__loader,
-.profileForm__loader {
+.profileForm__loader,
+.trailerForm__loader {
   width: 32px;
   height: 32px;
   border: 4px solid #E9C17D;
@@ -1284,7 +1390,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__preview,
 .autoForm__preview,
 .driverForm__preview,
-.profileForm__preview {
+.profileForm__preview,
+.trailerForm__preview {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1294,7 +1401,8 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__image,
 .autoForm__image,
 .driverForm__image,
-.profileForm__image {
+.profileForm__image,
+.trailerForm__image {
   max-width: 30rem;
   max-height: 30rem;
   height: auto;
@@ -1306,7 +1414,8 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__image,
   .autoForm__image,
   .driverForm__image,
-  .profileForm__image {
+  .profileForm__image,
+  .trailerForm__image {
     width: 50%;
   }
 }
@@ -1314,14 +1423,16 @@ input[type=date]::-webkit-datetime-edit {
   .cargoForm__image,
   .autoForm__image,
   .driverForm__image,
-  .profileForm__image {
+  .profileForm__image,
+  .trailerForm__image {
     width: 90%;
   }
 }
 .cargoForm__button,
 .autoForm__button,
 .driverForm__button,
-.profileForm__button {
+.profileForm__button,
+.trailerForm__button {
   font-size: 1em;
   border-radius: 0.2rem;
   border: 0;
@@ -1334,19 +1445,22 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__button:hover,
 .autoForm__button:hover,
 .driverForm__button:hover,
-.profileForm__button:hover {
+.profileForm__button:hover,
+.trailerForm__button:hover {
   transform: scale(1.05);
 }
 .cargoForm__button:last-child,
 .autoForm__button:last-child,
 .driverForm__button:last-child,
-.profileForm__button:last-child {
+.profileForm__button:last-child,
+.trailerForm__button:last-child {
   margin-bottom: 0.5rem;
 }
 .cargoForm__rating,
 .autoForm__rating,
 .driverForm__rating,
-.profileForm__rating {
+.profileForm__rating,
+.trailerForm__rating {
   display: flex;
   justify-content: center;
   gap: 2.2rem;
@@ -1355,14 +1469,16 @@ input[type=date]::-webkit-datetime-edit {
 .cargoForm__rating span,
 .autoForm__rating span,
 .driverForm__rating span,
-.profileForm__rating span {
+.profileForm__rating span,
+.trailerForm__rating span {
   color: #E9C17D;
   font-weight: 700;
 }
 .cargoForm__title,
 .autoForm__title,
 .driverForm__title,
-.profileForm__title {
+.profileForm__title,
+.trailerForm__title {
   margin-bottom: 2.2rem;
 }
 
@@ -1370,6 +1486,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto,
 .driver,
 .profile,
+.trailer,
+.trailerPage,
 .cargoList,
 .autoList {
   margin-bottom: 5rem;
@@ -1378,6 +1496,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__title,
 .driver__title,
 .profile__title,
+.trailer__title,
+.trailerPage__title,
 .cargoList__title,
 .autoList__title {
   text-align: center;
@@ -1390,6 +1510,8 @@ input[type=date]::-webkit-datetime-edit {
   .auto__title,
   .driver__title,
   .profile__title,
+  .trailer__title,
+  .trailerPage__title,
   .cargoList__title,
   .autoList__title {
     font-size: 2.2rem;
@@ -1399,6 +1521,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__empty,
 .driver__empty,
 .profile__empty,
+.trailer__empty,
+.trailerPage__empty,
 .cargoList__empty,
 .autoList__empty {
   display: flex;
@@ -1420,6 +1544,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__empty-button,
 .driver__empty-button,
 .profile__empty-button,
+.trailer__empty-button,
+.trailerPage__empty-button,
 .cargoList__empty-button,
 .autoList__empty-button {
   font-size: 1em;
@@ -1436,6 +1562,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__empty-button:hover,
 .driver__empty-button:hover,
 .profile__empty-button:hover,
+.trailer__empty-button:hover,
+.trailerPage__empty-button:hover,
 .cargoList__empty-button:hover,
 .autoList__empty-button:hover {
   transform: scale(1.05);
@@ -1444,6 +1572,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__btnBox,
 .driver__btnBox,
 .profile__btnBox,
+.trailer__btnBox,
+.trailerPage__btnBox,
 .cargoList__btnBox,
 .autoList__btnBox {
   display: flex;
@@ -1453,6 +1583,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__button,
 .driver__button,
 .profile__button,
+.trailer__button,
+.trailerPage__button,
 .cargoList__button,
 .autoList__button {
   font-size: 1em;
@@ -1469,6 +1601,8 @@ input[type=date]::-webkit-datetime-edit {
 .auto__button:hover,
 .driver__button:hover,
 .profile__button:hover,
+.trailer__button:hover,
+.trailerPage__button:hover,
 .cargoList__button:hover,
 .autoList__button:hover {
   transform: scale(1.05);

@@ -180,4 +180,22 @@ const validateDriverData = (data) => {
     return errors;
 }
 
-export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData };
+const validateTrailerData = (data) => {
+    const errors = {};
+    const { name, trailerNumber, liftingCapacity, bodyType, loadType, unloadType, length, width, height, volume} = data;
+
+    if (!name) errors.name = "Модель прицепа обязательна";
+    if (!trailerNumber || !/^[А-Я]{1}\d{3}[А-Я]{2}$/.test(trailerNumber)) errors.trailerNumber = "Номер прицепа обязателен и должен иметь формат А111АА";
+    if (!liftingCapacity) errors.liftingCapacity = "Укажите грузоподъемность";
+    if (!bodyType) errors.bodyType = "Укажите тип кузова";
+    if (!loadType) errors.loadType = "Укажите тип загрузки";
+    if (!unloadType) errors.unloadType = "Укажите тип выгрузки";
+    if (!length || length > 50) errors.length = "Длина обязательна и не должна превышать 50 метров";
+    if (!width || width > 10) errors.width = "Ширина прицепа обязательна и не должна превышать 10 метров";
+    if (!height || height > 10) errors.height = "Высота прицепа обязательна и не должна превышать 10 метров";
+    if (!volume) errors.volume = "Укажите грузоподъемность";
+    
+    return errors;
+}
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData };

@@ -3,6 +3,7 @@ import { getDriversByProfile } from "../api/driverService";
 
 class DriverStore {
     driverFormData = {
+        fullName: "",
         licenseCategory: "",
         licenseNumber: "",
         issueDate: "",

@@ -54,7 +54,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
 
     const inputLicenseNumberMask = useMask({
         mask: '____ ______',
-        replacement: { _:  /\d/ }, // разрешает латинские буквы и цифры
+        replacement: { _: /\d/ }, // разрешает латинские буквы и цифры
         // replacement: { _: /[a-zA-Z0-9]/ }, // разрешает латинские буквы и цифры
     });
 
@@ -63,10 +63,9 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
             <FormGroup label="ФИО" modification="driver">
                 <input className="driverForm__input"
                     type="text"
-                // name="name"
-                // value={data.name}
-                // placeholder="Фамилия"
-                // onChange={onChange}
+                    name="fullName"
+                    value={data.fullName || ""}
+                    onChange={onChange}
                 />
             </FormGroup>
             <FormGroup label="Категория водительских прав" modification="driver">
@@ -90,7 +89,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
                 <input className="driverForm__input"
                     type="text"
                     name="licenseNumber"
-                    value={data.licenseNumber}
+                    value={data.licenseNumber || ""}
                     onChange={onChange}
                     ref={inputLicenseNumberMask}
                     placeholder="Например: АА12345678"
@@ -100,7 +99,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
                 <input className="driverForm__input"
                     type="date"
                     name="issueDate"
-                    value={data.issueDate}
+                    value={data.issueDate || ""}
                     onChange={onChange}
                 />
             </FormGroup>
@@ -108,7 +107,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
                 <input className="driverForm__input"
                     type="date"
                     name="expirationDate"
-                    value={data.expirationDate}
+                    value={data.expirationDate || ""}
                     onChange={onChange}
                 />
             </FormGroup>

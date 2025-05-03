@@ -3,7 +3,8 @@
 @use '../utils' as u;
 
 .search,
-.driverList {
+.driverList,
+.trailerList {
     @include m.form-step-base(column, 1rem 2.2rem, auto);
     margin-top: 5rem;
     margin-inline: auto;

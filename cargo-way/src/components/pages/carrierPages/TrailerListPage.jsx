@@ -8,21 +8,25 @@ import DriverList from "../../driverList/DriverList";
 import { deleteDriver, getDetailsDriver } from "../../../api/driverService";
 import Pagination from "../../Pagination";
 import { toast } from "react-toastify";
+import { trailerStore } from "../../../stores/TrailerStore";
+import ListItems from "../../ListItems";
+import TrailerList from "../../trailerList/TrailerList";
+import { deleteTrailer, getDetailsTrailer } from "../../../api/trailerService";
 
-const DriverListPage = observer(() => {
-    const store = driverStore;
+const TrailerListPage = observer(() => {
+    const store = trailerStore;
     const navigate = useNavigate();
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(true);
     const [popupData, setPopupData] = useState({ isOpen: false, item: null });
 
-    const loadDriverList = async (page = store.getCurrentPage()) => {
+    const loadTrailerList = async (page = store.getCurrentPage()) => {
         try {
             setIsLoading(true);
             store.setCurrentPage(page);
-            await store.fetchDriverList(page);
+            await store.fetchTrailerList(page);
         } catch (error) {
-            console.error("Ошибка загрузки списка водителей:", error);
+            console.error("Ошибка загрузки списка прицепов:", error);
         } finally {
             setIsLoading(false);
         }
@@ -37,14 +41,14 @@ const DriverListPage = observer(() => {
     };
 
     useEffect(() => {
-        loadDriverList();
+        loadTrailerList();
     }, [location.pathname]);
 
     const handleEditClick = async (item) => {
         try {
-            const data = await getDetailsDriver(item.id);
-            store.setDriverFormDataFromServer(item.id, data);
-            navigate('/driver/edit');
+            const data = await getDetailsTrailer(item.id);
+            store.setTrailerFormDataFromServer(item.id, data);
+            navigate('/trailer/edit');
         } catch (error) {
             console.log(error);
             toast.error('Ошибка, попробуйте позже');
@@ -53,9 +57,9 @@ const DriverListPage = observer(() => {
 
     const handleDeleteClick = async () => {
         try {
-            await deleteDriver(popupData.item.id);
+            await deleteTrailer(popupData.item.id);
             closePopup();
-            loadDriverList();
+            loadTrailerList();
             toast.success('Успешно удалено');
         } catch (error) {
             console.log(error);
@@ -63,40 +67,39 @@ const DriverListPage = observer(() => {
         }
     }
 
-
     return (
-        <div className="driver">
+        <div className="trailerPage">
             <div className="container">
+                <TopBar />
                 <Popup
                     isOpen={popupData.isOpen}
-                    text='Вы действительно хоите удалить эту запись?'
+                    text='Вы действительно хотите удалить эту запись?'
                     typePopup='del'
                     onClose={closePopup}
                     onConfirm={handleDeleteClick}
                 />
-                <TopBar />
-                <h2 className="driver__title">Ваши водители</h2>
+                <h2 className="trailerPage__title">Ваши прицепы</h2>
                 {isLoading ? (
-                    <div className="driver__empty">
-                        <p className="driver__subtitle">Загрузка списка...</p>
+                    <div className="trailerPage__empty">
+                        <p className="trailerPage__subtitle">Загрузка списка...</p>
                     </div>
-                ) : store.driverList.length > 0 ? (
-                    <div className="cargoList__content">
-                        <DriverList
-                            list={store.driverList}
+                ) : store.trailerList.length > 0 ? (
+                    <div className="trailerPage__content">
+                        <TrailerList
+                            list={store.trailerList}
                             onClickEdit={handleEditClick}
                             onClickDelete={openPopup}
                         />
                         <Pagination
                             currentPage={store.getCurrentPage()}
                             totalPages={store.getTotalPages()}
-                            onPageChange={(page) => loadDriverList(page)}
+                            onPageChange={(page) => loadTrailerList(page)}
                         />
                     </div>
                 ) : (
-                    <div className="driver__empty">
-                        <p className="driver__empty-subtitle">У вас нет созданных грузов.</p>
-                        <button className="driver__empty-button" onClick={() => navigate('/driver/add')}>Перейти к созданию</button>
+                    <div className="trailerPage__empty">
+                        <p className="trailerPage__empty-subtitle">У вас нет созданных грузов.</p>
+                        <button className="trailerPage__empty-button">Перейти к созданию</button>
                     </div>
 
                 )}
@@ -105,4 +108,4 @@ const DriverListPage = observer(() => {
     )
 });
 
-export default DriverListPage; 
+export default TrailerListPage; 
