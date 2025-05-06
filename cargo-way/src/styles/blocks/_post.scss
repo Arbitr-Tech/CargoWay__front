@@ -202,10 +202,15 @@
         display: flex;
         justify-content: start;
         position: relative;
+        gap: 1rem;
 
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-bottom: 3rem;
+
+            &--hide {
+                display: none;
+            }
         }
     }
 
@@ -219,6 +224,17 @@
 
         &::before {
             @include m.line(-1rem, v.$noactive-color);
+        }
+
+        &--additional {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &::before {
+                display: none;
+            }
         }
     }
 
@@ -314,6 +330,10 @@
         @include m.button(v.$active-color, v.$font-light-color);
         margin-top: 5rem;
     }
+}
+
+.driver__content {
+    width: 100%;
 }
 
 .driverForm {

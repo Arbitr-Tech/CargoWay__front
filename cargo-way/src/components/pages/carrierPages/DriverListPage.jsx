@@ -4,7 +4,7 @@ import Popup from "../../Popup";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { driverStore } from "../../../stores/DriverStore";
-import DriverList from "../../driverList/DriverList";
+import DriverList from "../../carrierLists/DriverList";
 import { deleteDriver, getDetailsDriver } from "../../../api/driverService";
 import Pagination from "../../Pagination";
 import { toast } from "react-toastify";
@@ -81,12 +81,8 @@ const DriverListPage = observer(() => {
                         <p className="driver__subtitle">Загрузка списка...</p>
                     </div>
                 ) : store.driverList.length > 0 ? (
-                    <div className="cargoList__content">
-                        <DriverList
-                            list={store.driverList}
-                            onClickEdit={handleEditClick}
-                            onClickDelete={openPopup}
-                        />
+                    <div className="driver__content">
+                        <DriverList list={store.driverList} onClickEdit={handleEditClick} onClickDelete={openPopup} />
                         <Pagination
                             currentPage={store.getCurrentPage()}
                             totalPages={store.getTotalPages()}
@@ -95,7 +91,7 @@ const DriverListPage = observer(() => {
                     </div>
                 ) : (
                     <div className="driver__empty">
-                        <p className="driver__empty-subtitle">У вас нет созданных грузов.</p>
+                        <p className="driver__empty-subtitle">У вас нет созданных водителей.</p>
                         <button className="driver__empty-button" onClick={() => navigate('/driver/add')}>Перейти к созданию</button>
                     </div>
 

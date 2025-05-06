@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import FormGroup from "./FormGroup";
+import Select from 'react-select';
+import { useMask } from "@react-input/mask";
 
-const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwiceNesctedChange, onClickButtonTrailer, onClickDriver, onClickMenu, onClickMenuButton, onLoadImage, onChangeImage }) => {
+const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage }) => {
 
     const bodyType = [
         { id: 1, name: "Option 1" },
         { id: 2, name: "Option 2" },
         { id: 3, name: "Option 3" },
         { id: 4, name: "Option 4" },
-        { id: 24, name: "Option 2" },
-        { id: 36, name: "Option 3" },
-        { id: 47, name: "Option 4" },
-        { id: 21, name: "Option 2" },
-        { id: 34, name: "Option 3" },
-        { id: 45, name: "Option 4" },
+        { id: 24, name: "Option 5" },
+        { id: 36, name: "Option 6" },
+        { id: 47, name: "Option 7" },
+        { id: 21, name: "Option 8" },
+        { id: 34, name: "Option 9" },
+        { id: 45, name: "Option 10" },
     ];
 
     const listDrivers = [
-        { id: 1, name: "Иванов Иван Иванович" },
-        { id: 2, name: "Сергеев Сергей Сергеевич" },
-        { id: 3, name: "Петров Петр Петрович" },
-        { id: 4, name: "Остапенко Остап Остапов" },
+        { id: "732edcbc-1cca-4822-8b07-b87d29daad8f", name: "Иванов Иван Иванович" },
+        { id: "8940dfcc-df80-41ba-8ac2-2fa807c5be9c", name: "Сергеев Сергей Сергеевич" },
+        { id: "2ff30e4e-b3e9-49bc-a613-56a60e85d8e5", name: "Петров Петр Петрович" },
+        { id: "ded5ee1c-8a7a-4ce5-bee7-3bae542d1100", name: "Остапенко Остап Остапов" },
     ];
 
     const [previewImages, setPreviewImages] = useState([null, null, null, null, null]);
@@ -98,6 +100,56 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
         onChangeImage("photos", updatedPhotos);
     };
 
+    const customStyles = {
+        container: (provided) => ({
+            ...provided,
+            maxWidth: '70%',
+            marginLeft: '1rem'
+        }),
+        control: (provided, state) => ({
+            ...provided,
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            borderColor: state.isFocused ? '#E9C17D' : '#2C2C2C', // ваши цвета
+            boxShadow: 'none',
+            '&:hover': {
+                borderColor: '#E9C17D',
+            }
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: '#2C2C2C'
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: '#2C2C2C',
+            padding: '8px',
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused ? 'rgba(233, 193, 125, 0.551)' : provided.backgroundColor,
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            marginLeft: '0.7rem',
+            backgroundColor: '#E9C17D',
+            width: '100%'
+        }),
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            width: '100%',
+            overflow: 'hidden',
+        }),
+    };
+
+    const inputTransportNumberMask = useMask({
+        mask: 'Ъ___ЪЪ',
+        replacement: {
+            _: /\d/,
+            Ъ: /[А-Яа-я]/
+        }
+    })
+
 
     return (
         <div className="autoForm">
@@ -106,31 +158,22 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                     <input className="autoForm__input"
                         type="text"
                         name="brand"
-                        value={data.brand}
+                        value={data.brand || ""}
                         placeholder="Марка"
                         onChange={onChange}
                     />
                     <input className="autoForm__input"
                         type="text"
                         name="model"
-                        value={data.model}
+                        value={data.model || ""}
                         placeholder="Модель"
                         onChange={onChange}
                     />
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="year"
-                        value={data.year === 0 ? null : data.year}
+                        name="manufactureYear"
+                        value={data.manufactureYear === 0 ? "" : data.manufactureYear}
                         placeholder="Год выпуска"
-                        onChange={onChange}
-                    />
-                </FormGroup>
-                <FormGroup label="Грузоподъемность (т)">
-                    <input className="autoForm__input autoForm__input--short"
-                        type="number"
-                        name="liftingCapacity"
-                        value={data.liftingCapacity === 0 ? null : data.liftingCapacity}
-                        placeholder="0"
                         onChange={onChange}
                     />
                 </FormGroup>
@@ -138,169 +181,24 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                     <input className="autoForm__input"
                         type="text"
                         name="transportNumber"
-                        value={data.transportNumber}
+                        value={data.transportNumber || ""}
                         placeholder="A111AA"
                         onChange={onChange}
+                        ref={inputTransportNumberMask}
                     />
                 </FormGroup>
-                {/* <FormGroup label="Водитель">
-                    <div className="autoForm__inputBox">
-                        <div className="autoForm__inputBox-input">
-                            <input
-                                type="text"
-                                disabled="disabled"
-                                name="driver"
-                                value={listDrivers.find(item => item.id === data.driver)?.name || ''}
-                            />
-                        </div>
-                        <div className="autoForm__inputBox-menu">
-                            {dropDown ?
-                                <img
-                                    src="/assets/img/arrow_top.svg"
-                                    alt="arrow top"
-                                    className="autoForm__input-icon"
-                                    onClick={onClickMenu}
-
-                                /> :
-                                <img
-                                    src="/assets/img/arrow.svg"
-                                    alt="arrow down"
-                                    className="autoForm__input-icon"
-                                    onClick={onClickMenu}
-                                />
-                            }
-                            <ul className={`autoForm__inputBox-ul ${dropDown ? 'show' : ''}`}>
-                                {listDrivers.map((option) => (
-                                    <li
-                                        key={option.id}
-                                        className="autoForm__inputBox-li"
-                                        onClick={onClickDriver}
-                                        data-id={option.id}
-                                        data-name={option.name}
-                                    >
-                                        {option.name}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                    <button className="autoForm__inputBox-btn" onClick={onClickMenuButton}>Отмена</button>
-                </FormGroup> */}
-                <div className="autoForm__section">
-                    <label className="autoForm__label">
-                        <span className="autoForm__label-text">Тип кузова</span>
-                        <div className="autoForm__input-group">
-                            {bodyType.map((option) => (
-                                <label key={option.id} className="radiobox-label">
-                                    <input className="radiobox"
-                                        type="radio"
-                                        name="bodyType"
-                                        value={option.name}
-                                        onChange={onChange}
-                                    />
-                                    {option.name}
-                                </label>
-                            ))}
-                        </div>
-                    </label>
-                    <label className="autoForm__label">
-                        <span className="autoForm__label-text">Тип загрузки</span>
-                        <div className="autoForm__input-group">
-                            {bodyType.map((option) => (
-                                <label key={option.id} className="autoForm__radiobox-label">
-                                    <input className="autoForm__radiobox"
-                                        type="radio"
-                                        name="loadType"
-                                        value={option.name}
-                                        onChange={onChange}
-                                    />
-                                    {option.name}
-                                </label>
-                            ))}
-                        </div>
-                    </label>
-                    <label className="autoForm__label">
-                        <span className="autoForm__label-text">Тип выгрузки</span>
-                        <div className="autoForm__input-group">
-                            {bodyType.map((option) => (
-                                <label key={option.id} className="autoForm__radiobox-label">
-                                    <input className="autoForm__radiobox"
-                                        type="radio"
-                                        name="unloadType"
-                                        value={option.name}
-                                        onChange={onChange}
-                                    />
-                                    {option.name}
-                                </label>
-                            ))}
-                        </div>
-                    </label>
-                </div>
-                <FormGroup label="Когда готов">
-                    <input className="autoForm__input"
-                        type="date"
-                        name="readyDate"
-                        value={data.readyDate}
+                <FormGroup label="Водитель">
+                    <select className="autoForm__input"
+                        name="driverId"
+                        value={data.driverId || ""}
                         onChange={onChange}
-                    />
-                </FormGroup>
-                <FormGroup label="Откуда">
-                    <input className="autoForm__input"
-                        type="text"
-                        name="route"
-                        placeholder="Населенный пункт"
-                        value={data.route.from}
-                        data-path="from"
-                        onChange={onNestedChange}
-                    />
-                </FormGroup>
-                <FormGroup label="Возможная выгрузка">
-                    <input className="autoForm__input"
-                        type="text"
-                        name="route"
-                        placeholder="Населенный пункт"
-                        value={data.route.to}
-                        data-path="to"
-                        onChange={onNestedChange}
-                    />
-                </FormGroup>
-                <FormGroup label="Ставка (рубли)">
-                    <input className="cargoForm__input"
-                        type="number"
-                        name="price"
-                        placeholder="Укажите ставку"
-                        value={data.price === 0 ? null : data.price}
-                        onChange={onChange}
-                    />
-                    <div className='cargoForm__radio'>
-                        <label className='cargoForm__radio-label'>
-                            <input className='cargoForm__radio-input'
-                                type="radio"
-                                name="typePay"
-                                value="Без НДС, безнал"
-                                onChange={onChange}
-                            />
-                            Без НДС, безнал
-                        </label>
-                        <label className='cargoForm__radio-label'>
-                            <input className='cargoForm__radio-input'
-                                type="radio"
-                                name="typePay"
-                                value="С НДС, безнал"
-                                onChange={onChange}
-                            />
-                            С НДС, безнал
-                        </label>
-                        <label className='cargoForm__radio-label'>
-                            <input className='cargoForm__radio-input'
-                                type="radio"
-                                name="typePay"
-                                value="Наличными"
-                                onChange={onChange}
-                            />
-                            Наличными
-                        </label>
-                    </div>
+                        placeholder='ghjk'
+                    >
+                        <option value="" disabled>Выберите водителя</option>
+                        {listDrivers.map((option) => (
+                            <option key={option.id} value={option.id}>{option.name}</option>
+                        ))}
+                    </select>
                 </FormGroup>
                 <FormGroup label="Фото транспорта">
                     <div className="cargoForm__photos">
@@ -325,58 +223,148 @@ const AutoForm = ({ data, onChange, autoTrailer, dropDown, onNestedChange, onTwi
                     </div>
                 </FormGroup>
                 <div className="autoForm__btnBox">
-                    <button className="autoForm__btnBox-button" onClick={onClickButtonTrailer}>{autoTrailer ? 'Отменить' : 'Добавить прицеп'}</button>
+                    <button className={`autoForm__btnBox-button ${typePage === 'edit' && autoEmbeddedTrailer ? 'autoForm__btnBox-button--hide' : ''}`} onClick={onClickButtonEmbeddedTrailer}>{autoEmbeddedTrailer ? 'Отменить' : 'Добавить встроенный прицеп'}</button>
+                    <button className={`autoForm__btnBox-button ${typePage === 'edit' && autoAdditionalTrailer ? 'autoForm__btnBox-button--hide' : ''}`} onClick={onClickButtonAdditionalTrailer}>{autoAdditionalTrailer ? 'Отменить' : 'Добавить дополнительный прицеп'}</button>
                 </div>
             </div>
-            {autoTrailer ? <div className="autoForm__trailer">
-                <h3 className="autoForm__trailer-label">Прицеп</h3>
+            {autoEmbeddedTrailer ? <div className="autoForm__trailer">
+                <h3 className="autoForm__trailer-label">Встроенный прицеп</h3>
+                <FormGroup label="Грузоподъемность (т)">
+                    <input className="autoForm__input autoForm__input--short"
+                        type="number"
+                        name="embeddedTrailerDetails"
+                        data-path="liftingCapacity"
+                        value={data.embeddedTrailerDetails.liftingCapacity === 0 ? "" : data.embeddedTrailerDetails.liftingCapacity}
+                        onChange={onNestedChange}
+                    />
+                </FormGroup>
                 <FormGroup label="Габариты">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailerDetails"
-                        value={data.trailerDetails.dimensions['length'] === 0 ? null : data.trailerDetails.dimensions['length']}
+                        name="embeddedTrailerDetails"
+                        data-path="length"
+                        value={data.embeddedTrailerDetails['length'] === 0 ? "" : data.embeddedTrailerDetails['length']}
                         placeholder="Длина (м)"
-                        data-path="dimensions"
-                        data-pathtwo="length"
-                        onChange={onTwiceNesctedChange}
+                        onChange={onNestedChange}
                     />
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailerDetails"
-                        value={data.trailerDetails.dimensions.width === 0 ? null : data.trailerDetails.dimensions.width}
+                        name="embeddedTrailerDetails"
+                        data-path="width"
+                        value={data.embeddedTrailerDetails.width === 0 ? "" : data.embeddedTrailerDetails.width}
                         placeholder="Ширина (м)"
-                        data-path="dimensions"
-                        data-pathtwo="width"
-                        onChange={onTwiceNesctedChange}
+                        onChange={onNestedChange}
                     />
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailerDetails"
-                        value={data.trailerDetails.dimensions.height === 0 ? null : data.trailerDetails.dimensions.height}
+                        name="embeddedTrailerDetails"
+                        data-path="height"
+                        value={data.embeddedTrailerDetails.height === 0 ? "" : data.embeddedTrailerDetails.height}
                         placeholder="Высота (м)"
-                        data-path="dimensions"
-                        data-pathtwo="height"
-                        onChange={onTwiceNesctedChange}
+                        onChange={onNestedChange}
                     />
                 </FormGroup>
                 <FormGroup label="Объем прицепа (куб.м)">
                     <input className="autoForm__input autoForm__input--short"
                         type="number"
-                        name="trailerDetails"
-                        value={data.trailerDetails.volume}
+                        name="embeddedTrailerDetails"
                         data-path="volume"
+                        value={data.embeddedTrailerDetails.volume === 0 ? "" : data.embeddedTrailerDetails.volume}
                         onChange={onNestedChange}
                     />
                 </FormGroup>
-                <FormGroup label="Номер прицепа">
-                    <input className="autoForm__input autoForm__input--short"
-                        type="number"
-                        name="trailerDetails"
-                        value={data.trailerDetails.trailerNumber}
-                        data-path="trailerNumber"
-                        onChange={onNestedChange}
-                    />
-                </FormGroup>
+                <div className="autoForm__section">
+                    <label className="autoForm__label">
+                        <span className="autoForm__label-text">Тип кузова</span>
+                        <div className="autoForm__input-group">
+                            {bodyType.map((option) => (
+                                <label key={`body-${option.id}`} className="radiobox-label">
+                                    <input
+                                        type="radio"
+                                        name="bodyTypeGroup"
+                                        value={option.name}
+                                        checked={data.embeddedTrailerDetails.bodyType === option.name}
+                                        onChange={(e) => onNestedChange({
+                                            target: {
+                                                name: "embeddedTrailerDetails",
+                                                dataset: { path: "bodyType" },
+                                                value: e.target.value
+                                            }
+                                        })}
+                                    />
+                                    {option.name}
+                                </label>
+                            ))}
+                        </div>
+                    </label>
+                    <label className="autoForm__label">
+                        <span className="autoForm__label-text">Тип загрузки</span>
+                        <div className="autoForm__input-group">
+                            {bodyType.map((option) => (
+                                <label key={`load-${option.id}`} className="radiobox-label">
+                                    <input
+                                        type="radio"
+                                        name="loadTypeGroup"
+                                        value={option.name}
+                                        checked={data.embeddedTrailerDetails.loadType === option.name}
+                                        onChange={(e) => onNestedChange({
+                                            target: {
+                                                name: "embeddedTrailerDetails",
+                                                dataset: { path: "loadType" },
+                                                value: e.target.value
+                                            }
+                                        })}
+                                    />
+                                    {option.name}
+                                </label>
+                            ))}
+                        </div>
+                    </label>
+                    <label className="autoForm__label">
+                        <span className="autoForm__label-text">Тип выгрузки</span>
+                        <div className="autoForm__input-group">
+                            {bodyType.map((option) => (
+                                <label key={`unload-${option.id}`} className="radiobox-label">
+                                    <input
+                                        type="radio"
+                                        name="unloadTypeGroup"
+                                        value={option.name}
+                                        checked={data.embeddedTrailerDetails.unloadType === option.name}
+                                        onChange={(e) => onNestedChange({
+                                            target: {
+                                                name: "embeddedTrailerDetails",
+                                                dataset: { path: "unloadType" },
+                                                value: e.target.value
+                                            }
+                                        })}
+                                    />
+                                    {option.name}
+                                </label>
+                            ))}
+                        </div>
+                    </label>
+                </div>
+            </div> : ''}
+            {autoAdditionalTrailer ? <div className="autoForm__trailer autoForm__trailer--additional">
+                <h3 className="autoForm__trailer-label">Дополнительный прицеп</h3>
+                <Select
+                    styles={customStyles}
+                    isMulti
+                    options={listDrivers.map(t => ({ value: t.id, label: t.name }))}
+                    value={data.trailersIds ? data.trailersIds.map(id => {
+                        const driver = listDrivers.find(d => d.id === id);
+                        return driver
+                            ? { value: driver.id, label: driver.name }
+                            : { value: id.toString(), label: `Unknown (${id})` };
+                    }) : []}
+                    onChange={selected => {
+                        const value = selected.map(c => c.value);
+                        onChange({
+                            target: { name: 'trailersIds', value }
+                        })
+                    }}
+                    placeholder="Номера прицепов"
+                />
             </div> : ''}
         </div>
     )

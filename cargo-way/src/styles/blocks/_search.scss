@@ -3,8 +3,7 @@
 @use '../utils' as u;
 
 .search,
-.driverList,
-.trailerList {
+.genericList {
     @include m.form-step-base(column, 1rem 2.2rem, auto);
     margin-top: 5rem;
     margin-inline: auto;
@@ -117,6 +116,11 @@
                 grid-template-columns: repeat(7, 1fr);
             }
 
+            &--driver,
+            &--transport {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
             @include m.tablet {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -197,6 +201,12 @@
                 grid-template-columns: repeat(7, 1fr);
             }
 
+            &--driver,
+            &--transport {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 1rem;
+            }
+
             @include m.tablet {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -225,10 +235,6 @@
                 @include m.mobile {
                     display: none;
                 }
-            }
-
-            &--stash {
-                display: none;
             }
         }
     }

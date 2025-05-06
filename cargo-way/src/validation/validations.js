@@ -106,7 +106,7 @@ const validateCargo = (data) => {
     const errors = {};
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     if (!data.name) errors.name = "Название груза обязательно";
     if (!data.description) errors.description = "Описание обязательно";
     if (data.weight <= 0) errors.weight = "Вес должен быть положительным";
@@ -151,7 +151,7 @@ const validateCargo = (data) => {
 
 const validateDriverData = (data) => {
     const errors = {};
-    const { licenseCategory, licenseNumber, issueDate, expirationDate} = data;
+    const { licenseCategory, licenseNumber, issueDate, expirationDate } = data;
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
 
@@ -182,7 +182,7 @@ const validateDriverData = (data) => {
 
 const validateTrailerData = (data) => {
     const errors = {};
-    const { name, trailerNumber, liftingCapacity, bodyType, loadType, unloadType, length, width, height, volume} = data;
+    const { name, trailerNumber, liftingCapacity, bodyType, loadType, unloadType, length, width, height, volume } = data;
 
     if (!name) errors.name = "Модель прицепа обязательна";
     if (!trailerNumber || !/^[А-Я]{1}\d{3}[А-Я]{2}$/.test(trailerNumber)) errors.trailerNumber = "Номер прицепа обязателен и должен иметь формат А111АА";
@@ -194,8 +194,46 @@ const validateTrailerData = (data) => {
     if (!width || width > 10) errors.width = "Ширина прицепа обязательна и не должна превышать 10 метров";
     if (!height || height > 10) errors.height = "Высота прицепа обязательна и не должна превышать 10 метров";
     if (!volume) errors.volume = "Укажите грузоподъемность";
-    
+
     return errors;
 }
 
-export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData };
+const validateTransportData = (data, autoEmbeddedTrailer, autoAdditionalTrailers) => {
+    const errors = {};
+    const { driverId,
+        brand,
+        model,
+        manufactureYear,
+        transportNumber,
+        embeddedTrailerDetails,
+        trailersIds } = data;
+    const currentYear = new Date().getFullYear();
+
+    if (!driverId) errors.driverId = "Укажите водителя";
+    if (!brand) errors.brand = "Укажите марку транспорта";
+    if (!model) errors.model = "Укажите модель транспорта";
+    if (!manufactureYear) {
+        errors.manufactureYearNull = "Укажите год выпуска";
+    } else {
+        if(manufactureYear < 1900 || manufactureYear > currentYear) errors.manufactureYear = "Транспорт не может быть старше 1900 года и младше текущего года";
+    }
+    if (!/^\d{4}$/.test(manufactureYear)) errors.manufactureYear = "Укажите корректный год выпуска";
+    if (!transportNumber || !/^[А-Я]{1}\d{3}[А-Я]{2}$/.test(transportNumber)) errors.transportNumber = "Номер транспорта обязателен и должен быть в формате: А111АА";
+
+    if (autoEmbeddedTrailer) {
+        if (!embeddedTrailerDetails.liftingCapacity || !embeddedTrailerDetails.bodyType
+            || !embeddedTrailerDetails.loadType || !embeddedTrailerDetails.unloadType
+            || !embeddedTrailerDetails.length || !embeddedTrailerDetails.width
+            || !embeddedTrailerDetails.height || !embeddedTrailerDetails.volume
+        ) errors.embeddedTrailerDetails = "Заполните все поля для встроенного прицепа";
+        if (embeddedTrailerDetails.length > 50) errors.length = "Длина обязательна и не должна превышать 50 метров";
+        if (embeddedTrailerDetails.width > 10) errors.width = "Ширина прицепа обязательна и не должна превышать 10 метров";
+        if (embeddedTrailerDetails.height > 10) errors.height = "Высота прицепа обязательна и не должна превышать 10 метров";
+    };
+
+    if (autoAdditionalTrailers && trailersIds.length < 1) errors.trailersIds = "Выберите хотя бы один дополнительный прицеп";
+
+    return errors;
+}
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData, validateTransportData };

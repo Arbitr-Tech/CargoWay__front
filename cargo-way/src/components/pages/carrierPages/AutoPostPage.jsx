@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TopBar from "../../TopBar";
 import AutoForm from "../../forms/AutoForm";
 import { observer } from "mobx-react-lite";
 import { autoStore } from "../../../stores/AutoStore";
 import { loadFile } from "../../../api/commonService";
-import { addAuto } from "../../../api/autoService";
+import { addAuto, updateAuto } from "../../../api/autoService";
 import { toJS } from "mobx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { validateTransportData } from "../../../validation/validations";
+import { toast } from "react-toastify";
 
 
 const AutoPostPage = observer(({ typePage }) => {
@@ -20,37 +22,51 @@ const AutoPostPage = observer(({ typePage }) => {
             }
         }, [location.pathname]);
 
-    const handleInputChange = ({ target: { name, value } }) => {
-        store.setFormData(name, value);
+    const handleInputChange = ({ target: { name, value, type, valueAsNumber } }) => {
+        if (type === "number") {
+            const valNum = Math.max(0, valueAsNumber || 0);
+            store.setFormData(name, valNum);
+        } else {
+            store.setFormData(name, value);
+        }
     };
 
-    const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
-        // const resValue = name === 'dimensions' ? +value : value;
-        store.setNestedFormData(name, dataset.path, value);
-    };
-
-    const handleTwiceNestedInputChange = ({ target: { name, dataset, value } }) => {
-        store.setTwiceNestedFormData(name, dataset.path, dataset.pathtwo, Number(value));
-        console.log(store.autoFormData)
-    };
-
-    const handleClickDriver = (event) => {
-        store.setDriver(Number(event.target.dataset.id));
+    const handleNestedInputChange = ({ target: { name, dataset, value, type, valueAsNumber } }) => {
+        if (type === "number") {
+            const valNum = Math.max(0, valueAsNumber || 0);
+            store.setNestedFormData(name, dataset.path, valNum);
+        } else {
+            store.setNestedFormData(name, dataset.path, value);
+        }
+        
     };
 
     const handleButton = async () => {
+        const errors = validateTransportData(store.autoFormData, store.autoEmbeddedTrailer, store.autoAdditionalTrailers);
+
+        if (Object.keys(errors).length > 0) {
+            console.log("Ошибки отправки формы:", errors);
+            Object.values(errors).forEach(errorMessage => {
+                toast.error(errorMessage);
+            });
+            return;
+        }
+
         try {
             if (typePage === 'add') {
-                await addAuto(toJS(store.autoFormData));
-                console.log(toJS(store.autoFormData))
+                const data = store.getFormData();
+                await addAuto(toJS(data));
                 navigate('/auto/list');
+                toast.success("Успешно");
             } else {
-                // const data = store.getUpdatedFields();
-                // await updateCargo(store.editingCargoId, data);
-                // navigate('/cargo/list');
+                const data = store.getUpdatedFields();
+                await updateAuto(store.editingTransportId, data);
+                navigate('/auto/list');
+                toast.success("Успешно");
             }
         } catch (error) {
             console.log('Ошибка отправки формы: ', error);
+            toast.error("Ошибка, попробуйте позже");
         }
     };
 
@@ -61,17 +77,15 @@ const AutoPostPage = observer(({ typePage }) => {
                 <h2 className="auto__title">{typePage === 'add' ? 'Добавить машину' : 'Изменить машину'}</h2>
                 <AutoForm
                     data={store.autoFormData}
-                    autoTrailer={store.autoTrailer}
-                    dropDown={store.autoDropDownDriver}
                     onChange={handleInputChange}
+                    autoEmbeddedTrailer={store.autoEmbeddedTrailer}
+                    autoAdditionalTrailer={store.autoAdditionalTrailers}
                     onNestedChange={handleNestedInputChange}
-                    onTwiceNesctedChange={handleTwiceNestedInputChange}
-                    onClickButtonTrailer={store.setAutoTrailer}
-                    onClickDriver={handleClickDriver}
-                    onClickMenu={store.setDropDown}
-                    onClickMenuButton={() => store.setFormData('driver', '')}
+                    onClickButtonEmbeddedTrailer={store.toggleAutoEmbeddedTrailer}
+                    onClickButtonAdditionalTrailer={store.toggleAutoAdditionalTrailers}
                     onLoadImage={loadFile}
                     onChangeImage={store.setFormData}
+                    typePage={typePage}
                 />
                 <div className="auto__btnBox">
                     <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>

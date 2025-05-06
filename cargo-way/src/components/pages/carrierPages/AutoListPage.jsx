@@ -1,49 +1,104 @@
 import TopBar from "../../TopBar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Popup from "../../Popup";
 import { observer } from "mobx-react-lite";
-import { listStore } from "../../../stores/ListStore";
+import AutoList from "../../carrierLists/AutoList";
 import { autoStore } from "../../../stores/AutoStore";
-import ListItems from "../../ListItems";
+import { useEffect, useState } from "react";
+import Pagination from "../../Pagination";
+import { deleteTransport, getDetailsTransport } from "../../../api/autoService";
+import { toast } from "react-toastify";
 
 const AutoListPage = observer(() => {
-    const store = listStore;
-    // const autoStore = autoStore;
+    const store = autoStore;
     const navigate = useNavigate();
+    const location = useLocation();
+    const [isLoading, setIsLoading] = useState(true);
+    const [popupData, setPopupData] = useState({ isOpen: false, item: null });
 
-    const list = [
-        { id: 1, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Опубликовано" },
-        { id: 2, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 3, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 4, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 5, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 6, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 7, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 8, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-        { id: 9, brand: "Volvo", model: "FH16", year: 2021, dimensions: { length: 700, width: 250, height: 300 }, cargo_type: "краска", volume: 90, category: "седельный тягач", transportNumber: 12345, trailerDetails: { dimensions: { length: 1350, width: 250, height: 400 }, cargo_type: "рефрижератор", volume: 120, trailerNumber: 54321 }, liftingCapacity: 25000, bodyType: "тентованный", loadType: "задняя", typePay: "Наличными", price: 15000, date: "2025-01-18", route: { from: "Москва", to: "Екатеринбург" }, autoPhoto: "photo_url_here", status: "Не опубликовано" },
-    ]
+    const loadTransportList = async (page = store.getCurrentPage()) => {
+        try {
+            setIsLoading(true);
+            store.setCurrentPage(page);
+            await store.fetchTransportList(page);
+        } catch (error) {
+            console.error("Ошибка загрузки списка водителей:", error);
+        } finally {
+            setIsLoading(false);
+        };
+    };
 
-    const handleEditClick = (item) => {
-        list.forEach(car => {
-            Object.keys(car).forEach(keys => {
-                // autoStore.setEditData(keys, car[keys]);
-                // console.log(keys, car[keys])
-            })
-        })
-        navigate('/auto/edit');
-        console.log(item);
+    useEffect(() => {
+        loadTransportList();
+    }, [location.pathname]);
+
+    const openPopup = (item) => {
+        setPopupData({ isOpen: true, item });
+    };
+
+    const closePopup = () => {
+        setPopupData({ isOpen: false, item: null });
+    };
+
+    const handleEditClick = async (item) => {
+        try {
+            const data = await getDetailsTransport(item.id);
+            store.setTransportFormDataFromServer(item.id, data);
+            navigate('/auto/edit');
+        } catch (error) {
+            console.log(error);
+            toast.error('Ошибка, попробуйте позже');
+        }
+    }
+
+    const handleDeleteClick = async () => {
+        try {
+            await deleteTransport(popupData.item.id);
+            closePopup();
+            loadTransportList();
+            toast.success('Успешно удалено');
+        } catch (error) {
+            console.log(error);
+            toast.error('Ошибка, попробуйте позже');
+        }
     }
 
 
     return (
         <div className="autoList">
             <div className="container">
-                <Popup isOpen={store.isPopupOpen} text='Вы действительно хоите удалить эту запись?' typePopup='del' onClose={store.closePopup} />
+                <Popup
+                    isOpen={popupData.isOpen}
+                    text='Вы действительно хоите удалить эту запись?'
+                    typePopup='del'
+                    onClose={closePopup}
+                    onConfirm={handleDeleteClick}
+                />
                 <TopBar />
                 <h2 className="autoList__title">Ваши машины</h2>
-                <ListItems list={list} type="myListTransport" buttons={[
-                    { label: "Редактировать", onClick: handleEditClick },
-                ]}/>
+                {isLoading ? (
+                    <div className="autoList__empty">
+                        <p className="autoList__subtitle">Загрузка списка...</p>
+                    </div>
+                ) : store.transportList.length > 0 ? (
+                    <div className="autoList__content">
+                        <AutoList
+                            list={store.transportList}
+                            onClickEdit={handleEditClick}
+                            onClickDelete={ openPopup }
+                        />
+                        <Pagination
+                            currentPage={store.getCurrentPage()}
+                            totalPages={store.getTotalPages()}
+                            onPageChange={(page) => loadTransportList(page)}
+                        />
+                    </div>
+                ) : (
+                    <div className="autoList__empty">
+                        <p className="autoList__empty-subtitle">У вас нет созданного транспорта.</p>
+                        <button className="autoList__empty-button" onClick={() => navigate('/driver/add')}>Перейти к созданию</button>
+                    </div>
+                )}
             </div>
         </div>
     )

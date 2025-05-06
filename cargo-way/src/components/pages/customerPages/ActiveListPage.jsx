@@ -6,7 +6,7 @@ import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/ca
 import Popup from "../../Popup";
 import TopBar from "../../TopBar";
 import { cargoStore } from "../../../stores/CargoStore";
-import ListItems from "../../ListItems";
+import ListItems from "../../listsTemplates/ListItems";
 
 const ActiveListPage = observer(() => {
     const navigate = useNavigate();

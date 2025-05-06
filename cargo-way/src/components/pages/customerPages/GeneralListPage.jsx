@@ -6,8 +6,8 @@ import { deleteCargo, getDetailsCargo, publishCargo, unpublishCargo } from "../.
 import Popup from "../../Popup";
 import { cargoStore } from "../../../stores/CargoStore";
 import Pagination from "../../Pagination";
-import ListItems from "../../ListItems";
 import { toast } from "react-toastify";
+import ListItems from "../../listsTemplates/ListItems";
 
 const GeneralListPage = observer(() => {
     const navigate = useNavigate();

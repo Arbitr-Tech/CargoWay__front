@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import SearchForm from "../../forms/SearchForm";
 import { motion } from "framer-motion";
-import ListItems from "../../ListItems";
 import { searchStore } from "../../../stores/SearchStore";
 import { listStore } from "../../../stores/ListStore";
 import { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import { toJS } from "mobx";
 import Pagination from "../../Pagination";
 import Popup from "../../Popup";
 import { toast } from "react-toastify";
+import ListItems from "../../listsTemplates/ListItems";
 
 const SearchCargoPage = observer(() => {
 

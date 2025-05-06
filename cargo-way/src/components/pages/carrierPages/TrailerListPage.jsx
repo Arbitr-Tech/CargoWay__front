@@ -3,14 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Popup from "../../Popup";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { driverStore } from "../../../stores/DriverStore";
-import DriverList from "../../driverList/DriverList";
-import { deleteDriver, getDetailsDriver } from "../../../api/driverService";
 import Pagination from "../../Pagination";
 import { toast } from "react-toastify";
 import { trailerStore } from "../../../stores/TrailerStore";
-import ListItems from "../../ListItems";
-import TrailerList from "../../trailerList/TrailerList";
+import TrailerList from "../../carrierLists/TrailerList";
 import { deleteTrailer, getDetailsTrailer } from "../../../api/trailerService";
 
 const TrailerListPage = observer(() => {
@@ -98,8 +94,8 @@ const TrailerListPage = observer(() => {
                     </div>
                 ) : (
                     <div className="trailerPage__empty">
-                        <p className="trailerPage__empty-subtitle">У вас нет созданных грузов.</p>
-                        <button className="trailerPage__empty-button">Перейти к созданию</button>
+                        <p className="trailerPage__empty-subtitle">У вас нет созданных прицепов.</p>
+                        <button className="trailerPage__empty-button" onClick={() => navigate("/trailer/add")}>Перейти к созданию</button>
                     </div>
 
                 )}
