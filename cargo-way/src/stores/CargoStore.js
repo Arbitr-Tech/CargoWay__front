@@ -26,8 +26,7 @@ class CargoStore {
     };
 
     originalCargoFormData = {};
-
-    editingCargoId = null;
+    responses = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -48,8 +47,7 @@ class CargoStore {
         };
     }
 
-    setCargoFormDataFromServer = (id, data) => {
-        this.editingCargoId = id; 
+    setCargoFormDataFromServer = (data) => {
         this.originalCargoFormData = data;
         this.cargoFormData = { ...data };
     }
@@ -62,7 +60,7 @@ class CargoStore {
                 updatedFields[key] = this.cargoFormData[key];
             }
         }
-    
+
         return updatedFields;
     }
 
@@ -88,11 +86,9 @@ class CargoStore {
             bodyType: "",
             loadType: "",
             unloadType: "",
-            cargoPhoto: "",
-            status: "HIDDEN",
-            photos: []
+            // photos: []
         };
-        this.editingCargoId = null;
+        this.responses = [];
     }
 }
 

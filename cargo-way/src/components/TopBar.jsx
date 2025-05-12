@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { userStore } from "../stores/UserStore";
-import Popup from "./Popup";
 import { useState } from "react";
 import { logout } from "../api/authService";
 import { toast } from "react-toastify";
+import Popup from "./popups/Popup";
 
 const TopBar = () => {
 
@@ -75,9 +75,9 @@ const TopBar = () => {
         {
             title: "Отклики",
             items: [
-                { title: "Активные", link: "/responses/active" },
-                { title: "Ждут ответа", link: "/responses/pending" },
-                { title: "Архив", link: "/responses/archive" }
+                { title: "Активные", link: "/cargo/list/active" },
+                { title: "Ждут ответа", link: "/carrier/list/active" },
+                { title: "Архив", link: "/cargo/list/history" }
             ]
         }
     ];

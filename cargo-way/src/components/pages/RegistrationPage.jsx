@@ -11,9 +11,6 @@ import { registration } from "../../api/regService";
 import { getProfileData } from "../../api/profileService";
 
 const RegistrationPage = observer(() => {
-
-    const store = registrationStore;
-    const storeUser = userStore;
     const navigate = useNavigate();
     const errorMessages = {
         "users_cargoway_username_key": "Имя пользователя уже занято. Выберите другое.",
@@ -23,11 +20,11 @@ const RegistrationPage = observer(() => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
-        store.setRegistrationFormData(name, value);
+        registrationStore.setRegistrationFormData(name, value);
     }
 
     const handleSubmit = async () => {
-        const errors = validateRegistration(store.registrationFormData, store.agreement);
+        const errors = validateRegistration(registrationStore.registrationFormData, registrationStore.agreement);
 
         if (Object.keys(errors).length > 0) {
             console.log("Ошибки валидации:", errors);
@@ -37,14 +34,14 @@ const RegistrationPage = observer(() => {
             return;
         }
 
-        console.log(toJS(store.registrationFormData))
+        console.log(toJS(registrationStore.registrationFormData))
 
         try {
-            await registration(toJS(store.registrationFormData));
+            await registration(toJS(registrationStore.registrationFormData));
             const data = await getProfileData();
-            storeUser.setUserFormData(data);
+            userStore.setUserFormData(data);
             navigate('/');
-            store.submitRegistration();
+            registrationStore.submitRegistration();
         } catch (error) {
             console.error("Ошибка входа:", error.message);
             if (error.message.includes("duplicate key value violates unique constraint")) {
@@ -62,11 +59,11 @@ const RegistrationPage = observer(() => {
         <div className="registration">
             <div className="container">
                 <RegistrationForm
-                    formData={store.registrationFormData}
-                    agreement={store.agreement}
+                    formData={registrationStore.registrationFormData}
+                    agreement={registrationStore.agreement}
                     onChange={handleInputChange}
                     onSubmit={handleSubmit}
-                    onChangeAgreement={store.switchAgreement}
+                    onChangeAgreement={registrationStore.switchAgreement}
                 />
             </div>
         </div >

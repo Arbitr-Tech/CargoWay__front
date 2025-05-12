@@ -70,7 +70,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             </FormGroup>
             <FormGroup label="ИНН" modification="company">
                 <input className="profileForm__input"
-                    type="number"
+                    type="text"
                     name="company"
                     value={data.company?.inn || ""}
                     data-path="inn"
@@ -81,7 +81,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             </FormGroup>
             <FormGroup label="ОГРН" modification="company">
                 <input className="profileForm__input"
-                    type="number"
+                    type="text"
                     name="company"
                     value={data.company?.ogrn || ""}
                     data-path="ogrn"
@@ -92,7 +92,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             </FormGroup>
             <FormGroup label="БИК" modification="company">
                 <input className="profileForm__input"
-                    type="number"
+                    type="text"
                     name="company"
                     value={data.company?.bic || ""}
                     data-path="bic"
@@ -103,7 +103,7 @@ const CompanyInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             </FormGroup>
             <FormGroup label="Корреспондентский счет" modification="company">
                 <input className="profileForm__input"
-                    type="number"
+                    type="text"
                     name="company"
                     value={data.company?.correspondentAccount || ""}
                     data-path="correspondentAccount"

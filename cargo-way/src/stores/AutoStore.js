@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import { getTrailerByProfile } from "../api/trailerService";
+import { getTrailerByProfile, getTrailerForTransport } from "../api/trailerService";
 import { getTransportsByProfile } from "../api/autoService";
+import { getDriversForTransport } from "../api/driverService";
 
 class AutoStore {
 
@@ -27,21 +28,13 @@ class AutoStore {
         // photos: []
     };
 
-    autoFormDataServer = {
-        brand: "",
-        model: "",
-        manufactureYear: 0,
-        transportNumber: "",
-        embeddedTrailer: {},
-        trailers: [],
-        driver: {},
-    }
-
     transportList = [];
     page = { current: 1, total: 1 };
 
     originalTransportFormData = {};
-    editingTransportId = null;
+
+    driversListForTransport = [];
+    trailersListForTransport = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -61,12 +54,31 @@ class AutoStore {
         };
     };
 
-    toggleAutoEmbeddedTrailer = () => {
-        this.autoEmbeddedTrailer = !this.autoEmbeddedTrailer;
+    toggleAutoEmbeddedTrailer = (typePage) => {
+        if (typePage === 'add') {
+            this.autoEmbeddedTrailer = !this.autoEmbeddedTrailer;
+        } else {
+            if(this.autoEmbeddedTrailer) {
+                this.autoFormData.embeddedTrailerDetails = {...this.originalTransportFormData.embeddedTrailerDetails};
+                this.autoEmbeddedTrailer = false;
+            } else {
+                this.autoEmbeddedTrailer = true;
+            };
+        };
     };
 
-    toggleAutoAdditionalTrailers = () => {
-        this.autoAdditionalTrailers = !this.autoAdditionalTrailers;
+    toggleAutoAdditionalTrailers = (typePage) => {
+        if (typePage === 'add') {
+            this.autoAdditionalTrailers = !this.autoAdditionalTrailers
+        } else {
+            if(this.autoAdditionalTrailers) {
+                this.autoFormData.trailersIds = this.originalTransportFormData.trailersIds;
+                this.autoAdditionalTrailers = false;
+                console.log(this.autoFormData.trailersIds)
+            } else {
+                this.autoAdditionalTrailers = true;
+            };
+        };
     };
 
     getFormData = () => {
@@ -91,6 +103,26 @@ class AutoStore {
         }
     };
 
+    async fetchDriversListForTransport() {
+        try {
+            const dataDrivers = await getDriversForTransport();
+            console.log(dataDrivers);
+            this.driversListForTransport = dataDrivers;
+        } catch (error) {
+            console.error("Ошибка при получении списка водителей для транспорта:", error);
+        }
+    };
+
+    async fetchTrailersListForTransport() {
+        try {
+            const dataTrailers = await getTrailerForTransport();
+            console.log(dataTrailers);
+            this.trailersListForTransport = dataTrailers;
+        } catch (error) {
+            console.error("Ошибка при получении списка прицепов для транспорта:", error);
+        }
+    };
+
     getCurrentPage() {
         return this.page?.current ?? 1;
     }
@@ -104,10 +136,10 @@ class AutoStore {
     }
 
     transformServerToClientData = (serverData) => {
-        if(serverData.trailers.length !== 0) {
+        if (serverData.trailers?.length !== 0) {
             this.autoAdditionalTrailers = true;
         }
-        if(Object.keys(serverData.embeddedTrailer).length !== 0) {
+        if (serverData.embeddedTrailer && Object.keys(serverData.embeddedTrailer)?.length !== 0) {
             this.autoEmbeddedTrailer = true;
         }
 
@@ -132,8 +164,7 @@ class AutoStore {
         };
     };
 
-    setTransportFormDataFromServer = (id, data) => {
-        this.editingTransportId = id;
+    setTransportFormDataFromServer = (data) => {
         this.autoFormData = this.transformServerToClientData(data);
         this.originalTransportFormData = this.autoFormData;
     }
@@ -147,7 +178,6 @@ class AutoStore {
             }
         }
 
-        // return this.getFormData(updatedFields);
         return updatedFields;
     }
 

@@ -6,7 +6,7 @@ const ItemCard = ({ name, weight, volume, from, to, price, typePay, type, status
         IN_PROGRESS: "В исполнении",
         COMPLETED: "Завершено",
         CANCELED: "Отменено",
-        BIDDINGS: "Торги"
+        BIDDING: "Торги"
     };
     const HIGHLIGHTED_STATUSES = ["PUBLISHED", "IN_PROGRESS", "COMPLETED"];
     

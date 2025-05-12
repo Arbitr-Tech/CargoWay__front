@@ -92,7 +92,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
                     value={data.licenseNumber || ""}
                     onChange={onChange}
                     ref={inputLicenseNumberMask}
-                    placeholder="Например: АА12345678"
+                    placeholder="Например: 1111 111111"
                 />
             </FormGroup>
             <FormGroup label="Дата выдачи водительских прав" modification="driver">

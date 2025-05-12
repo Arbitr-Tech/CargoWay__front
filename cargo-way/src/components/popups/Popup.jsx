@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
 
-const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
+const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
     if (!isOpen) return null;
 
     const fieldNames = {
@@ -60,12 +59,17 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm }) => {
                     <img src="/assets/img/close.svg" alt="close" onClick={onClose} />
                 </div>
                 <div className="popup__text">
-                    {typePopup === 'contacts' ? renderText(text) : text}
+                    {typePopup === 'details' ? renderText(text) : text}
                 </div>
-                {(typePopup !== 'contacts' && typePopup !== 'auth') && (
+                {(typePopup !== 'details' && typePopup !== 'auth') && (
                     <div className="popup__buttons">
                         <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
                         <button className="popup__button" onClick={onClose}>Отменить</button>
+                    </div>
+                )}
+                {(typePopup === 'details') && (
+                    <div className="popup__buttons">
+                        <button className="popup__button" onClick={onRespond}>Откликнуться</button>
                     </div>
                 )}
             </div>

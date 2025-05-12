@@ -10,15 +10,14 @@ import { toast } from "react-toastify";
 import IndividualInfoForm from "../forms/profileForms/IndividualInfoForm";
 
 const ProfilePage = observer(() => {
-    const store = userStore;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getProfileData();
                 console.log(data);
-                store.setUserFormData(data);
-                console.log("UF: ", store.userFormData);
+                userStore.setUserFormData(data);
+                console.log("UF: ", userStore.userFormData);
             } catch (error) {
                 console.log(error);
                 toast.error('Произошла ошибка, попробуйте позже');
@@ -30,19 +29,19 @@ const ProfilePage = observer(() => {
     }, []);
 
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
-        store.setNestedFieldsData(name, dataset.path, value);
+        userStore.setNestedFieldsData(name, dataset.path, value);
     };
 
     const handleClickMainInfoButton = async () => {
         try {
-            const updatedData = store.getUpdatedFields();
+            const updatedData = userStore.getUpdatedFields();
             console.log(updatedData);
             const newData = await updateProfileData(toJS(updatedData));
-            store.setUserFormData(newData);
+            userStore.setUserFormData(newData);
             toast.success("Успешно")
         } catch (error) {
             console.log('Ошибка отправки изменений: ', error);
-            store.reset();
+            userStore.reset();
             toast.error('Произошла ошибка, попробуйте позже');
         }
     }
@@ -64,21 +63,21 @@ const ProfilePage = observer(() => {
                         <div className="profile__userInfo-main">
                             <h2 className="profile__main-title">Основная информация</h2>
                             <div className="profile__main-rating">
-                                <p className="profile__rating-item">Рейтинг от пользователей: <span>{store.originalUserFormData?.userRating}</span></p>
-                                <p className="profile__rating-item">Рейтинг системы: <span>{store.originalUserFormData?.systemRating}</span></p>
+                                <p className="profile__rating-item">Рейтинг от пользователей: <span>{userStore.originalUserFormData?.userRating}</span></p>
+                                <p className="profile__rating-item">Рейтинг системы: <span>{userStore.originalUserFormData?.systemRating}</span></p>
                             </div>
                             <div className="profile__main-data">
-                                <p className="profile__data-item">Имя пользователя: <span>{store.originalUserFormData.userData?.username || ''}</span></p>
-                                <p className="profile__data-item">Почта: <span>{store.originalUserFormData.userData?.email || ''}</span></p>
+                                <p className="profile__data-item">Имя пользователя: <span>{userStore.originalUserFormData.userData?.username || ''}</span></p>
+                                <p className="profile__data-item">Почта: <span>{userStore.originalUserFormData.userData?.email || ''}</span></p>
                                 <p className="profile__data-item">
-                                    Роль: <span>{getRoleName(store.originalUserFormData.userData?.role)}</span>
+                                    Роль: <span>{getRoleName(userStore.originalUserFormData.userData?.role)}</span>
                                 </p>
                             </div>
                         </div>
                         <div className="profile__userInfo-contact">
                             <ContactInfoForm
-                                data={store.userFormData}
-                                isNull={store.originalUserFormData.contactData === null}
+                                data={userStore.userFormData}
+                                isNull={userStore.originalUserFormData.contactData === null}
                                 onClickButton={handleClickMainInfoButton}
                                 onNestedChange={handleNestedInputChange}
                             />
@@ -86,14 +85,14 @@ const ProfilePage = observer(() => {
                     </div>
                     <div className="profile__companyInfo">
                         <CompanyInfoForm
-                            data={store.userFormData}
-                            isNull={store.originalUserFormData.company === null}
+                            data={userStore.userFormData}
+                            isNull={userStore.originalUserFormData.company === null}
                             onClickButton={handleClickMainInfoButton}
                             onNestedChange={handleNestedInputChange}
                         />
                         <IndividualInfoForm
-                            data={store.userFormData}
-                            isNull={store.originalUserFormData.individual === null}
+                            data={userStore.userFormData}
+                            isNull={userStore.originalUserFormData.individual === null}
                             onClickButton={handleClickMainInfoButton}
                             onNestedChange={handleNestedInputChange}
                         />

@@ -2,36 +2,43 @@ import { useEffect } from "react";
 import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { trailerStore } from "../../../stores/TrailerStore";
 import TrailerForm from "../../forms/TrailerForm";
-import { addTrailer, updateTrailer } from "../../../api/trailerService";
+import { addTrailer, getDetailsTrailer, updateTrailer } from "../../../api/trailerService";
 import { toast } from "react-toastify";
 import { validateTrailerData } from "../../../validation/validations";
 
 
 const TrailerPostPage = observer(({ typePage }) => {
-    const store = trailerStore;
     const navigate = useNavigate();
     const location = useLocation();
+    const param = useParams();
+    const id = param.id;
 
     useEffect(() => {
+        async function getData() {
+            const data = await getDetailsTrailer(id);
+            trailerStore.setTrailerFormDataFromServer(data);
+        };
         if (!location.pathname.startsWith("/trailer/edit")) {
-            store.resetFormData();
+            trailerStore.resetFormData();
+        } else {
+            getData();
         }
     }, [location.pathname]);
 
     const handleInputChange = ({ target: { name, value, valueAsNumber, type } }) => {
         if (type === "number") {
             const valNum = Math.max(0, valueAsNumber || 0);
-            store.setFormData(name, valNum);
+            trailerStore.setFormData(name, valNum);
         } else {
-            store.setFormData(name, value);
+            trailerStore.setFormData(name, value);
         }
     };
 
     const handleButtonClick = async () => {
-        const errors = validateTrailerData(store.trailerFormData);
+        const errors = validateTrailerData(trailerStore.trailerFormData);
 
         if (Object.keys(errors).length > 0) {
             console.log("Ошибки отправки формы:", errors);
@@ -43,10 +50,10 @@ const TrailerPostPage = observer(({ typePage }) => {
 
         try {
             if (typePage === 'add') {
-                await addTrailer(toJS(store.trailerFormData));
+                await addTrailer(toJS(trailerStore.trailerFormData));
             } else {
-                const data = store.getUpdatedFields();
-                await updateTrailer(store.editingTrailerId, data);
+                const data = trailerStore.getUpdatedFields();
+                await updateTrailer(id, data);
             }
             navigate('/trailer/list');
             toast.success('Успешно');
@@ -62,7 +69,7 @@ const TrailerPostPage = observer(({ typePage }) => {
                 <TopBar />
                 <h2 className="trailer__title">{typePage === 'add' ? 'Добавить прицеп' : 'Изменить прицеп'}</h2>
                 <TrailerForm
-                    data={store.trailerFormData}
+                    data={trailerStore.trailerFormData}
                     onChange={handleInputChange}
                 />
                 <div className="trailer__btnBox">

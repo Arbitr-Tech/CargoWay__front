@@ -4,45 +4,55 @@ import { cargoStore } from "../../../stores/CargoStore";
 import CargoForm from "../../forms/CargoForm";
 import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
-import { addCargo, updateCargo } from "../../../api/cargoService";
-import { useLocation, useNavigate } from "react-router-dom";
+import { addCargo, getDetailsCargo, updateCargo } from "../../../api/cargoService";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { validateCargo } from "../../../validation/validations";
 
 const CargoPostPage = observer(({ typePage }) => {
-    const store = cargoStore;
     const navigate = useNavigate();
-
+    const params = useParams();
+    const id = params.id;
     const location = useLocation();
 
+
+
     useEffect(() => {
+        async function getData() {
+            const data = await getDetailsCargo(id);
+            cargoStore.setCargoFormDataFromServer(data.cargo);
+            console.log(data)
+        };
+
         if (!location.pathname.startsWith("/cargo/edit")) {
             cargoStore.resetFormData();
+        } else {
+            getData();
         }
     }, [location.pathname]);
 
     const handleInputChange = ({ target: { name, value, valueAsNumber, type } }) => {
         if (type === 'number') {
             const valNum = Math.max(0, valueAsNumber || 0);
-            store.setFormData(name, valNum);
+            cargoStore.setFormData(name, valNum);
         } else {
-            store.setFormData(name, value);
+            cargoStore.setFormData(name, value);
         }
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value, valueAsNumber, type } }) => {
         if (type === 'number') {
             const valNum = Math.max(0, valueAsNumber || 0);
-            store.setNestedFormData(name, dataset.path, valNum);
+            cargoStore.setNestedFormData(name, dataset.path, valNum);
         } else {
-            store.setNestedFormData(name, dataset.path, value);
+            cargoStore.setNestedFormData(name, dataset.path, value);
         }
     };
 
     const handleClickButton = async () => {
-        console.log(toJS(store.cargoFormData))
-        const errors = validateCargo(store.cargoFormData);
+        console.log(toJS(cargoStore.cargoFormData))
+        const errors = validateCargo(cargoStore.cargoFormData);
 
         if (Object.keys(errors).length > 0) {
             console.log("Ошибки отправки формы:", errors);
@@ -54,12 +64,12 @@ const CargoPostPage = observer(({ typePage }) => {
 
         try {
             if (typePage === 'add') {
-                await addCargo(toJS(store.cargoFormData));
+                await addCargo(toJS(cargoStore.cargoFormData));
                 toast.success("Успешно создано")
                 navigate('/');
             } else {
-                const data = store.getUpdatedFields();
-                await updateCargo(store.editingCargoId, data);
+                const data = cargoStore.getUpdatedFields();
+                await updateCargo(id, data);
                 toast.success("Успешно изменено")
                 navigate('/');
             }
@@ -74,7 +84,7 @@ const CargoPostPage = observer(({ typePage }) => {
             <div className="container">
                 <TopBar />
                 <h2 className="cargo__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} груз</h2>
-                <CargoForm data={store.cargoFormData} onChange={handleInputChange} onNestedChange={handleNestedInputChange} onChangeImage={store.setFormData} onLoadImage={loadFile} />
+                <CargoForm data={cargoStore.cargoFormData} onChange={handleInputChange} onNestedChange={handleNestedInputChange} onChangeImage={cargoStore.setFormData} onLoadImage={loadFile} />
                 <div className="cargo__btnBox">
                     <button className="cargo__button"
                         onClick={handleClickButton}

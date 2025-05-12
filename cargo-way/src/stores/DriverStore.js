@@ -11,7 +11,6 @@ class DriverStore {
     };
 
     originalDriverFormData = {};
-    editingDriverId = null;
 
     driverList = [];
 
@@ -48,8 +47,7 @@ class DriverStore {
         return this.page?.total ?? 1;
     }
 
-    setDriverFormDataFromServer = (id, data) => {
-        this.editingDriverId = id;
+    setDriverFormDataFromServer = (data) => {
         this.originalDriverFormData = data;
         this.driverFormData = { ...data };
     }
@@ -73,7 +71,6 @@ class DriverStore {
             issueDate: "",
             expirationDate: ""
         };
-        this.editingDriverId = null;
     }
 }
 

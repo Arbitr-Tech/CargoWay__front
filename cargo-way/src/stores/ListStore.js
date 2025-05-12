@@ -25,7 +25,7 @@ class ListStore {
     async fetchCargoList(category, pageNumber) {
         try {
             const dataCargo = await getCargoByCategory(category, pageNumber);
-            console.log(dataCargo.content);
+            console.log(dataCargo);
             this.cargoLists[category] = dataCargo.content;
             this.pages[category] = {
                 current: dataCargo.pageNumber,

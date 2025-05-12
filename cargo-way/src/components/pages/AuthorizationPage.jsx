@@ -8,38 +8,35 @@ import { data, useNavigate } from "react-router-dom";
 import { userStore } from "../../stores/UserStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import PopupWithInput from "../PopupWithInput";
 import { popupWithInputStore } from "../../stores/PopupWithInputStore";
 import { getProfileData } from "../../api/profileService";
+import PopupWithInput from "../popups/PopupWithInput";
 
 const AuthorizationPage = observer(() => {
-    const store = autorizationStore;
-    const storeUser = userStore;
-    const storePopup = popupWithInputStore;
     const navigate = useNavigate();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
         return () => {
-            store.reset(); // Очистка формы при размонтировании
+            autorizationStore.reset(); // Очистка формы при размонтировании
         };
-    }, [store]);
+    }, []);
 
     const handleOnChange = (event) => {
         const { name, value } = event.target;
 
-        store.setAuthorizationFormData(name, value);
+        autorizationStore.setAuthorizationFormData(name, value);
     };
 
     const handleNext = async () => {
-        console.log(toJS(store.autorizationFormData));
+        console.log(toJS(autorizationStore.autorizationFormData));
 
         try {
-            await login(toJS(store.autorizationFormData));
+            await login(toJS(autorizationStore.autorizationFormData));
             const data = await getProfileData();
-            storeUser.setUserFormData(data);
+            userStore.setUserFormData(data);
             navigate('/');
-            store.reset();
+            autorizationStore.reset();
         } catch (error) {
             console.error("Ошибка входа:", error);
             if (!error.message.startsWith('Неверный') && !error.message.startsWith('Участник')) {
@@ -51,13 +48,13 @@ const AuthorizationPage = observer(() => {
     };
 
     const handlePasswordReset = async () => {
-        if (!storePopup.email) {
+        if (!popupWithInputStore.email) {
             toast.error('Заполните поле ввода почты');
             return;
         };
         try {
-            await passwordReset({ "email": storePopup.email });
-            storePopup.reset();
+            await passwordReset({ "email": popupWithInputStore.email });
+            popupWithInputStore.reset();
             setIsPopupOpen(false);
         } catch (error) {
             if (error.message.includes("не был найден!")) {
@@ -76,11 +73,11 @@ const AuthorizationPage = observer(() => {
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}
                 onSend={handlePasswordReset}
-                email={storePopup.email}
-                onChangeEmail={storePopup.setEmail}
+                email={popupWithInputStore.email}
+                onChangeEmail={popupWithInputStore.setEmail}
             />
             <div className="container">
-                <AuthorizationForm formData={store.autorizationFormData} onChange={handleOnChange} onNext={handleNext} onClickLink={() => setIsPopupOpen(true)} />
+                <AuthorizationForm formData={autorizationStore.autorizationFormData} onChange={handleOnChange} onNext={handleNext} onClickLink={() => setIsPopupOpen(true)} />
             </div>
         </div>
     )

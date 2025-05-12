@@ -71,3 +71,17 @@ export const deleteTrailer = async (trailerId) => {
         throw error;
     }
 };
+
+export const getTrailerForTransport = async () => {
+    try {
+        const data = await fetchWithAuth("/api/v1/trailers/list/", {
+            method: "GET"
+        });
+
+        console.log("Успешный ответ:", data);
+        return data;
+    } catch (error) {
+        console.error("Ошибка получения прицепов для транспорта:", error.message);
+        throw error;
+    }
+};

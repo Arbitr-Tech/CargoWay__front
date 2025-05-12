@@ -207,10 +207,6 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-bottom: 3rem;
-
-            &--hide {
-                display: none;
-            }
         }
     }
 

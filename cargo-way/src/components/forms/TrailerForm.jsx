@@ -62,7 +62,7 @@ const TrailerForm = ({ data, onChange }) => {
                                         type="radio"
                                         name="bodyType"
                                         value={option.name || ""}
-                                        checked={data.bodyType.includes(option.name)}
+                                        checked={data.bodyType === option.name}
                                         onChange={onChange}
                                     />
                                     {option.name}
@@ -79,7 +79,7 @@ const TrailerForm = ({ data, onChange }) => {
                                         type="radio"
                                         name="loadType"
                                         value={option.name || ""}
-                                        checked={data.loadType.includes(option.name)}
+                                        checked={data.loadType === option.name}
                                         onChange={onChange}
                                     />
                                     {option.name}
@@ -96,7 +96,7 @@ const TrailerForm = ({ data, onChange }) => {
                                         type="radio"
                                         name="unloadType"
                                         value={option.name || ""}
-                                        checked={data.unloadType.includes(option.name)}
+                                        checked={data.unloadType === option.name}
                                         onChange={onChange}
                                     />
                                     {option.name}

@@ -6,23 +6,27 @@ import { listStore } from "../../../stores/ListStore";
 import { useEffect, useState } from "react";
 import { toJS } from "mobx";
 import Pagination from "../../Pagination";
-import Popup from "../../Popup";
+import Popup from "../../popups/Popup";
 import { toast } from "react-toastify";
 import ListItems from "../../listsTemplates/ListItems";
+import { createResponse, getDetailsCargo } from "../../../api/cargoService";
+import { autoStore } from "../../../stores/AutoStore";
+import PopupWithChoice from "../../popups/PopupWithChange";
+import { userStore } from "../../../stores/UserStore";
 
 const SearchCargoPage = observer(() => {
-
-    const store = searchStore;
     const [isLoading, setIsLoading] = useState(false);
-    const role = localStorage.getItem('role');
-    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
+    const role = userStore.role;
+    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: ""});
+    const [cargoId, setCargoId] = useState('');
     const [hasSearched, setHasSearched] = useState(false);
+    const [popupChoice, setPopupChoice] = useState(false);
 
     useEffect(() => {
         return () => {
-            store.reset();
+            searchStore.reset();
         };
-    }, [store]);
+    }, [searchStore]);
 
     useEffect(() => {
         if (!hasSearched) {
@@ -45,14 +49,14 @@ const SearchCargoPage = observer(() => {
     const handleInputChange = ({ target: { name, value, valueAsNumber, type } }) => {
         if (type === 'number') {
             const val = Math.max(0, valueAsNumber || 0);
-            store.setFormData(name, val);
+            searchStore.setFormData(name, val);
         } else {
-            store.setFormData(name, value);
+            searchStore.setFormData(name, value);
         }
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value } }) => {
-        store.setNestedFormData(name, dataset.path, value);
+        searchStore.setNestedFormData(name, dataset.path, value);
     };
 
     const handleSearchClick = () => {
@@ -63,17 +67,26 @@ const SearchCargoPage = observer(() => {
         handleSearch(1);
     };
 
-    const handleDetailsClick = () => {
+    const handleDetailsClick = async (item) => {
         if (role === null) {
             openPopup("Необходимо авторизоваться, чтобы узнать детали заказа", "auth");
             return;
+        }
+
+        try {
+            const data = await getDetailsCargo(item.id);
+            openPopup(data.cargo, 'details');
+            setCargoId(item.id);
+        } catch (error) {
+            toast.error("Ошибка, попробуйте позже");
+            console.log(error);
         }
     };
 
     const handleSearch = async (page) => {
         try {
             setIsLoading(true);
-            const data = toJS(store.getFilledData());
+            const data = toJS(searchStore.getFilledData());
             listStore.setCurrentPage("FILTERS", page);
             await listStore.fetchCargoListByFilters(data, page);
             setHasSearched(true);
@@ -85,12 +98,42 @@ const SearchCargoPage = observer(() => {
         }
     };
 
-    const openPopup = (text, type, item) => {
-        setPopupData({ isOpen: true, text, type, item });
+    const openPopup = (text, type) => {
+        setPopupData({ isOpen: true, text, type});
     };
 
     const closePopup = () => {
-        setPopupData({ isOpen: false, text: "", type: "", item: null });
+        setPopupData({ isOpen: false, text: "", type: ""});
+    };
+
+    const loadTransportList = async (page = autoStore.getCurrentPage()) => {
+        try {
+            autoStore.setCurrentPage(page);
+            await autoStore.fetchTransportList(page);
+        } catch (error) {
+            console.error("Ошибка загрузки списка транспорта:", error);
+        };
+    };
+
+    const handleClickRespond = () => {
+        loadTransportList();
+        closePopup();
+        setPopupChoice(true);
+    };
+
+    const handleClickChoice = async(item) => {
+        try {
+            console.log(cargoId);
+            await createResponse(cargoId, item.id);
+            setPopupChoice(false);
+            toast.success('Отклик успешно отправлен');
+            setCargoId('');
+        } catch (error) {
+            console.error("Ошибка отклика:", error);
+            setPopupChoice(false);
+            setCargoId('');
+            toast.error('Произошла ошибка, попробуйте позже');
+        };
     };
 
     const showSearchResults = hasSearched && listStore.cargoLists.FILTERS.length > 0;
@@ -105,6 +148,16 @@ const SearchCargoPage = observer(() => {
                 text={popupData.text}
                 typePopup={popupData.type}
                 onClose={closePopup}
+                onRespond={handleClickRespond}
+            />
+            <PopupWithChoice
+                isOpen={popupChoice}
+                onClose={() => setPopupChoice(false)}
+                onClickChoice={(item) => handleClickChoice(item)}
+                list={autoStore.transportList}
+                onClickCurrentPage={autoStore.getCurrentPage()}
+                onClickTotalPages={autoStore.getTotalPages()}
+                onPageChange={(page) => loadTransportList(page)}
             />
             <motion.div className="searchPage__formBox"
                 initial={
@@ -122,11 +175,11 @@ const SearchCargoPage = observer(() => {
             >
                 <div className="searchPage__formBox-form">
                     <SearchForm
-                        data={store.formData}
+                        data={searchStore.formData}
                         onChange={handleInputChange}
                         onNestedChange={handleNestedInputChange}
                         onReset={() => {
-                            store.reset();
+                            searchStore.reset();
                             setHasSearched(false);
                         }}
                         onSearch={handleSearchClick}
@@ -139,7 +192,7 @@ const SearchCargoPage = observer(() => {
                 </div>
             ) : showSearchResults ? (
                 <div className="searchPage__list">
-                    <ListItems type="main" list={listStore.cargoLists.FILTERS} buttons={[{ label: "Узнать подробности", onClick: handleDetailsClick }]} />
+                    <ListItems type="main" list={listStore.cargoLists.FILTERS} buttons={[{ label: "Узнать подробности", onClick: (item) => handleDetailsClick(item) }]} />
                     <Pagination
                         currentPage={listStore.getCurrentPage("FILTERS")}
                         totalPages={listStore.getTotalPages("FILTERS")}

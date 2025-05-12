@@ -3,7 +3,7 @@ import FormGroup from "./FormGroup";
 import Select from 'react-select';
 import { useMask } from "@react-input/mask";
 
-const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage }) => {
+const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage, listDrivers, listTrailers }) => {
 
     const bodyType = [
         { id: 1, name: "Option 1" },
@@ -16,13 +16,6 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
         { id: 21, name: "Option 8" },
         { id: 34, name: "Option 9" },
         { id: 45, name: "Option 10" },
-    ];
-
-    const listDrivers = [
-        { id: "732edcbc-1cca-4822-8b07-b87d29daad8f", name: "Иванов Иван Иванович" },
-        { id: "8940dfcc-df80-41ba-8ac2-2fa807c5be9c", name: "Сергеев Сергей Сергеевич" },
-        { id: "2ff30e4e-b3e9-49bc-a613-56a60e85d8e5", name: "Петров Петр Петрович" },
-        { id: "ded5ee1c-8a7a-4ce5-bee7-3bae542d1100", name: "Остапенко Остап Остапов" },
     ];
 
     const [previewImages, setPreviewImages] = useState([null, null, null, null, null]);
@@ -196,7 +189,7 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                     >
                         <option value="" disabled>Выберите водителя</option>
                         {listDrivers.map((option) => (
-                            <option key={option.id} value={option.id}>{option.name}</option>
+                            <option key={option.id} value={option.id}>{option.fullName}</option>
                         ))}
                     </select>
                 </FormGroup>
@@ -223,8 +216,8 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                     </div>
                 </FormGroup>
                 <div className="autoForm__btnBox">
-                    <button className={`autoForm__btnBox-button ${typePage === 'edit' && autoEmbeddedTrailer ? 'autoForm__btnBox-button--hide' : ''}`} onClick={onClickButtonEmbeddedTrailer}>{autoEmbeddedTrailer ? 'Отменить' : 'Добавить встроенный прицеп'}</button>
-                    <button className={`autoForm__btnBox-button ${typePage === 'edit' && autoAdditionalTrailer ? 'autoForm__btnBox-button--hide' : ''}`} onClick={onClickButtonAdditionalTrailer}>{autoAdditionalTrailer ? 'Отменить' : 'Добавить дополнительный прицеп'}</button>
+                    <button className="autoForm__btnBox-button" onClick={onClickButtonEmbeddedTrailer}>{autoEmbeddedTrailer ? `Отменить${typePage === 'edit' ? ' изменения встроенного прицепа' : ''}` : typePage === 'edit' ? 'Изменить встроенный прицеп' : 'Добавить встроенный прицеп'}</button>
+                    <button className="autoForm__btnBox-button" onClick={onClickButtonAdditionalTrailer}>{autoAdditionalTrailer ? `Отменить${typePage === 'edit' ? ' изменения полуприцепа' : ''}` : typePage === 'edit' ? 'Изменить полуприцеп' : 'Добавить полуприцеп'}</button>
                 </div>
             </div>
             {autoEmbeddedTrailer ? <div className="autoForm__trailer">
@@ -346,13 +339,13 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                 </div>
             </div> : ''}
             {autoAdditionalTrailer ? <div className="autoForm__trailer autoForm__trailer--additional">
-                <h3 className="autoForm__trailer-label">Дополнительный прицеп</h3>
+                <h3 className="autoForm__trailer-label">Полуприцеп</h3>
                 <Select
                     styles={customStyles}
                     isMulti
-                    options={listDrivers.map(t => ({ value: t.id, label: t.name }))}
+                    options={listTrailers.map(t => ({ value: t.id, label: t.name }))}
                     value={data.trailersIds ? data.trailersIds.map(id => {
-                        const driver = listDrivers.find(d => d.id === id);
+                        const driver = listTrailers.find(d => d.id === id);
                         return driver
                             ? { value: driver.id, label: driver.name }
                             : { value: id.toString(), label: `Unknown (${id})` };

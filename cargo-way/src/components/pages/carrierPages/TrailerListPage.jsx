@@ -1,26 +1,25 @@
 import TopBar from "../../TopBar";
 import { useLocation, useNavigate } from "react-router-dom";
-import Popup from "../../Popup";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import Pagination from "../../Pagination";
 import { toast } from "react-toastify";
 import { trailerStore } from "../../../stores/TrailerStore";
 import TrailerList from "../../carrierLists/TrailerList";
-import { deleteTrailer, getDetailsTrailer } from "../../../api/trailerService";
+import { deleteTrailer } from "../../../api/trailerService";
+import Popup from "../../popups/Popup";
 
 const TrailerListPage = observer(() => {
-    const store = trailerStore;
     const navigate = useNavigate();
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(true);
     const [popupData, setPopupData] = useState({ isOpen: false, item: null });
 
-    const loadTrailerList = async (page = store.getCurrentPage()) => {
+    const loadTrailerList = async (page = trailerStore.getCurrentPage()) => {
         try {
             setIsLoading(true);
-            store.setCurrentPage(page);
-            await store.fetchTrailerList(page);
+            trailerStore.setCurrentPage(page);
+            await trailerStore.fetchTrailerList(page);
         } catch (error) {
             console.error("Ошибка загрузки списка прицепов:", error);
         } finally {
@@ -39,17 +38,6 @@ const TrailerListPage = observer(() => {
     useEffect(() => {
         loadTrailerList();
     }, [location.pathname]);
-
-    const handleEditClick = async (item) => {
-        try {
-            const data = await getDetailsTrailer(item.id);
-            store.setTrailerFormDataFromServer(item.id, data);
-            navigate('/trailer/edit');
-        } catch (error) {
-            console.log(error);
-            toast.error('Ошибка, попробуйте позже');
-        }
-    }
 
     const handleDeleteClick = async () => {
         try {
@@ -79,16 +67,16 @@ const TrailerListPage = observer(() => {
                     <div className="trailerPage__empty">
                         <p className="trailerPage__subtitle">Загрузка списка...</p>
                     </div>
-                ) : store.trailerList.length > 0 ? (
+                ) : trailerStore.trailerList.length > 0 ? (
                     <div className="trailerPage__content">
                         <TrailerList
-                            list={store.trailerList}
-                            onClickEdit={handleEditClick}
+                            list={trailerStore.trailerList}
+                            onClickEdit={(item) => {navigate(`/trailer/edit/${item.id}`)}}
                             onClickDelete={openPopup}
                         />
                         <Pagination
-                            currentPage={store.getCurrentPage()}
-                            totalPages={store.getTotalPages()}
+                            currentPage={trailerStore.getCurrentPage()}
+                            totalPages={trailerStore.getTotalPages()}
                             onPageChange={(page) => loadTrailerList(page)}
                         />
                     </div>

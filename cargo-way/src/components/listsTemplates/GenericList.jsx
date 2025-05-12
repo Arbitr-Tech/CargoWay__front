@@ -5,10 +5,11 @@ const GenericList = ({
     columns,
     headerClassName = '',
     itemClassName = '',
+    listClassName = '',
     getItemProps = (item) => item,
     ...listProps }) => {
     return (
-        <div className="genericList__result">
+        <div className={`genericList__result ${listClassName}`}>
             <div className={`genericList__result-header ${headerClassName}`}>
                 {columns.map((col) => (
                     <p

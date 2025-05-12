@@ -71,3 +71,17 @@ export const deleteDriver = async (driverId) => {
         throw error;
     }
 };
+
+export const getDriversForTransport = async () => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/drivers/list/`, {
+            method: "GET"
+        });
+
+        console.log("Успешный ответ:", data);
+        return data;
+    } catch (error) {
+        console.error("Ошибка получения водителей для транспорта:", error.message);
+        throw error;
+    }
+};

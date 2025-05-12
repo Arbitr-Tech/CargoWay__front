@@ -3,15 +3,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
 import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
-import Popup from "../../Popup";
 import TopBar from "../../TopBar";
 import { cargoStore } from "../../../stores/CargoStore";
 import ListItems from "../../listsTemplates/ListItems";
+import Popup from "../../popups/Popup";
+import { userStore } from "../../../stores/UserStore";
 
 const HistoryListPage = observer(() => {
     const navigate = useNavigate();
+    const role = userStore.role;
     const location = useLocation();
-    const storeCargo = cargoStore;
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +20,7 @@ const HistoryListPage = observer(() => {
         "content": [
             {
                 "id": "980bf2b4-26f6-4384-9fca-19de25e57e78",
-                "visibility": "DRAFT",
+                "visibilityStatus": "COMPLETED",
                 "startExecution": null,
                 "endExecution": null,
                 "orderCreatedAt": "2025-04-18T10:43:03.44185",
@@ -49,7 +50,7 @@ const HistoryListPage = observer(() => {
             },
             {
                 "id": "fca97c4f-5c56-46a8-a15b-0dcf405bfbe6",
-                "visibility": "DRAFT",
+                "visibilityStatus": "CANCELED",
                 "startExecution": null,
                 "endExecution": null,
                 "orderCreatedAt": "2025-04-18T10:43:05.137901",
@@ -117,6 +118,15 @@ const HistoryListPage = observer(() => {
     //     }
     // };
 
+    const getButtonsByStatus = (item) => {
+        if (role === "CUSTOMER") {
+            return [{ label: "Подробности", onClick: () => navigate(`/customer/info/history/${item.id}`) }];
+        } else {
+            return [{ label: "Подробности", onClick: () => navigate(`/carrier/info/history/${item.id}`) }];
+        }
+
+    };
+
     return (
         <div className="cargoList">
             <div className="container">
@@ -136,10 +146,7 @@ const HistoryListPage = observer(() => {
                 <ListItems
                     list={listTest.content}
                     type="myListCargo"
-                    buttons={[
-                        { label: "Удалить" },
-                        { label: "Посмотреть перевозчика" }
-                    ]}
+                    getButtons={getButtonsByStatus}
                 />
                 {/* ) : (
                     <p>У вас нет добавленных грузов.</p>

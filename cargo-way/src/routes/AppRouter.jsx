@@ -14,6 +14,8 @@ import DriverPostPage from '../components/pages/carrierPages/DriverPostPage';
 import DriverListPage from '../components/pages/carrierPages/DriverListPage';
 import TrailerPostPage from '../components/pages/carrierPages/TrailerPostPage';
 import TrailerListPage from '../components/pages/carrierPages/TrailerListPage';
+import InfoOrderPage from '../components/pages/InfoOrderPage';
+import RespondPage from '../components/pages/customerPages/RespondPage';
 
 const AppRouter = () => {
     return (
@@ -22,17 +24,27 @@ const AppRouter = () => {
             <Route path='/cargo/add' element={<CargoPostPage typePage='add'/>} />
             <Route path='/cargo/list/history' element={<HistoryListPage />} />
             <Route path='/cargo/list/active' element={<ActiveListPage />} />
-            <Route path='/cargo/edit' element={<CargoPostPage typePage='edit' />} />
+            <Route path='/cargo/edit/:id' element={<CargoPostPage typePage='edit' />} />
+
+            <Route path='/customer/info/active/:id' element={<InfoOrderPage typePage='customer_active'/>} />
+            <Route path='/customer/info/history/:id' element={<InfoOrderPage typePage='customer_history'/>} />
+
+            <Route path='/carrier/list/active' element={<ActiveListPage typePage="respond"/>} />
+            <Route path='/carrier/info/active/:id' element={<InfoOrderPage typePage='carrier_active'/>} />
+            <Route path='/carrier/info/history/:id' element={<InfoOrderPage typePage='carrier_history'/>} />
+            <Route path='/carrier/info/respond/:id' element={<InfoOrderPage typePage='carrier_biddings'/>} />
+
+            <Route path='/respond/:id' element={<RespondPage/>} />
             
             <Route path='/driver/list' element={<DriverListPage/>} />
             <Route path='/driver/add' element={<DriverPostPage typePage='add' />} />
-            <Route path='/driver/edit' element={<DriverPostPage typePage='edit' />} />
+            <Route path='/driver/edit/:id' element={<DriverPostPage typePage='edit' />} />
             <Route path='/trailer/list' element={<TrailerListPage />} />
             <Route path='/trailer/add' element={<TrailerPostPage typePage='add' />} />
-            <Route path='/trailer/edit' element={<TrailerPostPage typePage='edit' />} />
+            <Route path='/trailer/edit/:id' element={<TrailerPostPage typePage='edit' />} />
             <Route path='/auto/list' element={<AutoListPage />} />
             <Route path='/auto/add' element={<AutoPostPage typePage='add' />} />
-            <Route path='/auto/edit' element={<AutoPostPage typePage='edit' />} />
+            <Route path='/auto/edit/:id' element={<AutoPostPage typePage='edit' />} />
 
             <Route path='/reg' element={<RegistrationPage />} />
             <Route path='/auth' element={<AuthorizationPage />} />

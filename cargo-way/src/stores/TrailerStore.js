@@ -16,7 +16,6 @@ class TrailerStore {
     };
 
     originalTrailerFormData = {};
-    editingTrailerId = null;
 
     trailerList = [];
 
@@ -53,8 +52,7 @@ class TrailerStore {
         return this.page?.total ?? 1;
     }
 
-    setTrailerFormDataFromServer = (id, data) => {
-        this.editingTrailerId = id;
+    setTrailerFormDataFromServer = (data) => {
         this.originalTrailerFormData = data;
         this.trailerFormData = { ...data };
     }
@@ -84,7 +82,6 @@ class TrailerStore {
             height: 0,
             volume: 0
         };
-        this.editingTrailerId = null;
     }
 }
 

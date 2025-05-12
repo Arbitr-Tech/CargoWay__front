@@ -41,7 +41,7 @@ export const updateCargo = async (cargoId, updatedData) => {
 
 export const publishCargo = async (cargoId) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/publish`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/publish/`, {
             method: "PATCH"
         });
         return data;
@@ -53,7 +53,7 @@ export const publishCargo = async (cargoId) => {
 
 export const unpublishCargo = async (cargoId) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/draft`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/draft/`, {
             method: "PATCH"
         });
         return data;
@@ -90,12 +90,24 @@ export const getCargoByFiltres = async (formData, pageNumber) => {
 
 export const getCargoByCategory = async (category, pageNumber) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/general/?cargoCategory=${category}&pageNumber=1&pageSize=10`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/general/?cargoCategory=${category}&pageNumber=${pageNumber}&pageSize=5`, {
             method: "GET"
         })
         return data;
     } catch (error) {
         console.log("Ошибка получения общего списка: ", error);
+        throw error;
+    }
+};
+
+export const createResponse = async (cargoId, transportId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/transport/${transportId}/response/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка создания отклика: ", error);
         throw error;
     }
 };

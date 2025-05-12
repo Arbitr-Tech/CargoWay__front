@@ -3,16 +3,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
 import { deleteCargo, getDetailsCargo, publishCargo, unpublishCargo } from "../../../api/cargoService";
-import Popup from "../../Popup";
 import { cargoStore } from "../../../stores/CargoStore";
 import Pagination from "../../Pagination";
 import { toast } from "react-toastify";
 import ListItems from "../../listsTemplates/ListItems";
+import Popup from "../../popups/Popup";
 
 const GeneralListPage = observer(() => {
     const navigate = useNavigate();
     const location = useLocation();
-    const storeCargo = cargoStore;
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -83,14 +82,11 @@ const GeneralListPage = observer(() => {
     const handleEditClick = async (item) => {
         try {
             if (popupData.item && popupData.item.visibilityStatus === "PUBLISHED"){
-                item = popupData.item
-                console.log(popupData.item.id)
+                item = popupData.item;
                 await unpublishCargo(popupData.item.id);
                 closePopup();
             };
-            const data = await getDetailsCargo(item.id);
-            storeCargo.setCargoFormDataFromServer(item.id, data.cargo);
-            navigate('/cargo/edit');
+            navigate(`/cargo/edit/${item.id}`);
         } catch (error) {
             console.log(error);
         }
@@ -158,7 +154,7 @@ const GeneralListPage = observer(() => {
                 </div>
             ) : (
                 <div className="cargoList__empty">
-                    <p className="cargoList__empty-subtitle">У вас нет созданных грузов.</p>
+                    <p className="cargoList__empty-subtitle">У вас нет грузов без откликов</p>
                     <button className="cargoList__empty-button" onClick={() => navigate('/cargo/add')}>Перейти к созданию</button>
                 </div>
 
