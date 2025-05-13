@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { getCargoByCategory, getCargoByFiltres } from "../api/cargoService";
+import { getCargoByCategory, getCargoByFiltres, getCargoFromCarrier } from "../api/cargoService";
 import { getCargoListOfLatest } from "../api/commonService";
 
 class ListStore {
@@ -9,6 +9,8 @@ class ListStore {
         HISTORY: [],
         FILTERS: [],
         LATEST: [],
+        ACTIVE: [],
+        WAITING: []
     };
 
     pages = {
@@ -16,6 +18,8 @@ class ListStore {
         EXTERNAL: { current: 1, total: 1 },
         HISTORY: { current: 1, total: 1 },
         FILTERS: { current: 1, total: 1 },
+        ACTIVE: { current: 1, total: 1 },
+        WAITING: { current: 1, total: 1 }
     };
 
     constructor() {
@@ -35,6 +39,21 @@ class ListStore {
             console.error("Ошибка при получении списка грузов:", error);
         }
     }
+
+    async fetchCargoListFromCarrier(category, pageNumber) {
+        try {
+            const dataCargo = await getCargoFromCarrier(category, pageNumber);
+            console.log(dataCargo);
+            this.cargoLists[category] = dataCargo.content;
+            // console.log(this.cargoLists[category]);
+            this.pages[category] = {
+                current: dataCargo.pageNumber,
+                total: dataCargo.totalPages,
+            };
+        } catch (error) {
+            console.error("Ошибка при получении списка грузов:", error);
+        }
+    };
 
     async fetchCargoListByFilters(formData, pageNumber) {
         try {

@@ -185,7 +185,8 @@ const validateTrailerData = (data) => {
     const { name, trailerNumber, liftingCapacity, bodyType, loadType, unloadType, length, width, height, volume } = data;
 
     if (!name) errors.name = "Модель прицепа обязательна";
-    if (!trailerNumber || !/^[А-Я]{1}\d{3}[А-Я]{2}$/.test(trailerNumber)) errors.trailerNumber = "Номер прицепа обязателен и должен иметь формат А111АА";
+    if (!/^[АВЕКМНОРСТУХ]{2}\d{4}$/.test(trailerNumber)) errors.trailerNumber = "Введите корректный номер прицепа";
+    if (!trailerNumber) errors.trailerNumber = "Номер прицепа обязателен и должен иметь формат АА1111";
     if (!liftingCapacity) errors.liftingCapacity = "Укажите грузоподъемность";
     if (!bodyType) errors.bodyType = "Укажите тип кузова";
     if (!loadType) errors.loadType = "Укажите тип загрузки";

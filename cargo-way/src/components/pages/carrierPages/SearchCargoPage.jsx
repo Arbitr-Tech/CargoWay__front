@@ -17,7 +17,7 @@ import { userStore } from "../../../stores/UserStore";
 const SearchCargoPage = observer(() => {
     const [isLoading, setIsLoading] = useState(false);
     const role = userStore.role;
-    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: ""});
+    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "" });
     const [cargoId, setCargoId] = useState('');
     const [hasSearched, setHasSearched] = useState(false);
     const [popupChoice, setPopupChoice] = useState(false);
@@ -99,11 +99,11 @@ const SearchCargoPage = observer(() => {
     };
 
     const openPopup = (text, type) => {
-        setPopupData({ isOpen: true, text, type});
+        setPopupData({ isOpen: true, text, type });
     };
 
     const closePopup = () => {
-        setPopupData({ isOpen: false, text: "", type: ""});
+        setPopupData({ isOpen: false, text: "", type: "" });
     };
 
     const loadTransportList = async (page = autoStore.getCurrentPage()) => {
@@ -121,7 +121,7 @@ const SearchCargoPage = observer(() => {
         setPopupChoice(true);
     };
 
-    const handleClickChoice = async(item) => {
+    const handleClickChoice = async (item) => {
         try {
             console.log(cargoId);
             await createResponse(cargoId, item.id);
@@ -132,7 +132,11 @@ const SearchCargoPage = observer(() => {
             console.error("Ошибка отклика:", error);
             setPopupChoice(false);
             setCargoId('');
-            toast.error('Произошла ошибка, попробуйте позже');
+            if (error.message.includes("Запрос для данного заказа от текущего профиля был сделан")) {
+                toast.error('Вы уже откликнулись на этот заказ');
+            } else {
+                toast.error("Ошибка. Попробуйте еще раз позже.");
+            }
         };
     };
 
@@ -192,6 +196,7 @@ const SearchCargoPage = observer(() => {
                 </div>
             ) : showSearchResults ? (
                 <div className="searchPage__list">
+                    <h2 className="searchPage__list-title">Результаты поиска</h2>
                     <ListItems type="main" list={listStore.cargoLists.FILTERS} buttons={[{ label: "Узнать подробности", onClick: (item) => handleDetailsClick(item) }]} />
                     <Pagination
                         currentPage={listStore.getCurrentPage("FILTERS")}
@@ -201,6 +206,7 @@ const SearchCargoPage = observer(() => {
                 </div>
             ) : showInitialList ? (
                 <div className="searchPage__list">
+                    <h2 className="searchPage__list-title">Последние заказы от грузоотправителей</h2>
                     <ListItems
                         type="main"
                         list={listStore.cargoLists.LATEST}

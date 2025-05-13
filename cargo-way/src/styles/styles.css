@@ -832,6 +832,10 @@ input[type=date]::-webkit-datetime-edit {
 .searchPage__list {
   width: 100%;
 }
+.searchPage__list-title {
+  color: #ffffff;
+  text-align: center;
+}
 
 .driverList__result-header {
   grid-template-columns: repeat(5, 1fr);
@@ -2372,6 +2376,11 @@ input[type=date]::-webkit-datetime-edit {
 }
 .info__btnBox-button:hover {
   transform: scale(1.05);
+}
+.info__btnBox-button:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+  transform: scale(1);
 }
 .info--biddings {
   width: 40%;

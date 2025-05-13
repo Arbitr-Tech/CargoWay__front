@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const InfoAboutOrder = ({ name, description, volume, weight, length, width, height, from, to, bodyType, loadType, unloadType, price, typePay, readyDate, deliveryDate, typePage, carrier, transport, customer, disabled, onClickCancel, onClickConfirm }) => {
+const InfoAboutOrder = ({ name, description, volume, weight, length, width, height, from, to, bodyType, loadType, unloadType, price, typePay, readyDate, deliveryDate, typePage, carrier, transport, customer, disabled, disabledFromCarrier, onClickCancel, onClickEnd }) => {
     return (
         <div className={`info ${typePage === 'customer_biddings' ? 'info--biddings' : ''}`}>
             {(typePage === 'customer_biddings') && (
@@ -58,7 +58,7 @@ const InfoAboutOrder = ({ name, description, volume, weight, length, width, heig
             {(typePage === "customer_active") && (
                 <div className="info__btnBox">
                     <button className="info__btnBox-button" onClick={onClickCancel}>Отменить</button>
-                    <button className="info__btnBox-button" onClick={onClickConfirm} disabled={disabled}>Подтвердить завершение</button>
+                    <button className="info__btnBox-button" disabled={disabled} onClick={onClickEnd}>Подтвердить завершение</button>
                 </div>
             )}
             {(typePage === "customer_biddings" || typePage === "carrier_biddings") && (
@@ -69,13 +69,9 @@ const InfoAboutOrder = ({ name, description, volume, weight, length, width, heig
             {(typePage === "carrier_active") && (
                 <div className="info__btnBox">
                     <button className="info__btnBox-button" onClick={onClickCancel}>Отменить</button>
-                    <button className="info__btnBox-button" onClick={onClickConfirm} disabled={disabled}>Завершить</button>
+                    <button className="info__btnBox-button" onClick={onClickEnd} disabled={disabledFromCarrier}>Завершить</button>
                 </div>
             )}
-            {/* <div className="info__btnBox">
-                <button className="info__btnBox-button">Отменить</button>
-                <button className="info__btnBox-button">Завершить</button>
-            </div> */}
         </div>
     )
 };

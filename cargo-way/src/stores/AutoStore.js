@@ -205,7 +205,6 @@ class AutoStore {
         this.autoEmbeddedTrailer = false;
         this.autoAdditionalTrailers = false;
     }
-
 };
 
 export const autoStore = new AutoStore();

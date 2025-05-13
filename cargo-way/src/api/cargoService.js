@@ -111,3 +111,68 @@ export const createResponse = async (cargoId, transportId) => {
         throw error;
     }
 };
+
+export const getCargoFromCarrier = async (category, pageNumber) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/carrier/general/?cargoCategory=${category}&pageNumber=${pageNumber}&pageSize=5`, {
+            method: "GET"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка получения списка грузов для перевозчика: ", error);
+        throw error;
+    }
+};
+
+export const cancelResponseByCarrier = async (cargoId, responseId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/response/${responseId}/cancel/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка отмены отклика: ", error);
+        throw error;
+    }
+};
+
+export const choiceCarrier = async (cargoId, responseId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/response/${responseId}/accept/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка принятия отклика: ", error);
+        throw error;
+    }
+};
+
+export const endResponseByCarrier = async (cargoId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/endExecution/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка завершения отклика: ", error);
+        throw error;
+    }
+};
+
+export const endResponseByCustomer = async (cargoId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/endExecution/confirm/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка завершения отклика: ", error);
+        throw error;
+    }
+};
+
+// ### Подтвердить запрос на завершение исполнения заказа
+// POST {{cargoUrl}}/{{cargo_order_id}}/endExecution/confirm/
+// Authorization: Bearer {{access_token}}
+// Accept: application/json

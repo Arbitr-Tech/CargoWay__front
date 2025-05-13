@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
 import TopBar from "../../TopBar";
 import ListItems from "../../listsTemplates/ListItems";
 import { userStore } from "../../../stores/UserStore";
@@ -12,150 +11,25 @@ const ActiveListPage = observer(({ typePage = "active" }) => {
     const navigate = useNavigate();
     const role = userStore.role;
     const location = useLocation();
-    const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
     const [isLoading, setIsLoading] = useState(true);
 
-    const listTestCarrier = {
-        "content": [
-            {
-                "id": "980bf2b4-26f6-4384-9fca-19de25e57e78",
-                "visibilityStatus": "IN_PROGRESS",
-                "startExecution": null,
-                "endExecution": null,
-                "orderCreatedAt": "2025-04-18T10:43:03.44185",
-                "orderUpdatedAt": null,
-                "cargo": {
-                    "name": "Box",
-                    "description": "Большая коробка",
-                    "weight": 10,
-                    "volume": 100,
-                    "loadType": "Задняя",
-                    "unloadType": "Задняя",
-                    "bodyType": "Тент",
-                    "dimensions": {
-                        "length": 10,
-                        "width": 5,
-                        "height": 20
-                    },
-                    "route": {
-                        "from": "New York",
-                        "to": "Los Angeles"
-                    },
-                    "price": 99.99,
-                    "typePay": "НДС",
-                    "readyDate": "2025-05-22",
-                    "deliveryDate": "2025-06-01"
-                }
-            },
-            {
-                "id": "fca97c4f-5c56-46a8-a15b-0dcf405bfbe6",
-                "visibilityStatus": "IN_PROGRESS",
-                "startExecution": null,
-                "endExecution": null,
-                "orderCreatedAt": "2025-04-18T10:43:05.137901",
-                "orderUpdatedAt": null,
-                "cargo": {
-                    "name": "Box",
-                    "description": "Большая коробка",
-                    "weight": 10,
-                    "volume": 100,
-                    "loadType": "Задняя",
-                    "unloadType": "Задняя",
-                    "bodyType": "Тент",
-                    "dimensions": {
-                        "length": 10,
-                        "width": 5,
-                        "height": 20
-                    },
-                    "route": {
-                        "from": "New York",
-                        "to": "Los Angeles"
-                    },
-                    "price": 99.99,
-                    "typePay": "НДС",
-                    "readyDate": "2025-05-22",
-                    "deliveryDate": "2025-06-01"
-                }
-            }
-        ],
-        "pageNumber": 0,
-        "pageSize": 10,
-        "totalPages": 1
-    }
+    const getListType = () => {
+        if (role === "CUSTOMER") return "EXTERNAL";
+        return typePage === "active" ? "ACTIVE" : "WAITING";
+    };
 
-    const listTestCarrierRespond = {
-        "content": [
-            {
-                "id": "980bf2b4-26f6-4384-9fca-19de25e57e78",
-                "visibilityStatus": "BIDDING",
-                "startExecution": null,
-                "endExecution": null,
-                "orderCreatedAt": "2025-04-18T10:43:03.44185",
-                "orderUpdatedAt": null,
-                "cargo": {
-                    "name": "Box",
-                    "description": "Большая коробка",
-                    "weight": 10,
-                    "volume": 100,
-                    "loadType": "Задняя",
-                    "unloadType": "Задняя",
-                    "bodyType": "Тент",
-                    "dimensions": {
-                        "length": 10,
-                        "width": 5,
-                        "height": 20
-                    },
-                    "route": {
-                        "from": "New York",
-                        "to": "Los Angeles"
-                    },
-                    "price": 99.99,
-                    "typePay": "НДС",
-                    "readyDate": "2025-05-22",
-                    "deliveryDate": "2025-06-01"
-                }
-            },
-            {
-                "id": "fca97c4f-5c56-46a8-a15b-0dcf405bfbe6",
-                "visibilityStatus": "BIDDING",
-                "startExecution": null,
-                "endExecution": null,
-                "orderCreatedAt": "2025-04-18T10:43:05.137901",
-                "orderUpdatedAt": null,
-                "cargo": {
-                    "name": "Box",
-                    "description": "Большая коробка",
-                    "weight": 10,
-                    "volume": 100,
-                    "loadType": "Задняя",
-                    "unloadType": "Задняя",
-                    "bodyType": "Тент",
-                    "dimensions": {
-                        "length": 10,
-                        "width": 5,
-                        "height": 20
-                    },
-                    "route": {
-                        "from": "New York",
-                        "to": "Los Angeles"
-                    },
-                    "price": 99.99,
-                    "typePay": "НДС",
-                    "readyDate": "2025-05-22",
-                    "deliveryDate": "2025-06-01"
-                }
-            }
-        ],
-        "pageNumber": 0,
-        "pageSize": 10,
-        "totalPages": 1
-    }
-
-    const loadCargoListActive = async (page = listStore.getCurrentPage("EXTERNAL")) => {
+    const loadCargoList = async (page = listStore.getCurrentPage(getListType())) => {
         try {
             setIsLoading(true);
-            listStore.setCurrentPage("EXTERNAL", page);
-            await listStore.fetchCargoList("EXTERNAL", page);
+
+            const listType = getListType();
+
+            listStore.setCurrentPage(listType, page);
+
+            await (role === "CUSTOMER"
+                ? listStore.fetchCargoList(listType, page)
+                : listStore.fetchCargoListFromCarrier(listType, page));
+
         } catch (error) {
             console.error("Ошибка загрузки списка грузов:", error);
         } finally {
@@ -164,17 +38,8 @@ const ActiveListPage = observer(({ typePage = "active" }) => {
     };
 
     useEffect(() => {
-        if (role === "CUSTOMER") {
-            loadCargoListActive();
-        }
+        loadCargoList();
     }, [location.pathname]);
-
-    // const handleInfoClick = (item) => {
-    //     store.setCargoFormDataFromServer(item.id, item.cargo);
-    //     // console.log(store.cargoFormData)
-    //     // navigate("/customer/info/active");
-
-    // };
 
     const getButtonsByStatus = (item) => {
         if (item.visibilityStatus === "IN_PROGRESS") {
@@ -197,29 +62,36 @@ const ActiveListPage = observer(({ typePage = "active" }) => {
             <div className="container">
                 <TopBar />
                 <h2 className="cargoList__title">{`${typePage === "active" ? "Активные" : "Ждут ответа"}`}</h2>
-                {/* {isLoading ? (
-                    <p>Загрузка списка...</p>
-                ) : listStore.listCargo.length > 0 ? ( */}
-                {typePage === "active" ?
+                {isLoading ? (
+                    <div className="cargoList__empty">
+                        <p className="cargoList__subtitle">Загрузка списка...</p>
+                    </div>
+                ) : listStore.cargoLists[getListType()].length > 0 ? (
                     <div className="cargoList__content">
-                        <ListItems
-                            list={role === "CUSTOMER" ? listStore.cargoLists.EXTERNAL : listTestCarrier.content}
-                            type={role === "CUSTOMER" ? "myListCargo" : "main"}
-                            getButtons={getButtonsByStatus}
-                        />
+                        {typePage === "active" ?
+                            <ListItems
+                                list={role === "CUSTOMER" ? listStore.cargoLists.EXTERNAL : listStore.cargoLists.ACTIVE}
+                                type={role === "CUSTOMER" ? "myListCargo" : "main"}
+                                getButtons={getButtonsByStatus}
+                            />
+                            :
+                            <ListItems
+                                list={listStore.cargoLists[getListType()]}
+                                type="main"
+                                getButtons={getButtonsByStatus}
+                            />
+                        }
                         <Pagination
-                        currentPage={role === "CUSTOMER" ? listStore.getCurrentPage("EXTERNAL") : '!!!!listTestCarrier.content'}
-                        totalPages={role === "CUSTOMER" ? listStore.getTotalPages("EXTERNAL") : '!!!!listTestCarrier.content'}
-                        onPageChange={(page) =>{ role === "CUSTOMER" ? loadCargoListActive(page) : console.log('!!!page')}}
+                            currentPage={listStore.getCurrentPage(getListType())}
+                            totalPages={listStore.getTotalPages(getListType())}
+                            onPageChange={(page) => { loadCargoList(page) }}
                         />
                     </div>
-                    :
-                    <ListItems
-                        list={listTestCarrierRespond.content}
-                        type="main"
-                        getButtons={getButtonsByStatus}
-                    />
-                }
+                ) : (
+                    <div className="cargoList__empty">
+                        <p className="cargoList__empty-subtitle">Список пуст</p>
+                    </div>
+                )}
             </div>
         </div>
     );

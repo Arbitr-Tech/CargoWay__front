@@ -17,7 +17,7 @@ const TrailerForm = ({ data, onChange }) => {
     ];
 
     const inputTrailerNumberMask = useMask({
-        mask: 'A___AA',
+        mask: 'AA____',
         replacement: {
             A: /[А-Яа-я]/,
             _: /\d/
@@ -40,7 +40,7 @@ const TrailerForm = ({ data, onChange }) => {
                         type="text"
                         name="trailerNumber"
                         value={data.trailerNumber || ""}
-                        placeholder="Номер прицепа (A111AA)"
+                        placeholder="Номер прицепа (AA1111)"
                         ref={inputTrailerNumberMask}
                         onChange={onChange}
                     />

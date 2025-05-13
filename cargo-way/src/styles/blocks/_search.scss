@@ -276,6 +276,11 @@
 
     &__list {
         width: 100%;
+
+        &-title {
+            color: v.$font-light-color; 
+            text-align: center;
+        }
     }
 
 }

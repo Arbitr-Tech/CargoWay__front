@@ -62,6 +62,12 @@
 
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
+
+            &:disabled {
+                cursor: not-allowed;
+                background-color: #ccc;
+                transform: scale(1);
+            }
         }
     }
 

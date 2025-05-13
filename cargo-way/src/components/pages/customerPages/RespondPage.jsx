@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { listStore } from "../../../stores/ListStore";
-import { changeStatusCargo, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
+import { changeStatusCargo, choiceCarrier, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
 import TopBar from "../../TopBar";
 import { cargoStore } from "../../../stores/CargoStore";
 import ListItems from "../../listsTemplates/ListItems";
@@ -10,11 +10,14 @@ import InfoAboutOrder from "../../InfoAboutOrder";
 import ListCarrier from "../../listsTemplates/ListCarrier";
 import Popup from "../../popups/Popup";
 import { getDetailsTransport } from "../../../api/autoService";
+import { toast } from "react-toastify";
+import { responseStore } from "../../../stores/ResponseStore";
 
 const RespondPage = observer(() => {
     const location = useLocation();
     const param = useParams();
     const id = param.id;
+    const navigate = useNavigate();
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +25,8 @@ const RespondPage = observer(() => {
         async function getData() {
             const data = await getDetailsCargo(id);
             cargoStore.setCargoFormDataFromServer(data.cargo);
-            cargoStore.responses = data.responses;
+            delete data.cargo;
+            responseStore.setResponseFormDataFromServer(data);
         };
         getData();
     }, [location.pathname]);
@@ -30,6 +34,7 @@ const RespondPage = observer(() => {
     useEffect(() => {
         return () => {
             cargoStore.resetFormData();
+            responseStore.resetFormData();
         };
     }, []);
 
@@ -44,8 +49,19 @@ const RespondPage = observer(() => {
     const handleClickSee = async (item) => {
         try {
             const data = await getDetailsTransport(item.transportDetails.id);
-            console.log(data);
+            openPopup({type: 'detailsTransport', item: data});
         } catch (error) {
+            console.log(error);
+        };
+    };
+
+    const handleClickChoice = async (item) => {
+        try {
+            await choiceCarrier(id, item.id);
+            toast.success("Перевозчик принят");
+            navigate("/cargo/list/active");
+        } catch (error) {
+            toast.error("Ошибка, попробуйте позже");
             console.log(error);
         };
     };
@@ -53,12 +69,12 @@ const RespondPage = observer(() => {
     return (
         <div className="respondPage">
             <div className="container">
-                {/* <Popup
+                <Popup
                     isOpen={popupData.isOpen}
-                    text={popupData.item ? popupData.item : popupData.text}
+                    text={popupData.item !== null ? popupData.item : popupData.text}
                     typePopup={popupData.type}
                     onClose={closePopup}
-                /> */}
+                />
                 <TopBar />
                 <div className="respondPage__inner">
                     <InfoAboutOrder
@@ -71,9 +87,9 @@ const RespondPage = observer(() => {
                         height={cargoStore.cargoFormData.dimensions.height}
                     />
                     <ListCarrier
-                        listCarrier={cargoStore.responses}
+                        listCarrier={responseStore.response.responses}
                         onClickSee={(item) => handleClickSee(item)}
-                        // onClickSee={(item) => openPopup({ type: 'details', item: item.transportDetails })}
+                        onClickAccept={(item) => handleClickChoice(item)}
                     />
                 </div>
             </div>

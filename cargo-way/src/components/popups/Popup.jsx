@@ -25,11 +25,19 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
         photos: "Фото груза",
         brand: "Марка",
         model: "Модель",
-        year: "Год выпуска",
+        manufactureYear: "Год выпуска",
         transportNumber: "Номер транспорта",
         trailerDetails: "Детали прицепа",
         trailerNumber: "Номер прицепа",
         liftingCapacity: "Грузоподъемность",
+        driver: "Водитель",
+        fullName: "ФИО",
+        licenseCategory: "Категория ВУ",
+        licenseNumber: "Номер ВУ",
+        issueDate: "Дата выдачи ВУ",
+        expirationDate: "Дата окончания ВУ",
+        embeddedTrailer: "Встроенный прицеп",
+        trailers: "Полуприцеп",
     };
 
     const renderText = (data) => {
@@ -37,14 +45,17 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
 
         const renderEntries = (obj) => (
             <ul className="popup__text-list">
-                {Object.entries(obj || {}).map(([key, value]) => (
-                    <li key={key} className="popup__text-item">
-                        <span className="popup__text-title">
-                            {fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:
-                        </span>
-                        {value && typeof value === "object" ? renderEntries(value) : ` ${value}`}
-                    </li>
-                ))}
+                {Object.entries(obj || {})
+                    .filter(([key]) => key !== 'id')
+                    .map(([key, value]) => (
+                        <li key={key} className="popup__text-item">
+                            <span className="popup__text-title">
+                                {fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:
+                            </span>
+                            {value && typeof value === "object" ? (value.length === 0 ? 'Отсутсвует' : renderEntries(value)) : (value === null) ? 'Отсутсвует' : ` ${value}`}
+                        </li>
+
+                    ))}
             </ul>
         );
 
@@ -59,9 +70,9 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
                     <img src="/assets/img/close.svg" alt="close" onClick={onClose} />
                 </div>
                 <div className="popup__text">
-                    {typePopup === 'details' ? renderText(text) : text}
+                    {(typePopup === 'details' || typePopup === 'detailsTransport') ? renderText(text) : text}
                 </div>
-                {(typePopup !== 'details' && typePopup !== 'auth') && (
+                {(typePopup !== 'details' && typePopup !== 'auth' && typePopup !== 'detailsTransport') && (
                     <div className="popup__buttons">
                         <button className="popup__button" onClick={onConfirm}>Подтвердить</button>
                         <button className="popup__button" onClick={onClose}>Отменить</button>

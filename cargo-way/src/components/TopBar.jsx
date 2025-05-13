@@ -94,7 +94,7 @@ const TopBar = () => {
         }
     ];
 
-    const currentMenu = role === "CARRIER" ? carrierMenu : customerMenu;
+    const currentMenu = role === "CARRIER" ? carrierMenu : role === "CUSTOMER" ? customerMenu : [carrierMenu[0]];
 
     return (
         <div className="topbar">

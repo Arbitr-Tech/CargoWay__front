@@ -1,11 +1,40 @@
-// import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
+import { getDetailsCargo } from "../api/cargoService";
 
-// class ResponseStore {
-//     responses = [];
+class ResponseStore {
+    response = {
+        endExecution: "",
+        executor: {},
+        id: "",
+        orderCreatedAt: "",
+        orderUpdatedAt: "",
+        owner: {},
+        responses: [],
+        startExecution: "",
+        visibilityStatus: ""
+    };
 
-//     constructor() {
-//         makeAutoObservable(this)
-//     };
-// }
+    constructor() {
+        makeAutoObservable(this)
+    };
 
-// export const responseStore = new ResponseStore();
+    setResponseFormDataFromServer = async (data) => {
+        this.response = { ...data };
+    }
+
+    resetFormData = () => {
+        this.response = {
+            endExecution: "",
+            executor: {},
+            id: "",
+            orderCreatedAt: "",
+            orderUpdatedAt: "",
+            owner: {},
+            responses: [],
+            startExecution: "",
+            visibilityStatus: ""
+        };
+    }
+}
+
+export const responseStore = new ResponseStore();

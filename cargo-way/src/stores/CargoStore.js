@@ -26,7 +26,6 @@ class CargoStore {
     };
 
     originalCargoFormData = {};
-    responses = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -88,7 +87,6 @@ class CargoStore {
             unloadType: "",
             // photos: []
         };
-        this.responses = [];
     }
 }
 
