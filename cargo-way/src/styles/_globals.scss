@@ -8,6 +8,7 @@ body {
     align-items: center;
     margin: 0;
     overflow-x: hidden;
+    position: relative;
 }
 
 input[type="date"]::-webkit-datetime-edit {

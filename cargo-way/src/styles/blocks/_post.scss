@@ -326,6 +326,41 @@
         @include m.button(v.$active-color, v.$font-light-color);
         margin-top: 5rem;
     }
+
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 3rem;
+        left: 7rem;
+        width: 39rem;
+        height: 25rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(141deg);
+        border-radius: 81% 19% 42% 58% / 46% 73% 27% 54%;
+    }
+
+    &::before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 27rem;
+        left: 55rem;
+        width: 34rem;
+        height: 22rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(141deg);
+        border-radius: (14% 13% 50% 37%/15% 13% 93% 71%);
+
+        @include m.laptop {
+            top: 7rem;
+            left: 40rem;
+            width: 24rem;
+            height: 14rem;
+        }
+    }
 }
 
 .driver__content {
@@ -334,4 +369,14 @@
 
 .driverForm {
     max-width: 50%;
+
+    &__categories {
+        @include m.laptop {
+            width: 70%;
+        }
+    }
+
+    @include m.mobile {
+        font-size: 0.8rem;
+    }
 }

@@ -271,6 +271,33 @@
     }
 }
 
+#main {
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 10rem;
+        left: 4rem;
+        width: 48rem;
+        height: 30rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(0deg);
+        border-radius: 40% 103% 103% 30%/79% 94% 47% 61%;
+
+        @include m.laptop {
+            top: 13rem;
+            left: 3rem;
+            width: 37rem;
+            height: 23rem;
+        }
+    }
+
+    &::before {
+        display: none;
+    }
+}
+
 @keyframes moveTruck {
     0% {
         right: -25rem;

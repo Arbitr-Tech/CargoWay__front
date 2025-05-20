@@ -16,6 +16,7 @@
     "react-input-mask": "^3.0.0-alpha.2",
     "react-scripts": "^5.0.1",
     "react-select": "^5.10.1",
+    "react-simple-star-rating": "^5.1.7",
     "react-toastify": "^11.0.3"
   },
   "scripts": {

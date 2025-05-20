@@ -121,7 +121,7 @@ const GeneralListPage = observer(() => {
     };
 
     return (
-        <div className="cargoList">
+        <div className="cargoList" id="main">
             <Popup
                 isOpen={popupData.isOpen}
                 text={popupData.text}

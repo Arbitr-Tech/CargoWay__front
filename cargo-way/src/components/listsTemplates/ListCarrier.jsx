@@ -1,6 +1,6 @@
 import ItemCarrier from "./ItemCarrier";
 
-const ListCarrier = ({ listCarrier = [], onClickSee, onClickAccept }) => {
+const ListCarrier = ({ listCarrier = [], onClickSee, onClickAccept, onClickProfile }) => {
     return (
         <div className="listCarrier" >
             <h2 className="listCarrier__title">Отклики</h2>
@@ -11,6 +11,7 @@ const ListCarrier = ({ listCarrier = [], onClickSee, onClickAccept }) => {
                         desc={item.responderDetails.userRating}
                         onClickSee={() => onClickSee(item)}
                         onClickAccept={() => onClickAccept(item)}
+                        onClickProfile={() => onClickProfile(item)}
                     />
                 ))}
             </div>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import TopBar from "../../TopBar";
-import ListItems from "../../listsTemplates/ListItems";
-import { userStore } from "../../../stores/UserStore";
-import { listStore } from "../../../stores/ListStore";
-import Pagination from "../../Pagination";
+import TopBar from "../TopBar";
+import ListItems from "../listsTemplates/ListItems";
+import { userStore } from "../../stores/UserStore";
+import { listStore } from "../../stores/ListStore";
+import Pagination from "../Pagination";
 
 const ActiveListPage = observer(({ typePage = "active" }) => {
     const navigate = useNavigate();

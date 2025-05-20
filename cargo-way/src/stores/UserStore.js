@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { getProfileData } from "../api/profileService";
 
 class UserStore {
     role = localStorage.getItem('role') || '';
@@ -12,6 +13,7 @@ class UserStore {
         individual: null,
         contactData: null,
     };
+    id = '';
 
     originalUserFormData = {};
 
@@ -26,13 +28,13 @@ class UserStore {
             localStorage.setItem('role', newRole);
         }
         this.role = newRole;
-    }
+    };
 
     setUserFormData(data) {
         this.originalUserFormData = data;
         this.userFormData = { ...data };
         this.setRole(this.originalUserFormData.userData.role);
-    }
+    };
 
     getUpdatedFields = () => {
         const updatedFields = {};
@@ -56,11 +58,11 @@ class UserStore {
         });
 
         return updatedFields;
-    }
+    };
 
     setFieldsData = (name, value) => {
         this.userFormData = { ...this.userFormData, [name]: value }
-    }
+    };
 
 
     setNestedFieldsData = (formName, secondName, newData) => {
@@ -71,11 +73,20 @@ class UserStore {
                 [secondName]: newData
             }
         };
-    }
+    };
+
+    // fetchId = async() => {
+    //     try {
+    //         const data = await getProfileData();
+    //         this.id = data.id;
+    //     } catch (error) {
+    //         console.error("Ошибка при получении id:", error);
+    //     };
+    // };
 
     reset = () => {
-        this.userFormData = {...this.originalUserFormData}
-    }
+        this.userFormData = { ...this.originalUserFormData }
+    };
 
 }
 

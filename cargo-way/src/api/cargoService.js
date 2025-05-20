@@ -11,7 +11,7 @@ export const addCargo = async (formData) => {
         return data;
     } catch (error) {
         console.error("Ошибка создания груза:", error.message);
-        throw error; // Прокидываем ошибку дальше
+        throw error;
     }
 };
 
@@ -124,14 +124,26 @@ export const getCargoFromCarrier = async (category, pageNumber) => {
     }
 };
 
-export const cancelResponseByCarrier = async (cargoId, responseId) => {
+export const cancelResponseByCarrier = async (cargoId) => {
     try {
-        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/response/${responseId}/cancel/`, {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/response/cancel/`, {
             method: "POST"
         })
         return data;
     } catch (error) {
         console.log("Ошибка отмены отклика: ", error);
+        throw error;
+    }
+};
+
+export const cancelOrder = async (cargoId) => {
+    try {
+        const data = await fetchWithAuth(`/api/v1/cargos/${cargoId}/cancel/`, {
+            method: "POST"
+        })
+        return data;
+    } catch (error) {
+        console.log("Ошибка отмены заказа: ", error);
         throw error;
     }
 };

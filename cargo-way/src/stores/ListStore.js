@@ -79,7 +79,24 @@ class ListStore {
     }
 
     resetLatestCargo() {
-        this.cargoLists.LATEST = [];
+        this.cargoLists = {
+            INTERNAL: [],
+            EXTERNAL: [],
+            HISTORY: [],
+            FILTERS: [],
+            LATEST: [],
+            ACTIVE: [],
+            WAITING: []
+        };
+
+        this.pages = {
+            INTERNAL: { current: 1, total: 1 },
+            EXTERNAL: { current: 1, total: 1 },
+            HISTORY: { current: 1, total: 1 },
+            FILTERS: { current: 1, total: 1 },
+            ACTIVE: { current: 1, total: 1 },
+            WAITING: { current: 1, total: 1 }
+        };
     }
 
     getCurrentPage(category) {
@@ -87,7 +104,7 @@ class ListStore {
     }
 
     setCurrentPage(category, page) {
-        this.pages[category] = {...this.pages[category], current: page};
+        this.pages[category] = { ...this.pages[category], current: page };
     }
 
     getTotalPages(category) {

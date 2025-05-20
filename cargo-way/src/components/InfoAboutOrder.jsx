@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const InfoAboutOrder = ({ name, description, volume, weight, length, width, height, from, to, bodyType, loadType, unloadType, price, typePay, readyDate, deliveryDate, typePage, carrier, transport, customer, disabled, disabledFromCarrier, onClickCancel, onClickEnd }) => {
+const InfoAboutOrder = ({ name, description, volume, weight, length, width, height, from, to, bodyType, loadType, unloadType, price, typePay, readyDate, deliveryDate, typePage, carrier, transport, customer, disabled, disabledFromCarrier, onClickCancel, onClickEnd, idCarrier, idCustomer, onClickAuto }) => {
     return (
         <div className={`info ${typePage === 'customer_biddings' ? 'info--biddings' : ''}`}>
             {(typePage === 'customer_biddings') && (
@@ -47,12 +47,12 @@ const InfoAboutOrder = ({ name, description, volume, weight, length, width, heig
             </div>
             {(typePage === 'customer_active' || typePage === 'customer_history') ?
                 <div className="info__content">
-                    <div className="info__inner-item">Исполнитель: <span><Link>{carrier}</Link></span></div>
-                    <div className="info__inner-item">Транспорт: <span><Link>{transport}</Link></span></div>
+                    <div className="info__inner-item">Исполнитель: <span><Link to={`/userProfile/${idCarrier}`}>{carrier}</Link></span></div>
+                    <div className="info__inner-item" onClick={onClickAuto}>Транспорт: <span><Link>{transport}</Link></span></div>
                 </div> :
                 (typePage !== 'customer_biddings') &&
                 (<div className="info__content">
-                    <div className="info__inner-item">Заказчик: <span><Link>{customer}</Link></span></div>
+                    <div className="info__inner-item">Заказчик: <span><Link to={`/userProfile/${idCustomer}`}>{customer}</Link></span></div>
                 </div>)
             }
             {(typePage === "customer_active") && (
@@ -61,14 +61,20 @@ const InfoAboutOrder = ({ name, description, volume, weight, length, width, heig
                     <button className="info__btnBox-button" disabled={disabled} onClick={onClickEnd}>Подтвердить завершение</button>
                 </div>
             )}
-            {(typePage === "customer_biddings" || typePage === "carrier_biddings") && (
+            {(typePage === "carrier_biddings") && (
                 <div className="info__btnBox">
                     <button className="info__btnBox-button" onClick={onClickCancel}>Отменить</button>
                 </div>
             )}
+            {(typePage === "customer_biddings") && (
+                <div className="info__btnBox">
+                    <button className="info__btnBox-button" onClick={onClickEnd}>Удалить</button>
+                    <button className="info__btnBox-button" onClick={onClickCancel}>Снять с публикации</button>
+                </div>
+            )}
             {(typePage === "carrier_active") && (
                 <div className="info__btnBox">
-                    <button className="info__btnBox-button" onClick={onClickCancel}>Отменить</button>
+                    <button className="info__btnBox-button" onClick={onClickCancel} disabled={disabledFromCarrier}>Отменить</button>
                     <button className="info__btnBox-button" onClick={onClickEnd} disabled={disabledFromCarrier}>Завершить</button>
                 </div>
             )}

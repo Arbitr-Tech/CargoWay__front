@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { listStore } from "../../../stores/ListStore";
-import { changeStatusCargo, choiceCarrier, deleteCargo, getDetailsCargo } from "../../../api/cargoService";
+import { choiceCarrier, deleteCargo, getDetailsCargo, unpublishCargo } from "../../../api/cargoService";
 import TopBar from "../../TopBar";
 import { cargoStore } from "../../../stores/CargoStore";
-import ListItems from "../../listsTemplates/ListItems";
 import InfoAboutOrder from "../../InfoAboutOrder";
 import ListCarrier from "../../listsTemplates/ListCarrier";
 import Popup from "../../popups/Popup";
@@ -19,7 +17,6 @@ const RespondPage = observer(() => {
     const id = param.id;
     const navigate = useNavigate();
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "", item: null });
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function getData() {
@@ -27,6 +24,7 @@ const RespondPage = observer(() => {
             cargoStore.setCargoFormDataFromServer(data.cargo);
             delete data.cargo;
             responseStore.setResponseFormDataFromServer(data);
+            console.log(data)
         };
         getData();
     }, [location.pathname]);
@@ -66,14 +64,37 @@ const RespondPage = observer(() => {
         };
     };
 
+    const handleClickDraft = async () => {
+        try {
+            await unpublishCargo(id);
+            toast.success("Успешно снято");
+            navigate('/customer/list/active');
+        } catch (error) {
+            toast.error("Ошибка, попробуйте позже");
+            console.log(error);
+        }
+    };
+
+    const handleClickDel = async () => {
+        try {
+            await deleteCargo(id);
+            toast.success("Успешно удалено");
+            navigate('/customer/list/active');
+        } catch (error) {
+            toast.error("Ошибка, попробуйте позже");
+            console.log(error);
+        }
+    };
+
     return (
         <div className="respondPage">
             <div className="container">
                 <Popup
                     isOpen={popupData.isOpen}
-                    text={popupData.item !== null ? popupData.item : popupData.text}
+                    text={popupData.text !== '' ? popupData.text : popupData.item}
                     typePopup={popupData.type}
                     onClose={closePopup}
+                    onConfirm={ handleClickDel }
                 />
                 <TopBar />
                 <div className="respondPage__inner">
@@ -85,11 +106,14 @@ const RespondPage = observer(() => {
                         length={cargoStore.cargoFormData.dimensions['length']}
                         width={cargoStore.cargoFormData.dimensions.width}
                         height={cargoStore.cargoFormData.dimensions.height}
+                        onClickCancel={ handleClickDraft }
+                        onClickEnd={() => openPopup({text: 'Вы действительно хотите удалить заказ?', type: 'del', item: null})}
                     />
                     <ListCarrier
                         listCarrier={responseStore.response.responses}
                         onClickSee={(item) => handleClickSee(item)}
                         onClickAccept={(item) => handleClickChoice(item)}
+                        onClickProfile={(item) => navigate(`/userProfile/${item.responderDetails.id}`)}
                     />
                 </div>
             </div>

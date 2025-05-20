@@ -8,7 +8,7 @@ import { data, useNavigate } from "react-router-dom";
 import { userStore } from "../../stores/UserStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { popupWithInputStore } from "../../stores/PopupWithInputStore";
+import { popupStore } from "../../stores/PopupStore";
 import { getProfileData } from "../../api/profileService";
 import PopupWithInput from "../popups/PopupWithInput";
 
@@ -48,13 +48,13 @@ const AuthorizationPage = observer(() => {
     };
 
     const handlePasswordReset = async () => {
-        if (!popupWithInputStore.email) {
+        if (!popupStore.email) {
             toast.error('Заполните поле ввода почты');
             return;
         };
         try {
-            await passwordReset({ "email": popupWithInputStore.email });
-            popupWithInputStore.reset();
+            await passwordReset({ "email": popupStore.email });
+            popupStore.reset();
             setIsPopupOpen(false);
         } catch (error) {
             if (error.message.includes("не был найден!")) {
@@ -73,8 +73,8 @@ const AuthorizationPage = observer(() => {
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}
                 onSend={handlePasswordReset}
-                email={popupWithInputStore.email}
-                onChangeEmail={popupWithInputStore.setEmail}
+                email={popupStore.email}
+                onChangeEmail={popupStore.setEmail}
             />
             <div className="container">
                 <AuthorizationForm formData={autorizationStore.autorizationFormData} onChange={handleOnChange} onNext={handleNext} onClickLink={() => setIsPopupOpen(true)} />

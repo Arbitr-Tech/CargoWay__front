@@ -1,7 +1,7 @@
-const ItemCarrier = ({ name, desc, onClickSee, onClickAccept }) => {
+const ItemCarrier = ({ name, desc, onClickSee, onClickAccept, onClickProfile }) => {
     return (
         <div className="itemCarrier">
-            <div className="itemCarrier__text">
+            <div className="itemCarrier__text" onClick={onClickProfile}>
                 <p className="itemCarrier__text-name">{name}</p>
                 <p className="itemCarrier__text-desc">Рейтинг: {desc}</p>
             </div>

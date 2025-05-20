@@ -15,7 +15,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
         container: (provided) => ({
             ...provided,
             maxWidth: '70%',
-            marginLeft: '1rem'
+            marginLeft: '1rem',
         }),
         control: (provided, state) => ({
             ...provided,

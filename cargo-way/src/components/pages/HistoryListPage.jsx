@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { listStore } from "../../../stores/ListStore";
-import TopBar from "../../TopBar";
-import ListItems from "../../listsTemplates/ListItems";
-import { userStore } from "../../../stores/UserStore";
-import Pagination from "../../Pagination";
+import { userStore } from "../../stores/UserStore";
+import { listStore } from "../../stores/ListStore";
+import ListItems from "../listsTemplates/ListItems";
+import Pagination from "../Pagination";
+import TopBar from "../TopBar";
 
 const HistoryListPage = observer(() => {
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ const HistoryListPage = observer(() => {
                     <div className="cargoList__content">
                         <ListItems
                             list={listStore.cargoLists.HISTORY}
-                            type="main"
+                            type='myCargoList'
                             getButtons={getButtonsByStatus}
                         />
                         <Pagination

@@ -237,4 +237,11 @@ const validateTransportData = (data, autoEmbeddedTrailer, autoAdditionalTrailers
     return errors;
 }
 
-export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData, validateTransportData };
+const validatePopupWithRating = (data) => {
+    const { comment, rating } = data;
+
+    if (!comment.trim() || !rating) return {popup: 'Необходимо полностью заполнить отзыв'}
+
+}
+
+export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData, validateTransportData, validatePopupWithRating };
