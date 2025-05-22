@@ -202,7 +202,7 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                                 <div className="autoForm__gallery-preview">
                                     {image.path ? (
                                         <img
-                                            src={`http://localhost:9000/${image.path}`}
+                                            src={`http://cargo-way-service.ru/${image.path}`}
                                             alt={`Фото ${index + 1}`}
                                             className="autoForm__gallery-image"
                                         />
