@@ -68,6 +68,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
                     name="fullName"
                     value={data.fullName || ""}
                     onChange={onChange}
+                    placeholder="Фамилия Имя Отчество"
                 />
             </FormGroup>
             <FormGroup label="Категория водительских прав" modification="driver">

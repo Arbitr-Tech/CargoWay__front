@@ -55,14 +55,6 @@
             width: 50%;
         }
 
-        // &--driver {
-        //     &__group {
-        //         @include m.tablet {
-        //             width: 10%;
-        //         }
-        //     }
-        // }
-
         @include m.laptop {
             flex-direction: column;
             align-items: start;
@@ -89,10 +81,6 @@
         & span {
             min-width: 50%;
         }
-
-        // @include m.tablet {
-        //     align-items: center;
-        // }
     }
 
     &--photo {

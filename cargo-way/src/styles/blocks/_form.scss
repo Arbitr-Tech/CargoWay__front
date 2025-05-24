@@ -2,6 +2,7 @@
 @use '../mixins' as m;
 
 .form {
+    @include m.margin-center;
     @include m.form-step-base(column, 6rem 5rem, 35rem);
 
     &--registration {

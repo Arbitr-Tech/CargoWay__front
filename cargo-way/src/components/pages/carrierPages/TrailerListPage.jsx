@@ -54,7 +54,6 @@ const TrailerListPage = observer(() => {
     return (
         <div className="trailerPage">
             <div className="container">
-                <TopBar />
                 <Popup
                     isOpen={popupData.isOpen}
                     text='Вы действительно хотите удалить эту запись?'
@@ -62,31 +61,35 @@ const TrailerListPage = observer(() => {
                     onClose={closePopup}
                     onConfirm={handleDeleteClick}
                 />
-                <h2 className="trailerPage__title">Ваши прицепы</h2>
-                {isLoading ? (
-                    <div className="trailerPage__empty">
-                        <p className="trailerPage__subtitle">Загрузка списка...</p>
-                    </div>
-                ) : trailerStore.trailerList.length > 0 ? (
-                    <div className="trailerPage__content">
-                        <TrailerList
-                            list={trailerStore.trailerList}
-                            onClickEdit={(item) => {navigate(`/trailer/edit/${item.id}`)}}
-                            onClickDelete={openPopup}
-                        />
-                        <Pagination
-                            currentPage={trailerStore.getCurrentPage()}
-                            totalPages={trailerStore.getTotalPages()}
-                            onPageChange={(page) => loadTrailerList(page)}
-                        />
-                    </div>
-                ) : (
-                    <div className="trailerPage__empty">
-                        <p className="trailerPage__empty-subtitle">У вас нет созданных прицепов.</p>
-                        <button className="trailerPage__empty-button" onClick={() => navigate("/trailer/add")}>Перейти к созданию</button>
-                    </div>
-
-                )}
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="trailerPage__title">Ваши прицепы</h2>
+                    {isLoading ? (
+                        <div className="trailerPage__empty">
+                            <p className="trailerPage__subtitle">Загрузка списка...</p>
+                        </div>
+                    ) : trailerStore.trailerList.length > 0 ? (
+                        <div className="trailerPage__content">
+                            <TrailerList
+                                list={trailerStore.trailerList}
+                                onClickEdit={(item) => { navigate(`/trailer/edit/${item.id}`) }}
+                                onClickDelete={openPopup}
+                            />
+                            <Pagination
+                                currentPage={trailerStore.getCurrentPage()}
+                                totalPages={trailerStore.getTotalPages()}
+                                onPageChange={(page) => loadTrailerList(page)}
+                            />
+                        </div>
+                    ) : (
+                        <div className="trailerPage__empty">
+                            <p className="trailerPage__empty-subtitle">У вас нет созданных прицепов.</p>
+                            <button className="trailerPage__empty-button" onClick={() => navigate("/trailer/add")}>Перейти к созданию</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

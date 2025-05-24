@@ -90,24 +90,28 @@ const AutoPostPage = observer(({ typePage }) => {
     return (
         <div className="auto">
             <div className="container">
-                <TopBar />
-                <h2 className="auto__title">{typePage === 'add' ? 'Добавить машину' : 'Изменить машину'}</h2>
-                <AutoForm
-                    data={autoStore.autoFormData}
-                    onChange={handleInputChange}
-                    autoEmbeddedTrailer={autoStore.autoEmbeddedTrailer}
-                    autoAdditionalTrailer={autoStore.autoAdditionalTrailers}
-                    onNestedChange={handleNestedInputChange}
-                    onClickButtonEmbeddedTrailer={() => autoStore.toggleAutoEmbeddedTrailer(typePage)}
-                    onClickButtonAdditionalTrailer={() => autoStore.toggleAutoAdditionalTrailers(typePage)}
-                    onLoadImage={loadFile}
-                    onChangeImage={autoStore.setFormData}
-                    typePage={typePage}
-                    listDrivers={autoStore.driversListForTransport}
-                    listTrailers={autoStore.trailersListForTransport}
-                />
-                <div className="auto__btnBox">
-                    <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="auto__title">{typePage === 'add' ? 'Добавить машину' : 'Изменить машину'}</h2>
+                    <AutoForm
+                        data={autoStore.autoFormData}
+                        onChange={handleInputChange}
+                        autoEmbeddedTrailer={autoStore.autoEmbeddedTrailer}
+                        autoAdditionalTrailer={autoStore.autoAdditionalTrailers}
+                        onNestedChange={handleNestedInputChange}
+                        onClickButtonEmbeddedTrailer={() => autoStore.toggleAutoEmbeddedTrailer(typePage)}
+                        onClickButtonAdditionalTrailer={() => autoStore.toggleAutoAdditionalTrailers(typePage)}
+                        onLoadImage={loadFile}
+                        onChangeImage={autoStore.setFormData}
+                        typePage={typePage}
+                        listDrivers={autoStore.driversListForTransport}
+                        listTrailers={autoStore.trailersListForTransport}
+                    />
+                    <div className="auto__btnBox">
+                        <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>
+                    </div>
                 </div>
             </div>
         </div>

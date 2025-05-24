@@ -6,12 +6,17 @@
 .driverForm,
 .profileForm,
 .trailerForm {
-    @include m.form-step-base(column, 1rem 2.2rem, 70rem);
+    @include m.form-step-base(column, 1rem 0rem, 70rem);
     padding-top: 3.5rem;
     max-width: 100%;
 
     @include m.laptop {
         max-width: 90%;
+    }
+
+    &__main,
+    &__trailer {
+        margin-inline: 2.2rem;
     }
 
     &__section {
@@ -335,6 +340,11 @@
     }
 }
 
+.driverForm {
+    @include m.margin-center;
+    padding: 2.2rem;
+}
+
 .cargo,
 .auto,
 .driver,
@@ -343,8 +353,6 @@
 .trailerPage,
 .cargoList,
 .autoList {
-    margin-bottom: 5rem;
-
     &__title {
         text-align: center;
         font-size: 2.875rem;
@@ -431,4 +439,13 @@
     @include m.mobile {
         font-size: 0.8rem;
     }
+}
+
+.registration,
+.authorization {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }

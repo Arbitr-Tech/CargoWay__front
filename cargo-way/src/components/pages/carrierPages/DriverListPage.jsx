@@ -71,32 +71,35 @@ const DriverListPage = observer(() => {
                     onClose={closePopup}
                     onConfirm={handleDeleteClick}
                 />
-                <TopBar />
-                <h2 className="driver__title">Ваши водители</h2>
-                {isLoading ? (
-                    <div className="driver__empty">
-                        <p className="driver__subtitle">Загрузка списка...</p>
-                    </div>
-                ) : driverStore.driverList.length > 0 ? (
-                    <div className="driver__content">
-                        <DriverList
-                            list={driverStore.driverList}
-                            onClickEdit={(item) => navigate(`/driver/edit/${item.id}`)}
-                            onClickDelete={openPopup}
-                        />
-                        <Pagination
-                            currentPage={driverStore.getCurrentPage()}
-                            totalPages={driverStore.getTotalPages()}
-                            onPageChange={(page) => loadDriverList(page)}
-                        />
-                    </div>
-                ) : (
-                    <div className="driver__empty">
-                        <p className="driver__empty-subtitle">У вас нет созданных водителей.</p>
-                        <button className="driver__empty-button" onClick={() => navigate('/driver/add')}>Перейти к созданию</button>
-                    </div>
-
-                )}
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="driver__title">Ваши водители</h2>
+                    {isLoading ? (
+                        <div className="driver__empty">
+                            <p className="driver__subtitle">Загрузка списка...</p>
+                        </div>
+                    ) : driverStore.driverList.length > 0 ? (
+                        <div className="driver__content">
+                            <DriverList
+                                list={driverStore.driverList}
+                                onClickEdit={(item) => navigate(`/driver/edit/${item.id}`)}
+                                onClickDelete={openPopup}
+                            />
+                            <Pagination
+                                currentPage={driverStore.getCurrentPage()}
+                                totalPages={driverStore.getTotalPages()}
+                                onPageChange={(page) => loadDriverList(page)}
+                            />
+                        </div>
+                    ) : (
+                        <div className="driver__empty">
+                            <p className="driver__empty-subtitle">У вас нет созданных водителей.</p>
+                            <button className="driver__empty-button" onClick={() => navigate('/driver/add')}>Перейти к созданию</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

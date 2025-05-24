@@ -43,30 +43,34 @@ const HistoryListPage = observer(() => {
     return (
         <div className="cargoList">
             <div className="container">
-                <TopBar />
-                <h2 className="cargoList__title">Архив</h2>
-                {isLoading ? (
-                    <div className="cargoList__empty">
-                        <p className="cargoList__subtitle">Загрузка списка...</p>
-                    </div>
-                ) : listStore.cargoLists.HISTORY.length > 0 ? (
-                    <div className="cargoList__content">
-                        <ListItems
-                            list={listStore.cargoLists.HISTORY}
-                            type='myCargoList'
-                            getButtons={getButtonsByStatus}
-                        />
-                        <Pagination
-                            currentPage={listStore.getCurrentPage("HISTORY")}
-                            totalPages={listStore.getTotalPages("HISTORY")}
-                            onPageChange={(page) => { loadCargoList(page) }}
-                        />
-                    </div>
-                ) : (
-                    <div className="cargoList__empty">
-                        <p className="cargoList__empty-subtitle">Список пуст</p>
-                    </div>
-                )}
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="cargoList__title">Архив</h2>
+                    {isLoading ? (
+                        <div className="cargoList__empty">
+                            <p className="cargoList__subtitle">Загрузка списка...</p>
+                        </div>
+                    ) : listStore.cargoLists.HISTORY.length > 0 ? (
+                        <div className="cargoList__content">
+                            <ListItems
+                                list={listStore.cargoLists.HISTORY}
+                                type='myCargoList'
+                                getButtons={getButtonsByStatus}
+                            />
+                            <Pagination
+                                currentPage={listStore.getCurrentPage("HISTORY")}
+                                totalPages={listStore.getTotalPages("HISTORY")}
+                                onPageChange={(page) => { loadCargoList(page) }}
+                            />
+                        </div>
+                    ) : (
+                        <div className="cargoList__empty">
+                            <p className="cargoList__empty-subtitle">Список пуст</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

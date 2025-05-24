@@ -1,12 +1,23 @@
 @use './variables' as v;
 
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
 body {
     background-color: #2C2C2C;
     font-family: v.$font-family-primary;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
     overflow-x: hidden;
     position: relative;
 }

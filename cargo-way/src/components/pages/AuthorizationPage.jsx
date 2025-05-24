@@ -34,7 +34,15 @@ const AuthorizationPage = observer(() => {
             await login(toJS(autorizationStore.autorizationFormData));
             const data = await getProfileData();
             userStore.setUserFormData(data);
+            toast.success("Успешный вход");
             navigate('/');
+            if ((userStore.userFormData.legalType === "INDIVIDUAL" &&
+                userStore.userFormData.individual === null) ||
+                (userStore.userFormData.legalType === "COMPANY" &&
+                    userStore.userFormData.company === null)
+            ) {
+                toast.warning("Для дальнейшей работы необходимо заполнить данные профиля");
+            };
             autorizationStore.reset();
         } catch (error) {
             console.error("Ошибка входа:", error);
@@ -75,9 +83,7 @@ const AuthorizationPage = observer(() => {
                 email={popupStore.email}
                 onChangeEmail={popupStore.setEmail}
             />
-            <div className="container">
-                <AuthorizationForm formData={autorizationStore.autorizationFormData} onChange={handleOnChange} onNext={handleNext} onClickLink={() => setIsPopupOpen(true)} />
-            </div>
+            <AuthorizationForm formData={autorizationStore.autorizationFormData} onChange={handleOnChange} onNext={handleNext} onClickLink={() => setIsPopupOpen(true)} />
         </div>
     )
 });

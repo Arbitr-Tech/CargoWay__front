@@ -64,11 +64,15 @@ const DriverPostPage = observer(({ typePage }) => {
     return (
         <div className="driver">
             <div className="container">
-                <TopBar />
-                <h2 className="driver__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} данные о водителе</h2>
-                <DriverForm data={driverStore.driverFormData} onChange={handleInputChange} />
-                <div className="driver__btnBox">
-                    <button className="driver__button" onClick={handleCLick}>{typePage === 'add' ? 'Опубликовать запись' : 'Сохранить изменения'}</button>
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="driver__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} данные о водителе</h2>
+                    <DriverForm data={driverStore.driverFormData} onChange={handleInputChange} />
+                    <div className="driver__btnBox">
+                        <button className="driver__button" onClick={handleCLick}>{typePage === 'add' ? 'Опубликовать запись' : 'Сохранить изменения'}</button>
+                    </div>
                 </div>
             </div>
         </div>

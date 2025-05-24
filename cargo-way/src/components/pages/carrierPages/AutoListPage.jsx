@@ -62,31 +62,35 @@ const AutoListPage = observer(() => {
                     onClose={closePopup}
                     onConfirm={handleDeleteClick}
                 />
-                <TopBar />
-                <h2 className="autoList__title">Ваши машины</h2>
-                {isLoading ? (
-                    <div className="autoList__empty">
-                        <p className="autoList__subtitle">Загрузка списка...</p>
-                    </div>
-                ) : autoStore.transportList.length > 0 ? (
-                    <div className="autoList__content">
-                        <AutoList
-                            list={autoStore.transportList}
-                            onClickEdit={(item) => navigate(`/auto/edit/${item.id}`)}
-                            onClickDelete={ openPopup }
-                        />
-                        <Pagination
-                            currentPage={autoStore.getCurrentPage()}
-                            totalPages={autoStore.getTotalPages()}
-                            onPageChange={(page) => loadTransportList(page)}
-                        />
-                    </div>
-                ) : (
-                    <div className="autoList__empty">
-                        <p className="autoList__empty-subtitle">У вас нет созданного транспорта.</p>
-                        <button className="autoList__empty-button" onClick={() => navigate('/auto/add')}>Перейти к созданию</button>
-                    </div>
-                )}
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="autoList__title">Ваши машины</h2>
+                    {isLoading ? (
+                        <div className="autoList__empty">
+                            <p className="autoList__subtitle">Загрузка списка...</p>
+                        </div>
+                    ) : autoStore.transportList.length > 0 ? (
+                        <div className="autoList__content">
+                            <AutoList
+                                list={autoStore.transportList}
+                                onClickEdit={(item) => navigate(`/auto/edit/${item.id}`)}
+                                onClickDelete={openPopup}
+                            />
+                            <Pagination
+                                currentPage={autoStore.getCurrentPage()}
+                                totalPages={autoStore.getTotalPages()}
+                                onPageChange={(page) => loadTransportList(page)}
+                            />
+                        </div>
+                    ) : (
+                        <div className="autoList__empty">
+                            <p className="autoList__empty-subtitle">У вас нет созданного транспорта.</p>
+                            <button className="autoList__empty-button" onClick={() => navigate('/auto/add')}>Перейти к созданию</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

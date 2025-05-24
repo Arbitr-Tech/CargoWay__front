@@ -17,11 +17,7 @@ const MainPage = observer(() => {
     return (
         <div className="main">
             <div className="container">
-                <div className="main__menu">
-                    <div className="main__menu-topBar">
-                        <TopBar />
-                    </div>
-                </div>
+                <TopBar />
                 <div className="main__text">
                     <h2 className="main__text-label">Транспорт для груза, груз для транспорта — <span>всё</span> у нас</h2>
                     <div className="main__text-link">

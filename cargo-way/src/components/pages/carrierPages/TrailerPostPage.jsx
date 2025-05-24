@@ -66,14 +66,18 @@ const TrailerPostPage = observer(({ typePage }) => {
     return (
         <div className="trailer">
             <div className="container">
-                <TopBar />
-                <h2 className="trailer__title">{typePage === 'add' ? 'Добавить прицеп' : 'Изменить прицеп'}</h2>
-                <TrailerForm
-                    data={trailerStore.trailerFormData}
-                    onChange={handleInputChange}
-                />
-                <div className="trailer__btnBox">
-                    <button className="trailer__button" onClick={handleButtonClick}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="trailer__title">{typePage === 'add' ? 'Добавить прицеп' : 'Изменить прицеп'}</h2>
+                    <TrailerForm
+                        data={trailerStore.trailerFormData}
+                        onChange={handleInputChange}
+                    />
+                    <div className="trailer__btnBox">
+                        <button className="trailer__button" onClick={handleButtonClick}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>
+                    </div>
                 </div>
             </div>
         </div>

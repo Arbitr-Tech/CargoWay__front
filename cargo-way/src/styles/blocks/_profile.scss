@@ -3,6 +3,8 @@
 
 .profile {
 
+    margin-bottom: 0;
+
     &__inner {
         @include m.center;
         width: 100%;

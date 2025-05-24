@@ -60,38 +60,42 @@ const ActiveListPage = observer(({ typePage = "active" }) => {
     return (
         <div className="cargoList">
             <div className="container">
-                <TopBar />
-                <h2 className="cargoList__title">{`${typePage === "active" ? "Активные" : "Ждут ответа"}`}</h2>
-                {isLoading ? (
-                    <div className="cargoList__empty">
-                        <p className="cargoList__subtitle">Загрузка списка...</p>
-                    </div>
-                ) : listStore.cargoLists[getListType()].length > 0 ? (
-                    <div className="cargoList__content">
-                        {typePage === "active" ?
-                            <ListItems
-                                list={role === "CUSTOMER" ? listStore.cargoLists.EXTERNAL : listStore.cargoLists.ACTIVE}
-                                type={role === "CUSTOMER" ? "myListCargo" : "main"}
-                                getButtons={getButtonsByStatus}
+                <div className="cargoList__menu">
+                    <TopBar />
+                </div>
+                <div className="cargoList__content">
+                    <h2 className="cargoList__title">{`${typePage === "active" ? "Активные" : "Ждут ответа"}`}</h2>
+                    {isLoading ? (
+                        <div className="cargoList__empty">
+                            <p className="cargoList__subtitle">Загрузка списка...</p>
+                        </div>
+                    ) : listStore.cargoLists[getListType()].length > 0 ? (
+                        <div className="cargoList__content">
+                            {typePage === "active" ?
+                                <ListItems
+                                    list={role === "CUSTOMER" ? listStore.cargoLists.EXTERNAL : listStore.cargoLists.ACTIVE}
+                                    type={role === "CUSTOMER" ? "myListCargo" : "main"}
+                                    getButtons={getButtonsByStatus}
+                                />
+                                :
+                                <ListItems
+                                    list={listStore.cargoLists[getListType()]}
+                                    type="main"
+                                    getButtons={getButtonsByStatus}
+                                />
+                            }
+                            <Pagination
+                                currentPage={listStore.getCurrentPage(getListType())}
+                                totalPages={listStore.getTotalPages(getListType())}
+                                onPageChange={(page) => { loadCargoList(page) }}
                             />
-                            :
-                            <ListItems
-                                list={listStore.cargoLists[getListType()]}
-                                type="main"
-                                getButtons={getButtonsByStatus}
-                            />
-                        }
-                        <Pagination
-                            currentPage={listStore.getCurrentPage(getListType())}
-                            totalPages={listStore.getTotalPages(getListType())}
-                            onPageChange={(page) => { loadCargoList(page) }}
-                        />
-                    </div>
-                ) : (
-                    <div className="cargoList__empty">
-                        <p className="cargoList__empty-subtitle">Список пуст</p>
-                    </div>
-                )}
+                        </div>
+                    ) : (
+                        <div className="cargoList__empty">
+                            <p className="cargoList__empty-subtitle">Список пуст</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

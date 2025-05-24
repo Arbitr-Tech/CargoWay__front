@@ -50,10 +50,14 @@ const validateIndividaulData = (data, isFirstTime = false) => {
         if (!registrationAddress) errors.registrationAddress = "Адрес регистрации обязателен для заполнения";
     }
 
-    const cleanValuePassportNum = passportNumber.replace(/\s/g, '');
+    const cleanValuePassportNum = passportNumber?.replace(/\s/g, '');
 
     if (!/^\d{10}$/.test(cleanValuePassportNum)) {
         errors.passportNum = "Серия и номер паспорта должны быть в формате: 1234 567891";
+    }
+
+    if (!/^[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+$/.test(fullName)) {
+        errors.fullName = "ФИО должно содержать только кириллические буквы в формате: Фамилия Имя Отчество";
     }
 
     if (!/^\d{3}-\d{3}$/.test(departmentCode)) {
@@ -151,7 +155,7 @@ const validateCargo = (data) => {
 
 const validateDriverData = (data) => {
     const errors = {};
-    const { licenseCategory, licenseNumber, issueDate, expirationDate } = data;
+    const { fullName, licenseCategory, licenseNumber, issueDate, expirationDate } = data;
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
 
@@ -165,6 +169,10 @@ const validateDriverData = (data) => {
         const issue = new Date(issueDate);
         issue.setHours(0, 0, 0, 0);
         if (issue > today) errors.issueDate = "Дата выдачи не может быть позже сегодняшнего числа";
+    }
+
+    if (!/^[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+$/.test(fullName)) {
+        errors.fullName = "ФИО должно содержать только кириллические буквы в формате: Фамилия Имя Отчество";
     }
 
     if (!expirationDate) {
@@ -216,7 +224,7 @@ const validateTransportData = (data, autoEmbeddedTrailer, autoAdditionalTrailers
     if (!manufactureYear) {
         errors.manufactureYearNull = "Укажите год выпуска";
     } else {
-        if(manufactureYear < 1900 || manufactureYear > currentYear) errors.manufactureYear = "Транспорт не может быть старше 1900 года и младше текущего года";
+        if (manufactureYear < 1900 || manufactureYear > currentYear) errors.manufactureYear = "Транспорт не может быть старше 1900 года и младше текущего года";
     }
     if (!/^\d{4}$/.test(manufactureYear)) errors.manufactureYear = "Укажите корректный год выпуска";
     if (!transportNumber || !/^[А-Я]{1}\d{3}[А-Я]{2}$/.test(transportNumber)) errors.transportNumber = "Номер транспорта обязателен и должен быть в формате: А111АА";
@@ -240,7 +248,7 @@ const validateTransportData = (data, autoEmbeddedTrailer, autoAdditionalTrailers
 const validatePopupWithRating = (data) => {
     const { comment, rating } = data;
 
-    if (!comment.trim() || !rating) return {popup: 'Необходимо полностью заполнить отзыв'}
+    if (!comment.trim() || !rating) return { popup: 'Необходимо полностью заполнить отзыв' }
 
 }
 

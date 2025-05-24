@@ -57,7 +57,11 @@
     }
 
     &__button {
-        @include m.button(v.$primary-color, v.$font-light-color)
+        @include m.button(v.$primary-color, v.$font-light-color);
+
+        @include m.mobile {
+            padding: 0.5rem;
+        }
     }
 
     &__inputBox {

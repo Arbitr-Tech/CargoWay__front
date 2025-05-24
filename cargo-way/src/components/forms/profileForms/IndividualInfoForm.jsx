@@ -57,6 +57,7 @@ const IndividualInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => 
                     data-path="fullName"
                     disabled={!isEdit}
                     onChange={onNestedChange}
+                    placeholder="Фамилия Имя Отчество"
                 />
             </FormGroup>
             <FormGroup label="Серия и номер паспорта" modification="individual">
