@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
 import { autorizationStore } from "../../stores/AutorizationStore";
 import { login, passwordReset } from "../../api/authService";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userStore } from "../../stores/UserStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -18,7 +18,7 @@ const AuthorizationPage = observer(() => {
 
     useEffect(() => {
         return () => {
-            autorizationStore.reset(); // Очистка формы при размонтировании
+            autorizationStore.reset();
         };
     }, []);
 
