@@ -202,7 +202,7 @@ const validateTrailerData = (data) => {
     if (!length || length > 50) errors.length = "Длина обязательна и не должна превышать 50 метров";
     if (!width || width > 10) errors.width = "Ширина прицепа обязательна и не должна превышать 10 метров";
     if (!height || height > 10) errors.height = "Высота прицепа обязательна и не должна превышать 10 метров";
-    if (!volume) errors.volume = "Укажите грузоподъемность";
+    if (!volume) errors.volume = "Укажите объем";
 
     return errors;
 }

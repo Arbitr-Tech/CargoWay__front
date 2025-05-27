@@ -12,7 +12,8 @@ class TrailerStore {
         length: 0,
         width: 0,
         height: 0,
-        volume: 0
+        volume: 0,
+        imagesIds: []
     };
 
     originalTrailerFormData = {};
@@ -52,6 +53,8 @@ class TrailerStore {
     }
 
     setTrailerFormDataFromServer = (data) => {
+        data = { ...data, "imagesIds": data.images }
+        delete data['images'];
         this.originalTrailerFormData = data;
         this.trailerFormData = { ...data };
     }
@@ -79,7 +82,8 @@ class TrailerStore {
             length: 0,
             width: 0,
             height: 0,
-            volume: 0
+            volume: 0,
+            imagesIds: []
         };
     }
 }

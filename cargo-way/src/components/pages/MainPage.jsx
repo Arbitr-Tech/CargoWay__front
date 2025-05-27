@@ -41,8 +41,8 @@ const MainPage = observer(() => {
                             y: 0
                         }
                     }
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
+                    viewport={{ once: true, amount: 0.01}}
+                    transition={{ duration: 0.3, delay: 0.1 }}
                 >
                     {getPageContent()}
                 </motion.div>

@@ -19,6 +19,18 @@ export const loadFile = async (file) => {
     return data;
 };
 
+export const deleteFile = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/api/v1/images/${id}/`, {
+            method: "DELETE"
+        });
+        return response;
+    } catch (error) {
+        console.error("Ошибка удаления файла:", error.message);
+        throw error;
+    }
+};
+
 export const refreshToken = async () => {
     try {
         const response = await fetch(`${API_URL}/api/v1/auth/refresh-token/`, {
@@ -37,7 +49,7 @@ export const refreshToken = async () => {
     } catch (error) {
         localStorage.removeItem("accessToken");
         userStore.setRole('');
-        
+
         // if (!hasShownToast) { // Показываем ошибку только один раз
         //     toast.error("Сессия истекла. Войдите снова.");
         //     hasShownToast = true;

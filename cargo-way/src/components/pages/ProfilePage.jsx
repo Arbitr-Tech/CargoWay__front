@@ -33,11 +33,11 @@ const ProfilePage = observer(() => {
     const handleClickMainInfoButton = async () => {
         try {
             const updatedData = userStore.getUpdatedFields();
-            if (updatedData.length > 0) {
+            if (Object.keys(updatedData).length > 0) {
                 const newData = await updateProfileData(toJS(updatedData));
                 userStore.setUserFormData(newData);
+                toast.success("Успешно")
             }
-            toast.success("Успешно")
         } catch (error) {
             console.log('Ошибка отправки изменений: ', error);
             userStore.reset();

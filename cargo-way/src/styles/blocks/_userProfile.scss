@@ -8,14 +8,16 @@
     &__inner {
         @include m.center();
         flex-direction: column;
-        width: 100%;
         gap: 2.2rem;
 
         &-info {
             @include m.form-step-base(column, 1rem 0, 100%);
-            width: 100%;
             background-color: v.$active-color;
             max-height: 5rem;
+
+            @include m.tablet {
+                max-height: 30%;
+            }
         }
 
         &-reviews {
@@ -28,10 +30,32 @@
             display: flex;
             justify-content: space-between;
             margin-inline: 2.2rem;
+
+            @include m.tablet {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            @include m.mobile {
+                margin-inline: 0.5rem;
+            }
         }
 
-        &-item span {
-            font-weight: 700;
+        &-item {
+            & span {
+                font-weight: 700;
+            }
+
+            @include m.tablet {
+                margin: 0.5rem 0;
+            }
+        }
+
+        &-title {
+            @include m.mobile {
+                font-size: 1.4rem;
+                margin: 0.5rem;
+            }
         }
     }
 
@@ -49,8 +73,14 @@
     padding-bottom: 2.2rem;
     max-height: 30rem;
 
+    &__title {
+        @include m.mobile {
+            margin: 0.5rem;
+            font-size: 1.4rem;
+        }
+    }
+
     &__content {
-        // height: 100%;
         max-height: 25rem;
         overflow-y: auto;
         overflow-x: hidden;
@@ -73,6 +103,20 @@
                 color: v.$primary-color;
                 border: solid 1px v.$primary-color;
             }
+
+            @include m.mobile {
+                padding: 0.5rem;
+            }
+        }
+
+        @include m.mobile {
+            margin-inline: 0.5rem;
+        }
+    }
+
+    &__content {
+        @include m.mobile {
+            margin-inline: 0.5rem;
         }
     }
 }

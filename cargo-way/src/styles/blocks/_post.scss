@@ -7,8 +7,10 @@
 .profileForm,
 .trailerForm {
     @include m.form-step-base(column, 1rem 0rem, 70rem);
+    @include m.margin-center;
     padding-top: 3.5rem;
     max-width: 100%;
+
 
     @include m.laptop {
         max-width: 90%;
@@ -63,13 +65,19 @@
             width: 80%;
         }
 
-        @include m.mobile {
-            width: 75%;
+        @include m.tablet {
+            width: 100%;
         }
 
         &-group {
             @include m.box-overflow-y;
             margin-top: 0.5rem;
+
+            @include m.laptop {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
         }
 
         &-icon {
@@ -95,6 +103,18 @@
 
             @include m.mobile {
                 width: 10rem;
+            }
+        }
+
+        &--driver {
+            width: 70%;
+
+            @include m.laptop {
+                width: 85%;
+            }
+
+            @include m.tablet {
+                width: 104%;
             }
         }
     }
@@ -213,9 +233,10 @@
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-bottom: 3rem;
 
-            @include m.mobile {
+            @include m.tablet {
                 margin-top: 1rem;
                 margin-bottom: 0;
+                padding: 0.5rem;
             }
         }
 
@@ -256,11 +277,13 @@
 
         &-button {
             color: v.$active-color;
-            padding: 1rem;
+            padding-inline-start: 1rem;
+            text-align: center;
         }
 
         &-gallery {
             width: 100%;
+
         }
 
         &-loader {
@@ -280,11 +303,18 @@
 
         &-preview {
             @include m.preview;
+
+            @include m.tablet {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         &-image {
             @include m.image;
             margin-top: 1rem;
+            cursor: pointer;
         }
 
         &-button {
@@ -296,24 +326,6 @@
             }
         }
     }
-
-    // &__imgBox {
-    //     @include m.imgBox;
-    // }
-
-    // &__loader {
-    //     @include m.loader;
-    //     margin-top: 1rem;
-    // }
-
-    // &__preview {
-    //     @include m.preview;
-    // }
-
-    // &__image {
-    //     @include m.image;
-    //     margin-top: 1rem;
-    // }
 
     &__button {
         @include m.button(v.$primary-color, v.$font-light-color);
@@ -343,6 +355,14 @@
 .driverForm {
     @include m.margin-center;
     padding: 2.2rem;
+
+    &__categories {
+
+        @include m.tablet {
+            display: flex;
+            justify-content: center;
+        }
+    }
 }
 
 .cargo,
@@ -353,15 +373,25 @@
 .trailerPage,
 .cargoList,
 .autoList {
+
     &__title {
         text-align: center;
         font-size: 2.875rem;
         color: v.$font-light-color;
         font-weight: 400;
+        margin-top: 0;
 
         @include m.tablet {
             font-size: 2.2rem;
         }
+
+        @include m.mobile {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__content {
+        align-content: center;
     }
 
     &__empty {
@@ -374,6 +404,10 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-inline: 2.2rem;
+
+            @include m.mobile {
+                padding: 0.5rem;
+            }
         }
     }
 
@@ -385,12 +419,13 @@
     &__button {
         @include m.button(v.$active-color, v.$font-light-color);
         margin-top: 5rem;
+        margin-bottom: 2.2rem;
     }
 
     &::after {
         display: block;
         content: "";
-        position: absolute;
+        position: fixed;
         top: 3rem;
         left: 7rem;
         width: 39rem;
@@ -404,7 +439,7 @@
     &::before {
         display: block;
         content: "";
-        position: absolute;
+        position: fixed;
         top: 27rem;
         left: 55rem;
         width: 34rem;

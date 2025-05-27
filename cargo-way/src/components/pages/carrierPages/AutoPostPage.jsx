@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "../../TopBar";
 import AutoForm from "../../forms/AutoForm";
 import { observer } from "mobx-react-lite";
 import { autoStore } from "../../../stores/AutoStore";
-import { loadFile } from "../../../api/commonService";
+import { deleteFile, loadFile } from "../../../api/commonService";
 import { addAuto, getDetailsTransport, updateAuto } from "../../../api/autoService";
 import { toJS } from "mobx";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -16,12 +16,20 @@ const AutoPostPage = observer(({ typePage }) => {
     const location = useLocation();
     const param = useParams();
     const id = param.id;
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function getData() {
-            const data = await getDetailsTransport(id);
-            autoStore.setTransportFormDataFromServer(data);
+            setIsLoading(true);
+            try {
+                const data = await getDetailsTransport(id);
+                console.log(data)
+                autoStore.setTransportFormDataFromServer(data);
+            } finally {
+                setIsLoading(false);
+            };
         };
+
         if (!location.pathname.startsWith("/auto/edit")) {
             autoStore.resetFormData();
         } else {
@@ -46,6 +54,10 @@ const AutoPostPage = observer(({ typePage }) => {
         } else {
             autoStore.setFormData(name, value);
         }
+    };
+
+    const handleDeleteImage = async (id) => {
+        await deleteFile(id);
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value, type, valueAsNumber } }) => {
@@ -77,6 +89,7 @@ const AutoPostPage = observer(({ typePage }) => {
                 toast.success("Успешно");
             } else {
                 const data = autoStore.getUpdatedFields();
+                console.log(data)
                 await updateAuto(id, data);
                 navigate('/auto/list');
                 toast.success("Успешно");
@@ -96,6 +109,7 @@ const AutoPostPage = observer(({ typePage }) => {
                 <div className="cargoList__content">
                     <h2 className="auto__title">{typePage === 'add' ? 'Добавить машину' : 'Изменить машину'}</h2>
                     <AutoForm
+                        isLoadingData={isLoading}
                         data={autoStore.autoFormData}
                         onChange={handleInputChange}
                         autoEmbeddedTrailer={autoStore.autoEmbeddedTrailer}
@@ -108,6 +122,7 @@ const AutoPostPage = observer(({ typePage }) => {
                         typePage={typePage}
                         listDrivers={autoStore.driversListForTransport}
                         listTrailers={autoStore.trailersListForTransport}
+                        onDeleteFile={handleDeleteImage}
                     />
                     <div className="auto__btnBox">
                         <button className="auto__button" onClick={handleButton}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>

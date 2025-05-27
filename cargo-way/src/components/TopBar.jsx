@@ -19,6 +19,26 @@ const TopBar = () => {
         setActiveDropdown(null);
     }, [location]);
 
+    useEffect(() => {
+        if (!isMobileMenuOpen) return;
+
+        const handleScroll = () => {
+            setIsMobileMenuOpen(false);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [isMobileMenuOpen]);
+
+    const handleOverlayClick = (e) => {
+        if (!e.target.closest('.topbar__mobile-menu')) {
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     const handleLogoutClick = () => {
         setIsPopupOpen(true);
     };
@@ -95,14 +115,12 @@ const TopBar = () => {
     const currentMenu = role === "CARRIER" ? carrierMenu : role === "CUSTOMER" ? customerMenu : [carrierMenu[0]];
 
     return (
-        <header className="topbar">
+        <div className="topbar">
             <div className="topbar__container">
                 <div className="topbar__header">
                     <p
                         className="topbar__mobile-toggle"
                         onClick={toggleMobileMenu}
-                    // aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
-                    // aria-expanded={isMobileMenuOpen}
                     >
                         {isMobileMenuOpen ? "Закрыть меню" : "Меню"}
                     </p>
@@ -198,7 +216,12 @@ const TopBar = () => {
                     )}
                 </div>
             </div>
-
+            {isMobileMenuOpen && (
+                <div
+                    className={`mobile__overlay ${isMobileMenuOpen ? "mobile__overlay--show" : ""}`}
+                    onClick={handleOverlayClick}
+                />
+            )}
             <div className={`topbar__mobile-menu ${isMobileMenuOpen ? "is-open" : ""}`}>
                 <div className="topbar__mobile-content">
                     <nav className="topbar__mobile-nav">
@@ -297,7 +320,7 @@ const TopBar = () => {
                 onClose={() => setIsPopupOpen(false)}
                 onConfirm={handleConfirmLogout}
             />
-        </header>
+        </div>
     );
 };
 

@@ -227,11 +227,14 @@
             transform: rotate(141deg);
             border-radius: (56% 44% 25% 74% / 58% 61% 39% 42%);
 
-            @include m.laptop {
-                top: 7rem;
-                left: 40rem;
-                width: 24rem;
-                height: 14rem;
+            @include m.laptop { 
+                display: none;
+            }
+
+            @include m.mobile {
+                display: block;
+                top: -72rem;
+                left: -21rem;
             }
         }
 
@@ -247,7 +250,26 @@
             background: v.$font-dark-color;
             transform: rotate(141deg);
             border-radius: 81% 19% 42% 58% / 46% 73% 27% 54%;
+
+            @include m.laptop { 
+                top: -34rem;
+                left: 26rem;
+            }
+
+            @include m.tablet { 
+                top: -40rem;
+                left: 9rem;
+            }
+
+            @include m.mobile {
+                top: -40rem;
+                left: 9rem;
+            }
         }
+    }
+
+    &__content {
+        margin: rem 0;
     }
 
     &::after {

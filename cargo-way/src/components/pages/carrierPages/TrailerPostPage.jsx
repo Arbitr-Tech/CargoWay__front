@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "../../TopBar";
 import { observer } from "mobx-react-lite";
 import { toJS } from "mobx";
@@ -8,6 +8,7 @@ import TrailerForm from "../../forms/TrailerForm";
 import { addTrailer, getDetailsTrailer, updateTrailer } from "../../../api/trailerService";
 import { toast } from "react-toastify";
 import { validateTrailerData } from "../../../validation/validations";
+import { deleteFile, loadFile } from "../../../api/commonService";
 
 
 const TrailerPostPage = observer(({ typePage }) => {
@@ -15,12 +16,19 @@ const TrailerPostPage = observer(({ typePage }) => {
     const location = useLocation();
     const param = useParams();
     const id = param.id;
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function getData() {
-            const data = await getDetailsTrailer(id);
-            trailerStore.setTrailerFormDataFromServer(data);
+            setIsLoading(true);
+            try {
+                const data = await getDetailsTrailer(id);
+                trailerStore.setTrailerFormDataFromServer(data);
+            } finally {
+                setIsLoading(false);
+            };
         };
+
         if (!location.pathname.startsWith("/trailer/edit")) {
             trailerStore.resetFormData();
         } else {
@@ -61,7 +69,11 @@ const TrailerPostPage = observer(({ typePage }) => {
             console.log('Ошибка отправки формы: ', error);
             toast.error('Ошибка, попробуйте позже');
         };
-    }
+    };
+
+    const handleDeleteImage = async (id) => {
+        await deleteFile(id);
+    };
 
     return (
         <div className="trailer">
@@ -74,6 +86,11 @@ const TrailerPostPage = observer(({ typePage }) => {
                     <TrailerForm
                         data={trailerStore.trailerFormData}
                         onChange={handleInputChange}
+                        onChangeImage={trailerStore.setFormData}
+                        typePage={typePage}
+                        onDeleteFile={handleDeleteImage}
+                        onLoadImage={loadFile}
+                        isLoadingData={isLoading}
                     />
                     <div className="trailer__btnBox">
                         <button className="trailer__button" onClick={handleButtonClick}>{typePage === 'add' ? 'Создать запись' : 'Сохранить изменения'}</button>

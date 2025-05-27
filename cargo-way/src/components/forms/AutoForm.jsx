@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import FormGroup from "./FormGroup";
 import Select from 'react-select';
 import { useMask } from "@react-input/mask";
-import { useLocation } from "react-router-dom";
 
-const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage, listDrivers, listTrailers }) => {
+const AutoForm = ({ isLoadingData, data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage, listDrivers, listTrailers, onDeleteFile }) => {
     const bodyType = [
         { id: 1, name: "Option 1" },
         { id: 2, name: "Option 2" },
@@ -20,9 +19,11 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
 
     const [uploadedImages, setUploadedImages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const location = useLocation();
 
     useEffect(() => {
+        if (isLoading) {
+            return <div className="loading-indicator">Загрузка...</div>;
+        }
         if (typePage === 'edit' && data.imagesIds?.length > 0) {
             const newImages = data.imagesIds.map(photo => ({
                 id: photo?.id,
@@ -36,8 +37,8 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
             };
         } else if (typePage === 'add') {
             setUploadedImages([]);
-        }
-    }, [location.pathname]);
+        };
+    }, [isLoadingData, typePage]);
 
     const handleFileUpload = async (e) => {
         const files = Array.from(e.target.files);
@@ -75,10 +76,15 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
         };
     };
 
-    const handleRemoveImage = (index) => {
+
+    const handleRemoveImage = (index, id) => {
+        if (typePage === 'add') {
+            onDeleteFile(id);
+        }
         const updatedImages = uploadedImages.filter((_, i) => i !== index);
         setUploadedImages(updatedImages);
         onChangeImage("imagesIds", updatedImages.map(img => img.id));
+
     };
 
     const customStyles = {
@@ -91,7 +97,7 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
             ...provided,
             flexDirection: 'column',
             alignItems: 'flex-start',
-            borderColor: state.isFocused ? '#E9C17D' : '#2C2C2C', // ваши цвета
+            borderColor: state.isFocused ? '#E9C17D' : '#2C2C2C',
             boxShadow: 'none',
             '&:hover': {
                 borderColor: '#E9C17D',
@@ -169,7 +175,7 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                     />
                 </FormGroup>
                 <FormGroup label="Водитель">
-                    <select className="autoForm__input"
+                    <select className="autoForm__input autoForm__input--driver"
                         name="driverId"
                         value={data.driverId || ""}
                         onChange={onChange}
@@ -209,10 +215,7 @@ const AutoForm = ({ data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, 
                                     ) : null}
                                     <button
                                         className="autoForm__gallery-button"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); //  Блокируем всплытие
-                                            handleRemoveImage(index);
-                                        }}
+                                        onClick={() => handleRemoveImage(index, image.id)}
                                     >
                                         Удалить
                                     </button>

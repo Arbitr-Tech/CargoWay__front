@@ -7,7 +7,8 @@ class DriverStore {
         licenseCategory: "",
         licenseNumber: "",
         issueDate: "",
-        expirationDate: ""
+        expirationDate: "",
+        imagesIds: []
     };
 
     originalDriverFormData = {};
@@ -28,7 +29,7 @@ class DriverStore {
         try {
             const dataDrivers = await getDriversByProfile(pageNumber);
             this.driverList = dataDrivers.content;
-            this.page = {current: dataDrivers.pageNumber, total: dataDrivers.totalPages};
+            this.page = { current: dataDrivers.pageNumber, total: dataDrivers.totalPages };
         } catch (error) {
             console.error("Ошибка при получении списка грузов:", error);
         }
@@ -39,7 +40,7 @@ class DriverStore {
     }
 
     setCurrentPage(page) {
-        this.page = {...this.page, current: page};
+        this.page = { ...this.page, current: page };
     }
 
     getTotalPages() {
@@ -47,6 +48,8 @@ class DriverStore {
     }
 
     setDriverFormDataFromServer = (data) => {
+        data = {...data, "imagesIds": data.images}
+        delete data['images'];
         this.originalDriverFormData = data;
         this.driverFormData = { ...data };
     }
@@ -68,7 +71,8 @@ class DriverStore {
             licenseCategory: "",
             licenseNumber: "",
             issueDate: "",
-            expirationDate: ""
+            expirationDate: "",
+            imagesIds: []
         };
     }
 }

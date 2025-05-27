@@ -7,18 +7,26 @@ import { observer } from "mobx-react-lite";
 import { addDriver, getDetailsDriver, updateDriver } from "../../../api/driverService";
 import { toJS } from "mobx";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { deleteFile, loadFile } from "../../../api/commonService";
 
 const DriverPostPage = observer(({ typePage }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const param = useParams();
     const id = param.id;
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         async function getData() {
-            const data = await getDetailsDriver(id);
-            driverStore.setDriverFormDataFromServer(data);
+            setIsLoading(true);
+            try {
+                const data = await getDetailsDriver(id);
+                driverStore.setDriverFormDataFromServer(data);
+            } finally {
+                setIsLoading(false);
+            };
         };
         if (!location.pathname.startsWith("/driver/edit")) {
             driverStore.resetFormData();
@@ -29,6 +37,10 @@ const DriverPostPage = observer(({ typePage }) => {
 
     const handleInputChange = ({ target: { name, value } }) => {
         driverStore.setFormData(name, value);
+    };
+
+    const handleDeleteImage = async (id) => {
+        await deleteFile(id);
     };
 
     const handleCLick = async () => {
@@ -69,7 +81,15 @@ const DriverPostPage = observer(({ typePage }) => {
                 </div>
                 <div className="cargoList__content">
                     <h2 className="driver__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} данные о водителе</h2>
-                    <DriverForm data={driverStore.driverFormData} onChange={handleInputChange} />
+                    <DriverForm
+                        data={driverStore.driverFormData}
+                        onChange={handleInputChange}
+                        isLoadingData={isLoading}
+                        onChangeImage={driverStore.setFormData}
+                        onDeleteFile={handleDeleteImage}
+                        onLoadImage={loadFile}
+                        typePage={typePage}
+                    />
                     <div className="driver__btnBox">
                         <button className="driver__button" onClick={handleCLick}>{typePage === 'add' ? 'Опубликовать запись' : 'Сохранить изменения'}</button>
                     </div>

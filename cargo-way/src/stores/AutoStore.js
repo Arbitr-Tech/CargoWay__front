@@ -156,7 +156,7 @@ class AutoStore {
                 volume: serverData.embeddedTrailer?.volume || 0
             },
             trailersIds: serverData.trailers?.map(trailer => trailer.id) || [],
-            // photos: serverData.photos || []
+            imagesIds: serverData.images || []
         };
     };
 

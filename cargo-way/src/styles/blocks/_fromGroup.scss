@@ -19,6 +19,7 @@
         @include m.laptop {
             width: 20%;
         }
+
         @include m.tablet {
             width: 100%;
             text-align: center;
@@ -53,6 +54,19 @@
 
         &--photo {
             width: 50%;
+
+            @include m.laptop {
+                width: 90%;
+            }
+        }
+
+        &--driverPhoto {
+            width: auto;
+            margin-left: -0.9rem;
+
+            @include m.laptop {
+                width: 90%;
+            }
         }
 
         @include m.laptop {
@@ -67,6 +81,7 @@
             gap: 1rem;
         }
 
+
     }
 
     &--company,
@@ -75,21 +90,33 @@
         width: 80%;
     }
 
-    &--driver {
+    &--driver,
+    &--driverPhoto {
         width: 100%;
         justify-content: space-between;
+
         & span {
             min-width: 50%;
         }
     }
 
+    &--driverPhoto {
+        justify-content: start;
+    }
+
+
     &--photo {
         max-width: 45%;
         gap: 4.5rem;
-        justify-self: start;  
+        justify-self: start;
         margin: 0 0 2.2rem 0;
 
-        @include m.mobile {
+        @include m.laptop {
+            max-width: 80%;
+        }
+
+        @include m.tablet {
+            align-self: center;
             gap: 2.2rem;
             margin-bottom: 1rem;
         }
