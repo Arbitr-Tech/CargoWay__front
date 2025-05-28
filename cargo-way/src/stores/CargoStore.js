@@ -22,7 +22,7 @@ class CargoStore {
         bodyType: "",
         loadType: "",
         unloadType: "",
-        // photos: []
+        imagesIds: []
     };
 
     originalCargoFormData = {};
@@ -47,6 +47,8 @@ class CargoStore {
     }
 
     setCargoFormDataFromServer = (data) => {
+        data = { ...data, "imagesIds": data.images };
+        delete data['images'];
         this.originalCargoFormData = data;
         this.cargoFormData = { ...data };
     }
@@ -85,7 +87,7 @@ class CargoStore {
             bodyType: "",
             loadType: "",
             unloadType: "",
-            // photos: []
+            imagesIds: []
         };
     }
 }

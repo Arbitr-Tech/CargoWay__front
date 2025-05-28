@@ -86,9 +86,7 @@ const TrailerForm = ({ data, onChange, onLoadImage, onDeleteFile, onChangeImage,
 
 
     const handleRemoveImage = (index, id) => {
-        if (typePage === 'add') {
-            onDeleteFile(id);
-        }
+        onDeleteFile(id);
         const updatedImages = uploadedImages.filter((_, i) => i !== index);
         setUploadedImages(updatedImages);
         onChangeImage("imagesIds", updatedImages.map(img => img.id));

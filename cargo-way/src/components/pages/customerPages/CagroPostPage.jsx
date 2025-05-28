@@ -1,5 +1,5 @@
 import { toJS } from "mobx";
-import { loadFile } from "../../../api/commonService";
+import { deleteFile, loadFile } from "../../../api/commonService";
 import { cargoStore } from "../../../stores/CargoStore";
 import CargoForm from "../../forms/CargoForm";
 import TopBar from "../../TopBar";
@@ -15,13 +15,17 @@ const CargoPostPage = observer(({ typePage }) => {
     const params = useParams();
     const id = params.id;
     const location = useLocation();
-
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function getData() {
-            const data = await getDetailsCargo(id);
-            cargoStore.setCargoFormDataFromServer(data.cargo);
+            setIsLoading(true);
+            try {
+                const data = await getDetailsCargo(id);
+                cargoStore.setCargoFormDataFromServer(data.cargo);
+            } finally {
+                setIsLoading(false);
+            };
         };
 
         if (!location.pathname.startsWith("/cargo/edit")) {
@@ -38,6 +42,10 @@ const CargoPostPage = observer(({ typePage }) => {
         } else {
             cargoStore.setFormData(name, value);
         }
+    };
+
+    const handleDeleteImage = async (id) => {
+        await deleteFile(id);
     };
 
     const handleNestedInputChange = ({ target: { name, dataset, value, valueAsNumber, type } }) => {
@@ -82,7 +90,16 @@ const CargoPostPage = observer(({ typePage }) => {
             <div className="container">
                 <TopBar />
                 <h2 className="cargo__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} груз</h2>
-                <CargoForm data={cargoStore.cargoFormData} onChange={handleInputChange} onNestedChange={handleNestedInputChange} onChangeImage={cargoStore.setFormData} onLoadImage={loadFile} />
+                <CargoForm
+                data={cargoStore.cargoFormData}
+                onChange={handleInputChange}
+                onNestedChange={handleNestedInputChange}
+                isLoadingData={isLoading}
+                onChangeImage={cargoStore.setFormData}
+                onDeleteFile={handleDeleteImage}
+                onLoadImage={loadFile}
+                typePage={typePage}
+                />
                 <div className="cargo__btnBox">
                     <button className="cargo__button"
                         onClick={handleClickButton}

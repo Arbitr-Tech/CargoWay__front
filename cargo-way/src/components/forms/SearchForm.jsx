@@ -123,15 +123,16 @@ const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
                                 name="dimensions"
-                                data-path="length"
-                                value={data.dimensions['length'] || ''}
+                                data-path="lengthFrom"
+                                value={data.dimensions['lengthFrom'] || ''}
                                 placeholder="от"
                                 onChange={onNestedChange}
                             />
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
-                                // name="weightTo"
-                                // value={data.weightTo || ''}
+                                name="dimensions"
+                                data-path="lengthTo"
+                                value={data.dimensions['lengthTo'] || ''}
                                 placeholder="до"
                                 onChange={onNestedChange}
                             />
@@ -143,15 +144,16 @@ const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
                                 name="dimensions"
-                                data-path="width"
-                                value={data.dimensions['width'] || ''}
+                                data-path="widthFrom"
+                                value={data.dimensions['widthFrom'] || ''}
                                 placeholder="от"
                                 onChange={onNestedChange}
                             />
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
-                                // name="weightTo"
-                                // value={data.weightTo || ''}
+                                name="dimensions"
+                                data-path="widthTo"
+                                value={data.dimensions['widthTo'] || ''}
                                 placeholder="до"
                                 onChange={onNestedChange}
                             />
@@ -163,16 +165,16 @@ const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
                                 name="dimensions"
-                                data-path="height"
-                                value={data.dimensions['height'] || ''}
-                                // value={data.volumeFrom || ''}
+                                data-path="heightFrom"
+                                value={data.dimensions['heightFrom'] || ''}
                                 placeholder="от"
                                 onChange={onNestedChange}
                             />
                             <input className="search__form-input search__form-input--fromTo"
                                 type="number"
-                                // name="weightTo"
-                                // value={data.weightTo || ''}
+                                name="dimensions"
+                                data-path="heightTo"
+                                value={data.dimensions['heightTo'] || ''}
                                 placeholder="до"
                                 onChange={onNestedChange}
                             />

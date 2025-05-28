@@ -46,10 +46,14 @@
         }
 
         &--company,
-        &--individual,
         &--contact {
             justify-content: center;
             width: 40%;
+        }
+
+        &--individual {
+            justify-content: end;
+            width: 50%;
         }
 
         &--photo {
@@ -102,6 +106,16 @@
 
     &--driverPhoto {
         justify-content: start;
+
+        @include m.tablet {
+            text-align: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @include m.mobile {
+            margin-bottom: 0.5rem;
+        }
     }
 
 
@@ -120,5 +134,16 @@
             gap: 2.2rem;
             margin-bottom: 1rem;
         }
+    }
+
+    &--cargo {
+        @include m.laptop {
+            margin-inline: 1rem;
+        };
+
+        @include m.tablet {
+            margin-inline: 0;
+            gap: 1rem;
+        };
     }
 }

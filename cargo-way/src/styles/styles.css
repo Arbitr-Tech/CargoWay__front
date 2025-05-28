@@ -1707,6 +1707,15 @@ input[type=date]::-webkit-datetime-edit {
 .trailerForm__gallery-button:last-child {
   margin-bottom: 0.5rem;
 }
+@media (max-width: 576px) {
+  .cargoForm__gallery-button,
+  .autoForm__gallery-button,
+  .driverForm__gallery-button,
+  .profileForm__gallery-button,
+  .trailerForm__gallery-button {
+    padding: 0.5rem;
+  }
+}
 .cargoForm__button,
 .autoForm__button,
 .driverForm__button,
@@ -1769,6 +1778,46 @@ input[type=date]::-webkit-datetime-edit {
   .driverForm__categories {
     display: flex;
     justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .cargoForm__input {
+    width: 90%;
+  }
+}
+@media (max-width: 576px) {
+  .cargoForm__input {
+    width: 80%;
+  }
+}
+@media (max-width: 768px) {
+  .cargoForm__input--short {
+    max-width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .cargoForm__textarea {
+    max-width: 90%;
+    width: 90%;
+  }
+}
+@media (max-width: 576px) {
+  .cargoForm__textarea {
+    width: 80%;
+  }
+}
+@media (max-width: 1120px) {
+  .cargoForm__photos {
+    margin-left: 1rem;
+  }
+}
+.cargoForm__photos-gallery {
+  margin-inline: 2.2rem;
+}
+@media (max-width: 768px) {
+  .cargoForm__photos-gallery {
+    margin: 0;
   }
 }
 
@@ -2050,9 +2099,13 @@ input[type=date]::-webkit-datetime-edit {
   display: flex;
   flex-direction: column;
 }
-.formGroup__group--company, .formGroup__group--individual, .formGroup__group--contact {
+.formGroup__group--company, .formGroup__group--contact {
   justify-content: center;
   width: 40%;
+}
+.formGroup__group--individual {
+  justify-content: end;
+  width: 50%;
 }
 .formGroup__group--photo {
   width: 50%;
@@ -2097,6 +2150,18 @@ input[type=date]::-webkit-datetime-edit {
 .formGroup--driverPhoto {
   justify-content: start;
 }
+@media (max-width: 768px) {
+  .formGroup--driverPhoto {
+    text-align: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 576px) {
+  .formGroup--driverPhoto {
+    margin-bottom: 0.5rem;
+  }
+}
 .formGroup--photo {
   max-width: 45%;
   gap: 4.5rem;
@@ -2113,6 +2178,17 @@ input[type=date]::-webkit-datetime-edit {
     align-self: center;
     gap: 2.2rem;
     margin-bottom: 1rem;
+  }
+}
+@media (max-width: 1120px) {
+  .formGroup--cargo {
+    margin-inline: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .formGroup--cargo {
+    margin-inline: 0;
+    gap: 1rem;
   }
 }
 
@@ -2338,7 +2414,6 @@ input[type=date]::-webkit-datetime-edit {
   justify-content: space-between;
   gap: 2.2rem;
   margin-bottom: 2.2rem;
-  max-height: 100%;
 }
 @media (max-width: 768px) {
   .profile__inner {
@@ -2479,7 +2554,6 @@ input[type=date]::-webkit-datetime-edit {
   box-shadow: none;
 }
 .profileForm__title--company, .profileForm__title--individual {
-  margin-top: -4.2rem;
   margin-bottom: 2.7rem;
 }
 @media (max-width: 768px) {
@@ -2487,8 +2561,8 @@ input[type=date]::-webkit-datetime-edit {
     margin-top: 0;
   }
 }
-.profileForm__button--company, .profileForm__button--individual {
-  margin-top: 5rem;
+.profileForm__button--company {
+  margin-top: 14%;
 }
 @media (max-width: 768px) {
   .profileForm__button--company, .profileForm__button--individual {

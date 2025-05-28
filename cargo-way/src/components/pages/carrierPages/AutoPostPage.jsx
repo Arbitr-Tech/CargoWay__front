@@ -23,7 +23,6 @@ const AutoPostPage = observer(({ typePage }) => {
             setIsLoading(true);
             try {
                 const data = await getDetailsTransport(id);
-                console.log(data)
                 autoStore.setTransportFormDataFromServer(data);
             } finally {
                 setIsLoading(false);
@@ -89,7 +88,6 @@ const AutoPostPage = observer(({ typePage }) => {
                 toast.success("Успешно");
             } else {
                 const data = autoStore.getUpdatedFields();
-                console.log(data)
                 await updateAuto(id, data);
                 navigate('/auto/list');
                 toast.success("Успешно");

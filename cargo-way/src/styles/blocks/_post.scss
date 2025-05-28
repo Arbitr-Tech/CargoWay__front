@@ -320,16 +320,18 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
 
-
             &:last-child {
                 margin-bottom: 0.5rem;
+            }
+
+            @include m.mobile {
+                padding: 0.5rem;
             }
         }
     }
 
     &__button {
         @include m.button(v.$primary-color, v.$font-light-color);
-
 
         &:last-child {
             margin-bottom: 0.5rem;
@@ -361,6 +363,49 @@
         @include m.tablet {
             display: flex;
             justify-content: center;
+        }
+    }
+}
+
+.cargoForm {
+    &__input {
+        @include m.tablet {
+            width: 90%;
+        }
+
+        @include m.mobile {
+            width: 80%;
+        }
+
+        &--short {
+            @include m.tablet {
+                max-width: 50%;
+            }
+        }
+    }
+
+    &__textarea {
+        @include m.tablet {
+            max-width: 90%;
+            width: 90%;
+        }
+
+        @include m.mobile {
+            width: 80%;
+        }
+    }
+
+    &__photos {
+        @include m.laptop {
+            margin-left: 1rem;
+        }
+
+        &-gallery {
+            margin-inline: 2.2rem;
+
+            @include m.tablet {
+                margin: 0;
+            }
         }
     }
 }

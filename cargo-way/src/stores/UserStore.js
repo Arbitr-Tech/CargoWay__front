@@ -12,6 +12,7 @@ class UserStore {
         company: null,
         individual: null,
         contactData: null,
+        imagesIds: []
     };
     id = '';
 
@@ -31,6 +32,8 @@ class UserStore {
     };
 
     setUserFormData(data) {
+        data = {...data, "imagesIds": data.individual?.images};
+        delete data.individual?.['images'];
         this.originalUserFormData = data;
         this.userFormData = { ...data };
         this.setRole(this.originalUserFormData.userData.role);
@@ -74,15 +77,6 @@ class UserStore {
             }
         };
     };
-
-    // fetchId = async() => {
-    //     try {
-    //         const data = await getProfileData();
-    //         this.id = data.id;
-    //     } catch (error) {
-    //         console.error("Ошибка при получении id:", error);
-    //     };
-    // };
 
     reset = () => {
         this.userFormData = { ...this.originalUserFormData }
