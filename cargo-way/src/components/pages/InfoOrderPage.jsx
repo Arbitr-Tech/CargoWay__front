@@ -161,28 +161,32 @@ const InfoOrderPage = observer(({ typePage }) => {
                     onClickRating={(value) => handleReview(
                         { target: { name: 'rating', value } }
                     )}
-                    onClose={ () => setPopupWithRating(false) }
+                    onClose={() => setPopupWithRating(false)}
                 />
-                <TopBar />
-                <h2 className="cargoList__title">Информация о заказе</h2>
-                <InfoAboutOrder
-                    {...cargoStore.cargoFormData}
-                    from={cargoStore.cargoFormData.route.from}
-                    to={cargoStore.cargoFormData.route.to}
-                    length={cargoStore.cargoFormData.dimensions['length']}
-                    width={cargoStore.cargoFormData.dimensions.width}
-                    height={cargoStore.cargoFormData.dimensions.height}
-                    onClickCancel={handleClickCancel}
-                    onClickEnd={() => setPopupWithRating(true)}
-                    customer={responseStore.response.owner ? responseStore.response.owner.profileName : ''}
-                    carrier={responseStore.response.executor ? responseStore.response.executor.profileName : ''}
-                    transport={responseStore.response.executorTransport ? `${responseStore.response.executorTransport.brand} ${responseStore.response.executorTransport.model}` : ''}
-                    disabled={responseStore.response.endExecution === null}
-                    disabledFromCarrier={responseStore.response.endExecution !== null}
-                    idCarrier={responseStore.response.executor ? responseStore.response.executor.id : ''}
-                    idCustomer={responseStore.response.owner ? responseStore.response.owner.id : ''}
-                    onClickAuto={handleClickSee}
-                    typePage={typePage} />
+                <div className="container__menu">
+                    <TopBar />
+                </div>
+                <div className="container__content">
+                    <h2 className="cargoList__title">Информация о заказе</h2>
+                    <InfoAboutOrder
+                        {...cargoStore.cargoFormData}
+                        from={cargoStore.cargoFormData.route?.from || ''}
+                        to={cargoStore.cargoFormData.route?.to || ''}
+                        length={cargoStore.cargoFormData.dimensions?.length || ''}
+                        width={cargoStore.cargoFormData.dimensions?.width || ''}
+                        height={cargoStore.cargoFormData.dimensions?.height || ''}
+                        onClickCancel={handleClickCancel}
+                        onClickEnd={() => setPopupWithRating(true)}
+                        customer={responseStore.response.owner ? responseStore.response.owner.profileName : ''}
+                        carrier={responseStore.response.executor ? responseStore.response.executor.profileName : ''}
+                        transport={responseStore.response.executorTransport ? `${responseStore.response.executorTransport.brand} ${responseStore.response.executorTransport.model}` : ''}
+                        disabled={responseStore.response.endExecution === null}
+                        disabledFromCarrier={responseStore.response.endExecution !== null}
+                        idCarrier={responseStore.response.executor ? responseStore.response.executor.id : ''}
+                        idCustomer={responseStore.response.owner ? responseStore.response.owner.id : ''}
+                        onClickAuto={handleClickSee}
+                        typePage={typePage} />
+                </div>
             </div>
         </div>
     );

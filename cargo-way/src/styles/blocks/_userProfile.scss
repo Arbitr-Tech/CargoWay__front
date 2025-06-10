@@ -2,7 +2,6 @@
 @use '../mixins' as m;
 
 .userProfile {
-    // height: 100%;
     padding-bottom: 2.2rem;
 
     &__inner {
@@ -125,12 +124,21 @@
     display: flex;
     flex-direction: column;
 
+    &__userInfo,
+    &__rating,
+    &__comment {
+        margin-inline: 2.2rem;
+        text-align: left;
+
+        @include m.mobile {
+            margin-inline: 1rem;
+        }
+    }
+
     &__userInfo {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-inline: 2.2rem;
-        text-align: left;
 
         &-btnBox {
             @include m.center();
@@ -139,6 +147,10 @@
             &--hide {
                 display: none;
             }
+        }
+
+        @include m.mobile {
+            flex-direction: column;
         }
     }
 
@@ -158,9 +170,6 @@
     }
 
     &__rating {
-        text-align: left;
-        margin-inline: 2.2rem;
-
         &-content span {
             color: v.$active-color;
         }
@@ -168,6 +177,5 @@
 
     &__comment {
         text-align: justify;
-        margin-inline: 2.2rem;
     }
 }

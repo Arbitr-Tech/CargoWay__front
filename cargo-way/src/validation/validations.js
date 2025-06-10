@@ -249,7 +249,7 @@ const validatePopupWithRating = (data) => {
     const { comment, rating } = data;
 
     if (!comment.trim() || !rating) return { popup: 'Необходимо полностью заполнить отзыв' }
-
+    return {};
 }
 
 export { validateRegistration, validateContactData, validateCompanyData, validateIndividaulData, validateCargo, validateDriverData, validateTrailerData, validateTransportData, validatePopupWithRating };

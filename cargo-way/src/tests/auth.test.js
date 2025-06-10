@@ -40,7 +40,7 @@ describe("Авторизация", () => {
             })
         );
 
-        render(renderWithRouter(null, '/auth')); // Рендерим компонент
+        render(renderWithRouter(null, '/auth'));
 
         await fillElements("user@example.com", "SecurePass123");
 

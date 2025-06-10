@@ -5,10 +5,7 @@
 .popupWithInput,
 .popupWithChoice,
 .popupWithRating {
-    // position: fixed;
     margin: 5% auto;
-    // top:15%;
-    // left: 27%;
     z-index: 999;
     max-width: 50%;
     max-height: 65%;
@@ -33,6 +30,17 @@
             border-bottom: 1px solid v.$active-color;
             margin-left: 0;
             transition: background-color 0.2s;
+
+            &--photo {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &--obj {
+                @include m.tablet {
+                    flex-direction: column;
+                }
+            }
         }
 
         &-title {
@@ -49,6 +57,18 @@
             margin: 0;
         }
 
+        &-imageBox {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 100%;
+        }
+
+    }
+
+    &__imageBox-img {
+        width: 100%;
+        cursor: pointer;
     }
 
     &__buttons {
@@ -107,7 +127,7 @@
     }
 
     &__content {
-        width: 100%; 
+        width: 100%;
         margin-top: 1rem;
         overflow: hidden;
     }

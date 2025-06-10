@@ -273,7 +273,7 @@ const TopBar = () => {
                         {role ? (
                             <>
                                 <button
-                                    className="topbar__mobile-auth-link"
+                                    className="topbar__mobile-authLink"
                                     onClick={() => {
                                         navigate("/profile");
                                         setIsMobileMenuOpen(false);
@@ -282,7 +282,7 @@ const TopBar = () => {
                                     Профиль
                                 </button>
                                 <button
-                                    className="topbar__mobile-auth-link"
+                                    className="topbar__mobile-authLink"
                                     onClick={() => {
                                         handleLogoutClick();
                                         setIsMobileMenuOpen(false);
@@ -295,14 +295,14 @@ const TopBar = () => {
                             <>
                                 <Link
                                     to="/auth"
-                                    className="topbar__mobile-auth-link"
+                                    className="topbar__mobile-authLink"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Войти
                                 </Link>
                                 <Link
                                     to="/reg"
-                                    className="topbar__mobile-auth-link topbar__mobile-auth-link--primary"
+                                    className="topbar__mobile-authLink topbar__mobile-authLink--primary"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Регистрация

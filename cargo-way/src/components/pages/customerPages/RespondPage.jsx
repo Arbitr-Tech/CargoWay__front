@@ -46,7 +46,7 @@ const RespondPage = observer(() => {
     const handleClickSee = async (item) => {
         try {
             const data = await getDetailsTransport(item.transportDetails.id);
-            openPopup({type: 'detailsTransport', item: data});
+            openPopup({ type: 'detailsTransport', item: data });
         } catch (error) {
             console.log(error);
         };
@@ -93,27 +93,31 @@ const RespondPage = observer(() => {
                     text={popupData.text !== '' ? popupData.text : popupData.item}
                     typePopup={popupData.type}
                     onClose={closePopup}
-                    onConfirm={ handleClickDel }
+                    onConfirm={handleClickDel}
                 />
-                <TopBar />
-                <div className="respondPage__inner">
-                    <InfoAboutOrder
-                        {...cargoStore.cargoFormData}
-                        typePage='customer_biddings'
-                        from={cargoStore.cargoFormData.route.from}
-                        to={cargoStore.cargoFormData.route.to}
-                        length={cargoStore.cargoFormData.dimensions['length']}
-                        width={cargoStore.cargoFormData.dimensions.width}
-                        height={cargoStore.cargoFormData.dimensions.height}
-                        onClickCancel={ handleClickDraft }
-                        onClickEnd={() => openPopup({text: 'Вы действительно хотите удалить заказ?', type: 'del', item: null})}
-                    />
-                    <ListCarrier
-                        listCarrier={responseStore.response.responses}
-                        onClickSee={(item) => handleClickSee(item)}
-                        onClickAccept={(item) => handleClickChoice(item)}
-                        onClickProfile={(item) => navigate(`/userProfile/${item.responderDetails.id}`)}
-                    />
+                <div className="container__menu">
+                    <TopBar />
+                </div>
+                <div className="container__content">
+                    <div className="respondPage__inner">
+                        <InfoAboutOrder
+                            {...cargoStore.cargoFormData}
+                            typePage='customer_biddings'
+                            from={cargoStore.cargoFormData.route?.from || ''}
+                            to={cargoStore.cargoFormData.route?.to || ''}
+                            length={cargoStore.cargoFormData.dimensions?.length || ''}
+                            width={cargoStore.cargoFormData.dimensions?.width || ''}
+                            height={cargoStore.cargoFormData.dimensions?.height || ''}
+                            onClickCancel={handleClickDraft}
+                            onClickEnd={() => openPopup({ text: 'Вы действительно хотите удалить заказ?', type: 'del', item: null })}
+                        />
+                        <ListCarrier
+                            listCarrier={responseStore.response.responses}
+                            onClickSee={(item) => handleClickSee(item)}
+                            onClickAccept={(item) => handleClickChoice(item)}
+                            onClickProfile={(item) => navigate(`/userProfile/${item.responderDetails.id}`)}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

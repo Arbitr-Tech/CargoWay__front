@@ -13,8 +13,10 @@ import { createResponse, getDetailsCargo } from "../../../api/cargoService";
 import { autoStore } from "../../../stores/AutoStore";
 import PopupWithChoice from "../../popups/PopupWithChange";
 import { userStore } from "../../../stores/UserStore";
+import { useNavigate } from "react-router-dom";
 
 const SearchCargoPage = observer(() => {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const role = userStore.role;
     const [popupData, setPopupData] = useState({ isOpen: false, text: "", type: "" });

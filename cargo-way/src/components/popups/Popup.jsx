@@ -22,7 +22,7 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
         bodyType: "Тип кузова",
         loadType: "Тип загрузки",
         unloadType: "Тип выгрузки",
-        photos: "Фото груза",
+        images: "Фото",
         brand: "Марка",
         model: "Модель",
         manufactureYear: "Год выпуска",
@@ -40,28 +40,82 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
         trailers: "Полуприцеп",
     };
 
-    const renderText = (data) => {
-        if (!data || typeof data !== "object") return null; // Проверяем, что data - объект
-
-        const renderEntries = (obj) => (
-            <ul className="popup__text-list">
-                {Object.entries(obj || {})
-                    .filter(([key]) => key !== 'id')
-                    .map(([key, value]) => (
-                        <li key={key} className="popup__text-item">
-                            <span className="popup__text-title">
-                                {fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:
-                            </span>
-                            {value && typeof value === "object" ? (value.length === 0 ? 'Отсутсвует' : renderEntries(value)) : (value === null) ? 'Отсутсвует' : ` ${value}`}
-                        </li>
-
-                    ))}
-            </ul>
-        );
-
-        return renderEntries(data);
+    const formatValue = (value) => {
+        if (value === null || value === undefined) return 'Отсутствует';
+        if (Array.isArray(value) && value.length === 0) return 'Отсутствует';
+        if (typeof value === 'object' && value.length === 0) return 'Отсутствует';
+        return value;
     };
 
+    const renderImages = (images) => {
+        if (!images || images.length === 0) return 'Отсутствует';
+
+        return (
+            <div className="popup__text-imageBox">
+                {images.map((img, index) => (
+                    <a
+                        key={index}
+                        href={`https://cargo-way-service.ru/minio/${img.path}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                    >
+                        <img
+                            src={`https://cargo-way-service.ru/minio/${img.path}`}
+                            alt={`Фото ${index + 1}`}
+                            className="popup__imageBox-img"
+                        />
+                    </a>
+                ))}
+            </div>
+        );
+    };
+
+    const renderObjectEntries = (obj, parentKey = '') => {
+        return (
+            <ul className="popup__text-list">
+                {Object.entries(obj || {})
+                    .filter(([key]) => {
+                        if (key === 'id') return false;
+                        if (parentKey === 'driver' && key === 'images') return false;
+                        return true;
+                    })
+                    .map(([key, value]) => {
+                        const formattedValue = formatValue(value);
+
+                        return (
+                            <li
+                                key={key}
+                                className={`popup__text-item
+                                ${key === 'images' ? 'popup__text-item--photo' : ''}
+                                ${typeof value === 'object' ? 'popup__text-item--obj' : ''}
+                            `}
+                            >
+                                <span className="popup__text-title">
+                                    {fieldNames[key] || key.charAt(0).toUpperCase() + key.slice(1)}:
+                                </span>
+
+                                {key === 'images'
+                                    ? renderImages(value)
+                                    : typeof value === 'object' && value !== null && !Array.isArray(value)
+                                        ? formattedValue === 'Отсутсвует' ?
+                                            'Отсутсвует'
+                                            : renderObjectEntries(value, key)
+                                        : formatValue(value)
+                                }
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        );
+    };
+
+    const renderContent = () => {
+        if (typePopup === 'details' || typePopup === 'detailsTransport') {
+            return renderObjectEntries(text);
+        }
+        return text;
+    };
 
     return ReactDOM.createPortal(
         <div className={`overlay ${isOpen ? "overlay--show" : ""}`}>
@@ -70,7 +124,7 @@ const Popup = ({ isOpen, text, typePopup, onClose, onConfirm, onRespond }) => {
                     <img src="/assets/img/close.svg" alt="close" onClick={onClose} />
                 </div>
                 <div className="popup__text">
-                    {(typePopup === 'details' || typePopup === 'detailsTransport') ? renderText(text) : text}
+                    {renderContent()}
                 </div>
                 {(typePopup !== 'details' && typePopup !== 'auth' && typePopup !== 'detailsTransport') && (
                     <div className="popup__buttons">

@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { userStore } from '../stores/UserStore'; // путь подставьте свой
+import { userStore } from '../stores/UserStore';
 
 const ProtectedRoute = observer(({ children, allowedRoles }) => {
     const { role } = userStore;
