@@ -16,8 +16,8 @@ const ListItems = ({ list, type, buttons = [], getButtons }) => {
                 {list.map((item) => (
                     <ItemCard key={item.id}
                         {...item.cargo}
-                        from={item.cargo.route.from}
-                        to={item.cargo.route.to}
+                        from={item.cargo.route?.from || ''}
+                        to={item.cargo.route?.to || ''}
                         status={item.visibilityStatus}
                         type={type}
                         buttons={getButtons ? getButtons(item) : buttons.map(btn => ({
