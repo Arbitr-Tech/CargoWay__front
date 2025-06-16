@@ -4,17 +4,33 @@ import React from "react";
 
 const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage, typePage, isLoadingData, onDeleteFile }) => {
 
-    const bodyType = [
-        { id: 1, name: "Option 1" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
-        { id: 25, name: "Option 5" },
-        { id: 35, name: "Option 6" },
-        { id: 43, name: "Option 7" },
-        { id: 27, name: "Option 8" },
-        { id: 32, name: "Option 9" },
-        { id: 49, name: "Option 10" },
+        const bodyType = [
+        { id: 1, name: 'Платформа' },
+        { id: 2, name: 'Фургон' },
+        { id: 3, name: 'Цистерна' },
+        { id: 4, name: 'Рефрижератор' },
+        { id: 5, name: 'Шторный' },
+        { id: 6, name: 'Самосвал' },
+        { id: 7, name: 'Контейнеровоз' },
+        { id: 8, name: 'Низкорамный трал' },
+        { id: 9, name: 'Танк-контейнер' },
+        { id: 10, name: 'Зерновоз' },
+        { id: 11, name: 'Изотермический' },
+        { id: 12, name: 'Навалочные грузы' },
+    ];
+
+    const loadingType = [
+        { id: 1, name: 'Загрузка спереди' },
+        { id: 2, name: 'Загрузка сзади' },
+        { id: 3, name: 'Загрузка сбоку' },
+        { id: 4, name: 'Загрузка сверху' },
+    ];
+
+    const unloadingType = [
+        { id: 1, name: 'Выгрузка спереди' },
+        { id: 2, name: 'Выгрузка сзади' },
+        { id: 3, name: 'Выгрузка сбоку' },
+        { id: 4, name: 'Выгрузка сверху' },
     ];
 
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -213,7 +229,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage,
                 <label className="cargoForm__label">
                     <span className="cargoForm__label-text">Тип загрузки</span>
                     <div className="cargoForm__input-group">
-                        {bodyType.map((option) => (
+                        {loadingType.map((option) => (
                             <label key={option.id} className="cargoForm__radiobox-label">
                                 <input className="cargoForm__radiobox"
                                     type="radio"
@@ -230,7 +246,7 @@ const CargoForm = ({ data, onChange, onNestedChange, onChangeImage, onLoadImage,
                 <label className="cargoForm__label">
                     <span className="cargoForm__label-text">Тип выгрузки</span>
                     <div className="cargoForm__input-group">
-                        {bodyType.map((option) => (
+                        {unloadingType.map((option) => (
                             <label key={option.id} className="cargoForm__radiobox-label">
                                 <input className="cargoForm__radiobox"
                                     type="radio"

@@ -5,16 +5,32 @@ import { useMask } from "@react-input/mask";
 
 const AutoForm = ({ isLoadingData, data, onChange, autoEmbeddedTrailer, autoAdditionalTrailer, onNestedChange, onClickButtonEmbeddedTrailer, onClickButtonAdditionalTrailer, onLoadImage, onChangeImage, typePage, listDrivers, listTrailers, onDeleteFile }) => {
     const bodyType = [
-        { id: 1, name: "Option 1" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
-        { id: 24, name: "Option 5" },
-        { id: 36, name: "Option 6" },
-        { id: 47, name: "Option 7" },
-        { id: 21, name: "Option 8" },
-        { id: 34, name: "Option 9" },
-        { id: 45, name: "Option 10" },
+        { id: 1, name: 'Платформа' },
+        { id: 2, name: 'Фургон' },
+        { id: 3, name: 'Цистерна' },
+        { id: 4, name: 'Рефрижератор' },
+        { id: 5, name: 'Шторный' },
+        { id: 6, name: 'Самосвал' },
+        { id: 7, name: 'Контейнеровоз' },
+        { id: 8, name: 'Низкорамный трал' },
+        { id: 9, name: 'Танк-контейнер' },
+        { id: 10, name: 'Зерновоз' },
+        { id: 11, name: 'Изотермический' },
+        { id: 12, name: 'Навалочные грузы' },
+    ];
+
+    const loadingType = [
+        { id: 1, name: 'Загрузка спереди' },
+        { id: 2, name: 'Загрузка сзади' },
+        { id: 3, name: 'Загрузка сбоку' },
+        { id: 4, name: 'Загрузка сверху' },
+    ];
+
+    const unloadingType = [
+        { id: 1, name: 'Выгрузка спереди' },
+        { id: 2, name: 'Выгрузка сзади' },
+        { id: 3, name: 'Выгрузка сбоку' },
+        { id: 4, name: 'Выгрузка сверху' },
     ];
 
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -205,7 +221,7 @@ const AutoForm = ({ isLoadingData, data, onChange, autoEmbeddedTrailer, autoAddi
                                 <div className="autoForm__gallery-preview">
                                     {image.path ? (
                                         <img
-                                            src={`https://cargo-way-service.ru/minio/${image.path}`} 
+                                            src={`https://cargo-way-service.ru/minio/${image.path}`}
                                             alt={`Фото ${index + 1}`}
                                             className="autoForm__gallery-image"
                                         />
@@ -300,7 +316,7 @@ const AutoForm = ({ isLoadingData, data, onChange, autoEmbeddedTrailer, autoAddi
                         <label className="autoForm__label">
                             <span className="autoForm__label-text">Тип загрузки</span>
                             <div className="autoForm__input-group">
-                                {bodyType.map((option) => (
+                                {loadingType.map((option) => (
                                     <label key={`load-${option.id}`} className="radiobox-label">
                                         <input
                                             type="radio"
@@ -323,7 +339,7 @@ const AutoForm = ({ isLoadingData, data, onChange, autoEmbeddedTrailer, autoAddi
                         <label className="autoForm__label">
                             <span className="autoForm__label-text">Тип выгрузки</span>
                             <div className="autoForm__input-group">
-                                {bodyType.map((option) => (
+                                {unloadingType.map((option) => (
                                     <label key={`unload-${option.id}`} className="radiobox-label">
                                         <input
                                             type="radio"

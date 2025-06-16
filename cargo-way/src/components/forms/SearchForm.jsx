@@ -2,23 +2,33 @@ import React from "react";
 
 const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
 
-    const bodyType = [
-        { id: 1, name: "Option 1" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
+        const bodyType = [
+        { id: 1, name: 'Платформа' },
+        { id: 2, name: 'Фургон' },
+        { id: 3, name: 'Цистерна' },
+        { id: 4, name: 'Рефрижератор' },
+        { id: 5, name: 'Шторный' },
+        { id: 6, name: 'Самосвал' },
+        { id: 7, name: 'Контейнеровоз' },
+        { id: 8, name: 'Низкорамный трал' },
+        { id: 9, name: 'Танк-контейнер' },
+        { id: 10, name: 'Зерновоз' },
+        { id: 11, name: 'Изотермический' },
+        { id: 12, name: 'Навалочные грузы' },
     ];
-    const unloadType = [
-        { id: 1, name: "Option 1" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
+
+    const loadingType = [
+        { id: 1, name: 'Загрузка спереди' },
+        { id: 2, name: 'Загрузка сзади' },
+        { id: 3, name: 'Загрузка сбоку' },
+        { id: 4, name: 'Загрузка сверху' },
     ];
-    const loadType = [
-        { id: 1, name: "Option 1" },
-        { id: 2, name: "Option 2" },
-        { id: 3, name: "Option 3" },
-        { id: 4, name: "Option 4" },
+
+    const unloadingType = [
+        { id: 1, name: 'Выгрузка спереди' },
+        { id: 2, name: 'Выгрузка сзади' },
+        { id: 3, name: 'Выгрузка сбоку' },
+        { id: 4, name: 'Выгрузка сверху' },
     ];
 
     return (
@@ -200,7 +210,7 @@ const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
                 </div>
                 <div className="search__choice-box">
                     <span>Тип загрузки</span>
-                    {loadType.map((option) => (
+                    {loadingType.map((option) => (
                         <label key={option.id} className="serch__choice-label">
                             <input className="serch__choice-input"
                                 type="radio"
@@ -215,7 +225,7 @@ const SearchForm = ({ data, onChange, onNestedChange, onReset, onSearch }) => {
                 </div>
                 <div className="search__choice-box">
                     <span>Тип выгрузки</span>
-                    {unloadType.map((option) => (
+                    {unloadingType.map((option) => (
                         <label key={option.id} className="serch__choice-label">
                             <input className="serch__choice-input"
                                 type="radio"
