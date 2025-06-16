@@ -7,7 +7,6 @@ export const addRewiew = async (profileId, formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка создания отзыва:", error.message);

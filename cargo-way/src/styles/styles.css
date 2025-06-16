@@ -1339,13 +1339,10 @@ input[type=date]::-webkit-datetime-edit {
   list-style: none;
   border-radius: 0.2rem;
   opacity: 0;
-  /* Изначально скрыт */
   transform: translateY(-10px);
-  /* Смещение вверх */
   transition: opacity 0.3s ease, transform 0.3s ease;
-  /* Переход */
   pointer-events: none;
-  /* Отключает клики, когда элемент скрыт */
+
 }
 .cargoForm__inputBox-ul.show,
 .autoForm__inputBox-ul.show,
@@ -1353,11 +1350,8 @@ input[type=date]::-webkit-datetime-edit {
 .profileForm__inputBox-ul.show,
 .trailerForm__inputBox-ul.show {
   opacity: 1;
-  /* Показывает элемент */
   transform: translateY(0);
-  /* Возвращает в исходное положение */
   pointer-events: auto;
-  /* Включает клики */
 }
 .cargoForm__inputBox-li,
 .autoForm__inputBox-li,
@@ -2948,7 +2942,6 @@ input[type=date]::-webkit-datetime-edit {
 @keyframes moveTruck {
   0% {
     right: -25rem;
-    /* За пределами экрана */
   }
   100% {
     right: 20rem;

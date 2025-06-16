@@ -7,11 +7,10 @@ export const addDriver = async (formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка создания водителя:", error.message);
-        throw error; // Прокидываем ошибку дальше
+        throw error; 
     }
 };
 
@@ -21,7 +20,6 @@ export const getDriversByProfile = async (pageNumber) => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения водителей:", error.message);
@@ -35,7 +33,6 @@ export const getDetailsDriver = async (driverId) => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения деталей водителя:", error.message);
@@ -50,7 +47,6 @@ export const updateDriver = async (formData, driverId) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка обновления водителя:", error.message);
@@ -64,7 +60,6 @@ export const deleteDriver = async (driverId) => {
             method: "DELETE"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка удаления водителя:", error.message);
@@ -78,7 +73,6 @@ export const getDriversForTransport = async () => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения водителей для транспорта:", error.message);

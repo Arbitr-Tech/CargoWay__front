@@ -7,7 +7,6 @@ export const addCargo = async (formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка создания груза:", error.message);

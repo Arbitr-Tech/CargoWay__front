@@ -7,7 +7,6 @@ export const addTrailer = async (formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка создания прицепа:", error.message);
@@ -21,7 +20,6 @@ export const getTrailerByProfile = async (pageNumber) => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения прицепов:", error.message);
@@ -35,7 +33,6 @@ export const getDetailsTrailer = async (trailerId) => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения деталей прицепа:", error.message);
@@ -50,7 +47,6 @@ export const updateTrailer = async (trailerId, formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка обновления прицепа:", error.message);
@@ -64,7 +60,6 @@ export const deleteTrailer = async (trailerId) => {
             method: "DELETE"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка удаления прицепа:", error.message);
@@ -78,7 +73,6 @@ export const getTrailerForTransport = async () => {
             method: "GET"
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка получения прицепов для транспорта:", error.message);

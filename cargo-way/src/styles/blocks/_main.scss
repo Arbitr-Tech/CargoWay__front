@@ -71,7 +71,6 @@
                 transition: transform 0.3s ease, opacity 0.3s ease, font-size 0.3s ease;
 
                 @include m.laptop {
-                    // width: 30%;
                     left: 10rem;
                 }
             }
@@ -324,7 +323,6 @@
 @keyframes moveTruck {
     0% {
         right: -25rem;
-        /* За пределами экрана */
     }
 
     100% {

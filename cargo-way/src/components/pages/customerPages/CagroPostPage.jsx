@@ -9,6 +9,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { validateCargo } from "../../../validation/validations";
+import { userStore } from "../../../stores/UserStore";
 
 const CargoPostPage = observer(({ typePage }) => {
     const navigate = useNavigate();
@@ -68,6 +69,16 @@ const CargoPostPage = observer(({ typePage }) => {
             return;
         }
 
+        if ((userStore.userFormData.legalType === "INDIVIDUAL" &&
+            userStore.userFormData.individual === null) ||
+            (userStore.userFormData.legalType === "COMPANY" &&
+                userStore.userFormData.company === null) ||
+            userStore.userFormData.contactData === null
+        ) {
+            toast.warning("Для дальнейшей работы необходимо заполнить данные профиля и контактные данные");
+            return
+        };
+
         try {
             if (typePage === 'add') {
                 await addCargo(toJS(cargoStore.cargoFormData));
@@ -91,14 +102,14 @@ const CargoPostPage = observer(({ typePage }) => {
                 <TopBar />
                 <h2 className="cargo__title">{typePage === 'add' ? 'Добавить' : 'Изменить'} груз</h2>
                 <CargoForm
-                data={cargoStore.cargoFormData}
-                onChange={handleInputChange}
-                onNestedChange={handleNestedInputChange}
-                isLoadingData={isLoading}
-                onChangeImage={cargoStore.setFormData}
-                onDeleteFile={handleDeleteImage}
-                onLoadImage={loadFile}
-                typePage={typePage}
+                    data={cargoStore.cargoFormData}
+                    onChange={handleInputChange}
+                    onNestedChange={handleNestedInputChange}
+                    isLoadingData={isLoading}
+                    onChangeImage={cargoStore.setFormData}
+                    onDeleteFile={handleDeleteImage}
+                    onLoadImage={loadFile}
+                    typePage={typePage}
                 />
                 <div className="cargo__btnBox">
                     <button className="cargo__button"

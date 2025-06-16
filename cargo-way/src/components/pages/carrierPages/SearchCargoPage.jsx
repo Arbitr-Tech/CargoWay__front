@@ -118,6 +118,17 @@ const SearchCargoPage = observer(() => {
     };
 
     const handleClickRespond = () => {
+        if ((userStore.userFormData.legalType === "INDIVIDUAL" &&
+            userStore.userFormData.individual === null) ||
+            (userStore.userFormData.legalType === "COMPANY" &&
+                userStore.userFormData.company === null) ||
+            userStore.userFormData.contactData === null
+        ) {
+            closePopup();
+            toast.warning("Для дальнейшей работы необходимо заполнить данные профиля и контактные данные");
+            return
+        };
+        
         loadTransportList();
         closePopup();
         setPopupChoice(true);

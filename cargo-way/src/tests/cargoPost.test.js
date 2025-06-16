@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import * as cargoService from "../api/cargoService";
 import userEvent from "@testing-library/user-event";
 import { toast } from "react-toastify";
+import { userStore } from "../stores/UserStore";
 
 jest.mock("../api/cargoService", () => ({
     addCargo: jest.fn()
@@ -62,6 +63,8 @@ describe("CargoPostPage", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         cargoStore.resetFormData();
+
+        userStore.setRole("CUSTOMER");
     });
 
     test("Успешное добавление груза", async () => {

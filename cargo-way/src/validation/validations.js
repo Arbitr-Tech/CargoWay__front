@@ -75,7 +75,7 @@ const validateCompanyData = (data, isFirstTime = false) => {
     const errors = {};
     const { name, inn, ogrn, bic, correspondentAccount, registrationDate } = data;
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
+    today.setHours(0, 0, 0, 0);
 
     if (isFirstTime) {
         if (!name) errors.name = "Название компании обязательно для заполнения";
@@ -157,11 +157,10 @@ const validateDriverData = (data) => {
     const errors = {};
     const { fullName, licenseCategory, licenseNumber, issueDate, expirationDate } = data;
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Убираем время для точного сравнения дат
+    today.setHours(0, 0, 0, 0);
 
     if (!licenseCategory) errors.licenseCategory = "Категория прав обязательная для ввода";
     if (!licenseNumber || !/^\d{4} \d{6}$/.test(licenseNumber)) errors.licenseNumber = "Номер водительских прав содержать иметь 10 символов";
-    // if (!licenseNumber || !/^[a-zA-Z0-9]{4} [a-zA-Z0-9]{6}$/.test(licenseNumber)) errors.licenseNumber = "Номер водительских прав содержать иметь 10 символов";
 
     if (!issueDate) {
         errors.issueDate = "Укажите дату выдачи";

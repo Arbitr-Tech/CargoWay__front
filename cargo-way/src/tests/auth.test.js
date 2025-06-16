@@ -4,6 +4,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { toast } from "react-toastify";
 import { renderWithRouter } from "./helpers/renderWithRouter";
+import { userStore } from "../stores/UserStore";
+import { getProfileData } from "../api/profileService";
 
 jest.mock("react-toastify", () => ({
     toast: {
@@ -12,13 +14,18 @@ jest.mock("react-toastify", () => ({
     }
 }));
 
+jest.mock("../api/profileService", () => ({
+    getProfileData: jest.fn(),
+}));
+
 describe("Авторизация", () => {
     let history;
 
     beforeEach(() => {
         jest.restoreAllMocks();
         autorizationStore.reset();
-        localStorage.clear();
+        userStore.setRole('');
+        localStorage.removeItem('role');
         history = createMemoryHistory();
     });
 
@@ -36,15 +43,20 @@ describe("Авторизация", () => {
         global.fetch = jest.fn(() =>
             Promise.resolve({
                 ok: true,
-                json: () => Promise.resolve({ access_token: "aass" }),
+                json: () => Promise.resolve({ role: "CUSTOMER" }),
             })
         );
+
+        getProfileData.mockResolvedValue({
+            userData: {role: "CUSTOMER"}
+        });
 
         render(renderWithRouter(null, '/auth'));
 
         await fillElements("user@example.com", "SecurePass123");
 
-        expect(localStorage.getItem("accessToken")).toBe("aass");
+        expect(userStore.role).toBe("CUSTOMER");
+        expect(toast.success).toHaveBeenCalledWith("Успешный вход");
         expect(history.location.pathname).toBe('/');
     });
 
@@ -60,7 +72,7 @@ describe("Авторизация", () => {
 
         await fillElements("wrongUser@example.com", "wrongPass");
 
-        expect(localStorage.getItem("accessToken")).toBeNull();
+        expect(userStore.role).toBe("");
         expect(toast.error).toHaveBeenCalledWith("Неверный логин или пароль");
     });
 });

@@ -2,8 +2,7 @@ const GenericItem = ({
     className = '',
     fields,
     buttons = [],
-    highlighted = false,
-    ...props
+    highlighted = false
 }) => {
     return (
         <div className={`genericList__item ${highlighted ? 'generic-item--highlighted' : ''}`}>

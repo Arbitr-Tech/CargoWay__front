@@ -7,7 +7,6 @@ export const addAuto = async (formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка создания транспорта:", error.message);
@@ -32,6 +31,7 @@ export const getDetailsTransport = async (transportId) => {
         const data = await fetchWithAuth(`/api/v1/transports/${transportId}/`, {
             method: "GET"
         })
+
         return data;
     } catch (error) {
         console.log("Ошибка получения деталей груза: ", error);
@@ -46,7 +46,6 @@ export const updateAuto = async (transportId, formData) => {
             body: JSON.stringify(formData),
         });
 
-        console.log("Успешный ответ:", data);
         return data;
     } catch (error) {
         console.error("Ошибка обновления транспорта:", error.message);

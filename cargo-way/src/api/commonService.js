@@ -1,6 +1,7 @@
 import { API_URL } from '../api/config';
 import { userStore } from '../stores/UserStore';
 import { toast } from "react-toastify";
+import { logout } from './authService';
 
 let hasShownToast = false;
 
@@ -42,29 +43,22 @@ export const refreshToken = async () => {
             throw new Error("Не удалось обновить токен");
         }
 
-        const data = await response.json();
-        localStorage.setItem("accessToken", data.access_token);
         hasShownToast = false;
-        return data.access_token;
     } catch (error) {
-        localStorage.removeItem("accessToken");
         userStore.setRole('');
+        await logout();
 
-        // if (!hasShownToast) { // Показываем ошибку только один раз
-        //     toast.error("Сессия истекла. Войдите снова.");
-        //     hasShownToast = true;
-        // }
+        if (!hasShownToast) {
+            toast.error("Сессия истекла. Войдите снова.");
+            hasShownToast = true;
+        }
 
         throw new Error("Сессия истекла. Войдите снова.");
     }
 };
 
 export const fetchWithAuth = async (url, options = {}) => {
-    let accessToken = localStorage.getItem("accessToken");
-
-    const defaultHeaders = {
-        "Authorization": `Bearer ${accessToken}`,
-    };
+    const defaultHeaders = {};
 
     if (options.body) {
         defaultHeaders["Content-Type"] = "application/json";
@@ -73,30 +67,29 @@ export const fetchWithAuth = async (url, options = {}) => {
     const response = await fetch(`${API_URL}${url}`, {
         ...options,
         headers: { ...defaultHeaders, ...(options.headers || {}) },
+        credentials: "include"
     });
 
     if (response.status === 403) {
         console.log("403: Access Forbidden");
         try {
-            accessToken = await refreshToken();
-            return fetchWithAuth(url, options); // Повторный запрос
+            await refreshToken();
+            return fetchWithAuth(url, options); 
         } catch (error) {
             return Promise.reject(error);
         }
     }
 
-    // Проверяем, успешен ли запрос
     if (!response.ok) {
-        const errorText = await response.text(); // Читаем текст ошибки с бэка
+        const errorText = await response.text();
         throw new Error(`Ошибка ${response.status}: ${errorText}`);
     }
 
-    // Проверяем, есть ли тело в ответе
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
-        return response.json(); // Возвращаем JSON, если тело есть
+        return response.json();
     } else {
-        return null; // Возвращаем null, если тело отсутствует
+        return null;
     }
 };
 
@@ -110,7 +103,7 @@ export const getCargoListOfLatest = async () => {
     });
 
     if (!response.ok) {
-        const errorData = await response.text(); // Читаем текст ошибки
+        const errorData = await response.text();
         throw new Error(`Ошибка ${response.status}: ${errorData}`);
     }
 

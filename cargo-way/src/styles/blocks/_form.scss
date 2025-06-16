@@ -44,10 +44,6 @@
         }
     }
 
-    // &__button {
-    //     @include m.button(v.$primary-color, v.$font-light-color);
-    // }
-
     &__transition {
         @include m.center;
         flex-direction: column;
@@ -59,7 +55,6 @@
         &-textBox {
             display: flex;
             justify-content: space-between;
-            // gap: 1rem;
         }
 
         &-text {
@@ -72,12 +67,7 @@
             cursor: pointer;
         }
     }
-
-    // &__transition a {
-    // color: v.$active-color;
-    // cursor: pointer;
-    // }
-
+    
     @include m.mobile {
         width: 55%;
         padding: 3rem 2rem;

@@ -41,7 +41,7 @@ const RegistrationPage = observer(() => {
             navigate('/');
             registrationStore.submitRegistration();
             toast.success('Успешная регистрация');
-            toast.warning("Для дальнейшей работы необходимо заполнить данные профиля");
+            toast.warning("Для дальнейшей работы необходимо заполнить данные профиля и контактные данные");
         } catch (error) {
             console.error("Ошибка входа:", error.message);
             if (error.message.includes("duplicate key value violates unique constraint")) {
@@ -57,7 +57,6 @@ const RegistrationPage = observer(() => {
 
     return (
         <div className="registration">
-            {/* <div className="container"> */}
                 <RegistrationForm
                     formData={registrationStore.registrationFormData}
                     agreement={registrationStore.agreement}
@@ -65,7 +64,6 @@ const RegistrationPage = observer(() => {
                     onSubmit={handleSubmit}
                     onChangeAgreement={registrationStore.switchAgreement}
                 />
-            {/* </div> */}
         </div >
     )
 

@@ -16,8 +16,4 @@ export const registration = async (formData) => {
         const error = await response.json();
         throw new Error(error.message)
     }
-
-    const data = await response.json();
-    localStorage.setItem("accessToken", data.access_token);
-    return data;
 };

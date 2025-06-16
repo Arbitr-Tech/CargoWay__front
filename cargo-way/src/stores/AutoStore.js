@@ -58,8 +58,8 @@ class AutoStore {
         if (typePage === 'add') {
             this.autoEmbeddedTrailer = !this.autoEmbeddedTrailer;
         } else {
-            if(this.autoEmbeddedTrailer) {
-                this.autoFormData.embeddedTrailerDetails = {...this.originalTransportFormData.embeddedTrailerDetails};
+            if (this.autoEmbeddedTrailer) {
+                this.autoFormData.embeddedTrailerDetails = { ...this.originalTransportFormData.embeddedTrailerDetails };
                 this.autoEmbeddedTrailer = false;
             } else {
                 this.autoEmbeddedTrailer = true;
@@ -71,7 +71,7 @@ class AutoStore {
         if (typePage === 'add') {
             this.autoAdditionalTrailers = !this.autoAdditionalTrailers
         } else {
-            if(this.autoAdditionalTrailers) {
+            if (this.autoAdditionalTrailers) {
                 this.autoFormData.trailersIds = this.originalTransportFormData.trailersIds;
                 this.autoAdditionalTrailers = false;
             } else {
@@ -195,8 +195,8 @@ class AutoStore {
                 height: 0,
                 volume: 0
             },
-            trailersIds: []
-            // photos: []
+            trailersIds: [],
+            imagesIds: []
         };
         this.autoEmbeddedTrailer = false;
         this.autoAdditionalTrailers = false;

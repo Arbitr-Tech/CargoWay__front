@@ -47,7 +47,6 @@ const TopBar = () => {
         try {
             await logout();
             userStore.setRole("");
-            localStorage.removeItem("accessToken");
             navigate("/");
         } catch (error) {
             toast.error("Произошла ошибка. Попробуйте позже");

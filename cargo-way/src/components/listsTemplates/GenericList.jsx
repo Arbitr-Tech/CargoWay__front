@@ -6,8 +6,8 @@ const GenericList = ({
     headerClassName = '',
     itemClassName = '',
     listClassName = '',
-    getItemProps = (item) => item,
-    ...listProps }) => {
+    getItemProps = (item) => item
+}) => {
     return (
         <div className={`genericList__result ${listClassName}`}>
             <div className={`genericList__result-header ${headerClassName}`}>
@@ -27,7 +27,6 @@ const GenericList = ({
                         key={item.id}
                         className={itemClassName}
                         {...getItemProps(item)}
-                        {...listProps}
                     />
                 ))}
             </div>

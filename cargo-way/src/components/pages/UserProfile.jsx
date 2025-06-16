@@ -43,7 +43,7 @@ const UserProfile = observer(() => {
     }, [id, location.pathname]);
 
     useEffect(() => {
-        loadReviewsList(1); // или другая логика
+        loadReviewsList(1);
     }, [typeList]);
 
     const getListType = () => {
@@ -145,7 +145,7 @@ const UserProfile = observer(() => {
                         <div className="userProfile__info-data">
                             <p className="userProfile__info-item">Имя пользователя: <span>{otherProfileStore.profileData.username}</span></p>
                             <p className="userProfile__info-item">Правовая форма: <span>{otherProfileStore.profileData.legalType === "INDIVIDUAL" ? "Физическое лицо" : "Юридическое лицо"}</span></p>
-                            <p className="userProfile__info-item">Системный рейтинг: <span>{otherProfileStore.profileData.systemRating}</span></p>
+                            <p className="userProfile__info-item">Пользовательский рейтинг: <span>{otherProfileStore.profileData.userRating}</span></p>
                         </div>
                     </div>
                     {isLoading ? (

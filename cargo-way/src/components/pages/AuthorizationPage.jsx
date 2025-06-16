@@ -33,7 +33,9 @@ const AuthorizationPage = observer(() => {
         try {
             await login(toJS(autorizationStore.autorizationFormData));
             const data = await getProfileData();
+            console.log(data)
             userStore.setUserFormData(data);
+            console.log(userStore)
             toast.success("Успешный вход");
             navigate('/');
             if ((userStore.userFormData.legalType === "INDIVIDUAL" &&

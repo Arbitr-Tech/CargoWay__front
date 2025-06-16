@@ -14,11 +14,11 @@ const ContactInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             Object.values(errors).forEach(errorMessage => {
                 toast.error(errorMessage);
             });
-            return false; // валидация не прошла
+            return false;
         }
 
         onClickButton();
-        setIsEdit(false); // валидация прошла
+        setIsEdit(false);
         return true;
     };
 
@@ -27,7 +27,7 @@ const ContactInfoForm = ({ data, isNull, onClickButton, onNestedChange }) => {
             setIsEdit(true);
         } else {
             const success = handleSubmit();
-            if (!success) return; // не валидно — не трогаем кнопку
+            if (!success) return;
         }
     };
 

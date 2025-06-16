@@ -163,22 +163,15 @@
             list-style: none;
             border-radius: v.$border-radius;
             opacity: 0;
-            /* Изначально скрыт */
             transform: translateY(-10px);
-            /* Смещение вверх */
             transition: opacity 0.3s ease, transform 0.3s ease;
-            /* Переход */
             pointer-events: none;
-            /* Отключает клики, когда элемент скрыт */
         }
 
         &-ul.show {
             opacity: 1;
-            /* Показывает элемент */
             transform: translateY(0);
-            /* Возвращает в исходное положение */
             pointer-events: auto;
-            /* Включает клики */
         }
 
 

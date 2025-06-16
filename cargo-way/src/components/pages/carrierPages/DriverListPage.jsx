@@ -39,15 +39,6 @@ const DriverListPage = observer(() => {
         loadDriverList();
     }, [location.pathname]);
 
-    // const handleEditClick = async (item) => {
-    //     try {
-
-    //     } catch (error) {
-    //         (error);
-    //         toast.error('Ошибка, попробуйте позже');
-    //     }
-    // }
-
     const handleDeleteClick = async () => {
         try {
             await deleteDriver(popupData.item.id);

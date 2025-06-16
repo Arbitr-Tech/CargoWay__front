@@ -7,7 +7,7 @@ class OtherProfileStore {
     profileData = {
         username: "",
         legalType: "",
-        systemRating: 0
+        userRating: 0
     };
 
     comment = {
@@ -27,11 +27,11 @@ class OtherProfileStore {
     async fetchProfileData(id) {
         try {
             const data = await getOtherProfileData(id);
-            const { legalType, systemRating } = data
+            const { legalType, userRating } = data
             this.profileData = {
                 'username': data.userData.username,
                 'legalType': legalType,
-                'systemRating': systemRating
+                'userRating': userRating
             };
         } catch (error) {
             console.error("Ошибка при получении данных профиля:", error);
@@ -67,7 +67,7 @@ class OtherProfileStore {
         this.profileData = {
             username: "",
             legalType: "",
-            systemRating: 0
+            userRating: 0
         };
         this.comment = {
             ALL: [],

@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { toast } from "react-toastify";
 import { renderWithRouter } from "./helpers/renderWithRouter";
 import { registrationStore } from "../stores/RegistrationStore";
+import { userStore } from "../stores/UserStore";
+import { getProfileData } from "../api/profileService";
 
 jest.mock("react-toastify", () => ({
     toast: {
@@ -12,12 +14,18 @@ jest.mock("react-toastify", () => ({
 }));
 
 
+jest.mock("../api/profileService", () => ({
+    getProfileData: jest.fn(),
+}));
+
+
 describe("Регистрация", () => {
 
     beforeEach(() => {
         jest.restoreAllMocks();
         registrationStore.submitRegistration();
-        localStorage.clear();
+        userStore.setRole('');
+        // localStorage.clear();
     });
 
     const fillElementsSuccess = async () => {
@@ -58,15 +66,20 @@ describe("Регистрация", () => {
         global.fetch = jest.fn(() =>
             Promise.resolve({
                 ok: true,
-                json: () => Promise.resolve({ access_token: "aass" }),
+                json: () => Promise.resolve({}),
             })
         );
+
+        getProfileData.mockResolvedValue({
+            userData: { role: "CUSTOMER" }
+        });
 
         render(renderWithRouter(null, '/reg'));
 
         await fillElementsSuccess();
 
-        expect(localStorage.getItem("accessToken")).toBe("aass");
+        expect(userStore.role).toBe("CUSTOMER");
+        expect(toast.success).toHaveBeenCalledWith("Успешная регистрация");
     });
 
     test("Ошибка регистрации (нет подтверждения согласия на обработку)", async () => {
@@ -90,7 +103,7 @@ describe("Регистрация", () => {
 
         await fillElementsSuccess();
 
-        expect(localStorage.getItem("accessToken")).toBeNull();
+        expect(userStore.role).toBe("");
         expect(toast.error).toHaveBeenCalledWith("Имя пользователя уже занято. Выберите другое.");
     });
 });
