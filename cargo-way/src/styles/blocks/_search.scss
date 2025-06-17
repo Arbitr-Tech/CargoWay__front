@@ -127,7 +127,7 @@
         }
 
         &::after {
-            @include m.line(12.125rem, v.$noactive-color);
+            @include m.line(14.125rem, v.$noactive-color);
 
             @include m.mobile {
                 top: 36.75rem;
