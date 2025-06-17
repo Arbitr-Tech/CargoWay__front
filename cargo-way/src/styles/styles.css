@@ -2997,7 +2997,7 @@ input[type=date]::-webkit-datetime-edit {
 .info__content {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   text-align: left;
   flex-direction: column;
   margin-bottom: 2.2rem;
