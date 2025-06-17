@@ -25,7 +25,6 @@ describe("Регистрация", () => {
         jest.restoreAllMocks();
         registrationStore.submitRegistration();
         userStore.setRole('');
-        // localStorage.clear();
     });
 
     const fillElementsSuccess = async () => {
