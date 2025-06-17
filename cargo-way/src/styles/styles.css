@@ -697,7 +697,7 @@ input[type=date]::-webkit-datetime-edit {
   position: absolute;
   display: block;
   background-color: #777777;
-  top: 12.125rem;
+  top: 14.125rem;
   left: 0;
   height: 0.05rem;
   width: 100%;
@@ -1342,7 +1342,6 @@ input[type=date]::-webkit-datetime-edit {
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
-
 }
 .cargoForm__inputBox-ul.show,
 .autoForm__inputBox-ul.show,
